@@ -1,9 +1,9 @@
 {
-  "name": "pkg-placeholder",
+  "name": "@lumirelle/stylelint-config",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "packageManager": "pnpm@10.16.1",
-  "description": "_description_",
+  "description": "Lumirelle's Stylelint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/lumirelle",
@@ -36,6 +36,17 @@
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks"
   },
+  "peerDependencies": {
+    "@stylistic/stylelint-config": "^3.0.1",
+    "stylelint": "^16.24.0",
+    "stylelint-config-recess-order": "^7.3.0",
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-config-standard-vue": "^1.0.0"
+  },
+  "dependencies": {
+    "local-pkg": "catalog:prod"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:cli",
     "@antfu/ni": "catalog:cli",
@@ -45,16 +56,21 @@
     "czg": "catalog:cli",
     "eslint": "catalog:cli",
     "eslint-plugin-format": "catalog:cli",
+    "execa": "catalog:testing",
     "lint-staged": "catalog:cli",
+    "sass-embedded": "catalog:testing",
     "simple-git-hooks": "catalog:cli",
+    "stylelint": "catalog:dev",
     "taze": "catalog:cli",
     "tinyexec": "catalog:utils",
+    "tinyglobby": "catalog:testing",
     "tsx": "catalog:cli",
     "typescript": "catalog:cli",
     "unbuild": "catalog:cli",
     "vite": "catalog:cli",
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
+    "vue": "catalog:testing",
     "yaml": "catalog:testing"
   },
   "simple-git-hooks": {

@@ -1,0 +1,6 @@
+.:
+  ConfigComposer: function
+  default: function
+  GLOB_EXCLUDE: object
+  lumirelle: function
+  mergeConfigs: function
