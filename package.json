@@ -7,13 +7,23 @@
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/lumirelle",
-  "homepage": "https://github.com/lumirelle/pkg-placeholder#readme",
+  "homepage": "https://github.com/lumirelle/stylelint-config#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lumirelle/pkg-placeholder.git"
+    "url": "git+https://github.com/lumirelle/stylelint-config.git"
   },
-  "bugs": "https://github.com/lumirelle/pkg-placeholder/issues",
-  "keywords": [],
+  "bugs": "https://github.com/lumirelle/stylelint-config/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "stylelint",
+    "stylelint-config",
+    "css",
+    "scss",
+    "vue",
+    "lumirelle"
+  ],
   "sideEffects": false,
   "exports": {
     ".": "./dist/index.mjs",
