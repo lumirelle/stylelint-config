@@ -1,5 +1,5 @@
 import type { Config as StylelintConfig } from 'stylelint'
-import type { OptionsConfig } from './types'
+import type { OptionsConfig, OptionsStylelint } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
@@ -23,7 +23,7 @@ const VuePackages = [
  * @param options Options to generate the configuration
  * @returns The generated Stylelint configuration object
  */
-export function lumirelle(options: OptionsConfig & Pick<StylelintConfig, 'ignoreFiles' | 'allowEmptyInput'> = {}): ConfigComposer {
+export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): ConfigComposer {
   const {
     ignoreFiles: userIgnoreFiles = [],
     allowEmptyInput = true,

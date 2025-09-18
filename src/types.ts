@@ -1,3 +1,5 @@
+import type { Config as StylelintConfig } from 'stylelint'
+
 export type Awaitable<T> = T | Promise<T>
 
 export interface OptionsConfig {
@@ -35,4 +37,30 @@ export interface OptionsConfig {
    * @default true
    */
   ordered?: boolean
+}
+
+export interface OptionsStylelint extends Pick<StylelintConfig, 'allowEmptyInput' | 'ignoreFiles'> {
+  /**
+   * If true, Stylelint does not throw an error when the glob pattern matches no files.
+   *
+   * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
+   * because it found that there are no input files to lint.
+   *
+   * So I set it to `true` by default here.
+   *
+   * @default true
+   * @see [allowEmptyInput](https://stylelint.io/user-guide/configure/#allowemptyinput)
+   */
+  allowEmptyInput?: boolean
+
+  /**
+   * Files to ignore, same as `.stylelintignore`.
+   *
+   * Stylelint use `micromatch` to match the files.
+   *
+   * @default GLOB_EXCLUDE
+   * @see [micromatch](https://github.com/micromatch/micromatch)
+   * @see [GLOB_EXCLUDE](https://github.com/lumirelle/stylelint-config/blob/main/src/globs.ts#L6)
+   */
+  ignoreFiles?: string | string[]
 }
