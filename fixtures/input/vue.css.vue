@@ -1,3 +1,4 @@
+<style>
 @media (max-width: 480px) {
   .bd-example-standard {
     position: relative;
@@ -5,20 +6,6 @@
     right: 1px;
     bottom: 1px;
     left: 1px;
-  }
-
-  .bd-example-scss {
-    $var: 1;
-    @if ($var == 1) {
-      .foo {
-        color: red;
-      }
-    }
-    @else {
-      .foo {
-        color: blue;
-      }
-    }
   }
 
   .bd-example-stylistic {
@@ -31,3 +18,4 @@
     top: 1px;
   }
 }
+</style>

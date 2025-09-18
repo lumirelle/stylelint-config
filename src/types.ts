@@ -1,8 +1,6 @@
 export type Awaitable<T> = T | Promise<T>
 
 export interface OptionsConfig {
-  ignore?: string | string[]
-
   /**
    * Enable stylistic rules.
    *

@@ -120,6 +120,9 @@ importers:
       '@antfu/utils':
         specifier: catalog:inlined
         version: 9.2.0
+      '@lumirelle/stylelint-config':
+        specifier: workspace:*
+        version: 'link:'
       '@types/node':
         specifier: catalog:types
         version: 24.5.1

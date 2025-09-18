@@ -1,19 +1,18 @@
-@media (max-width: 480px) {
+<style>
+@media (width <= 480px) {
   .bd-example-standard {
     position: relative;
-    top: 1px;
-    right: 1px;
-    bottom: 1px;
-    left: 1px;
+    inset: 1px;
   }
 
   .bd-example-stylistic {
       font-family: "Bad Indent",serif; color: red;}
 
   .bd-example-ordered {
-    display: block;
-    right: 1px;
     position: relative;
     top: 1px;
+    right: 1px;
+    display: block;
   }
 }
+</style>

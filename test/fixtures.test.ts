@@ -17,23 +17,50 @@ afterAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
 })
 
-runWithConfig('css', {
+runWithConfig('standard', {
+  standard: true,
   scss: false,
   vue: false,
-})
-runWithConfig('scss', {
+  stylistic: false,
+  ordered: false,
+}, '*.css')
+runWithConfig('standard+scss', {
+  standard: true,
+  scss: true,
   vue: false,
-})
-runWithConfig('vue-css', {
+  stylistic: false,
+  ordered: false,
+}, '*.{css,scss}')
+runWithConfig('standard+vue', {
+  standard: true,
   scss: false,
   vue: true,
-})
-runWithConfig('vue-scss', {
+  stylistic: false,
+  ordered: false,
+}, '*.{css,css.vue}')
+runWithConfig('standard+vue+scss', {
+  standard: true,
   scss: true,
   vue: true,
-})
+  stylistic: false,
+  ordered: false,
+}, '*.{css,scss,css.vue,scss.vue}')
+runWithConfig('stylistic', {
+  standard: true,
+  scss: true,
+  vue: true,
+  stylistic: true,
+  ordered: false,
+}, '*.{css,scss,css.vue,scss.vue}')
+runWithConfig('ordered', {
+  standard: true,
+  scss: true,
+  vue: true,
+  stylistic: false,
+  ordered: true,
+}, '*.{css,scss,css.vue,scss.vue}')
 
-function runWithConfig(name: string, configs: OptionsConfig) {
+function runWithConfig(name: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
   it.concurrent(name, async ({ expect }) => {
     const from = resolve('fixtures/input')
     const output = resolve('fixtures/output', name)
@@ -53,7 +80,7 @@ export default lumirelle(
 )
 `)
 
-    await execa('npx', ['stylelint', './*.{css,scss}', '--fix'], {
+    await execa('npx', ['stylelint', filePatterns, '--fix'], {
       cwd: target,
       stdio: 'pipe',
     })

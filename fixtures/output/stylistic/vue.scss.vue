@@ -1,15 +1,14 @@
-@media (max-width: 480px) {
+<style lang="scss">
+@media (width <= 480px) {
   .bd-example-standard {
     position: relative;
-    top: 1px;
-    right: 1px;
-    bottom: 1px;
-    left: 1px;
+    inset: 1px;
   }
 
   .bd-example-scss {
     $var: 1;
-    @if ($var == 1) {
+
+    @if $var == 1 {
       .foo {
         color: red;
       }
@@ -22,7 +21,9 @@
   }
 
   .bd-example-stylistic {
-      font-family: "Bad Indent",serif; color: red;}
+    font-family: "Bad Indent", serif;
+    color: red;
+  }
 
   .bd-example-ordered {
     display: block;
@@ -31,3 +32,4 @@
     top: 1px;
   }
 }
+</style>

@@ -1,3 +1,4 @@
+<style lang="scss">
 @media (max-width: 480px) {
   .bd-example-standard {
     position: relative;
@@ -31,3 +32,4 @@
     top: 1px;
   }
 }
+</style>

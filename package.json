@@ -51,6 +51,7 @@
     "@antfu/eslint-config": "catalog:cli",
     "@antfu/ni": "catalog:cli",
     "@antfu/utils": "catalog:inlined",
+    "@lumirelle/stylelint-config": "workspace:*",
     "@types/node": "catalog:types",
     "bumpp": "catalog:cli",
     "czg": "catalog:cli",
