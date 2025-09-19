@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle } from '../src/factory'
 import { GLOB_EXCLUDE } from '../src/globs'
+import { LESS_OPINIONATED_RULES } from '../src/rules'
 
 const defaultConfig = {
   allowEmptyInput: true,
@@ -17,20 +18,10 @@ const defaultConfig = {
   rules: {
     '@stylistic/max-line-length': null,
 
-    'block-no-empty': [true, { severity: 'warning' }],
-    'keyframes-name-pattern': null,
-    'no-descending-specificity': null,
-    'no-empty-source': null,
-    'selector-class-pattern': null,
-    'selector-id-pattern': null,
-
     'scss/at-if-closing-brace-space-after': null,
     'scss/at-if-closing-brace-newline-after': null,
     'scss/at-else-closing-brace-newline-after': null,
     'scss/at-else-closing-brace-space-after': null,
-    'scss/dollar-variable-pattern': null,
-    'scss/load-no-partial-leading-underscore': [true, { severity: 'warning' }],
-    'scss/at-extend-no-missing-placeholder': [true, { severity: 'warning' }],
   },
 }
 
@@ -143,6 +134,26 @@ describe('should', () => {
       ...defaultConfig,
       extends: defaultConfig.extends.filter(ext => ext !== 'stylelint-config-recess-order'),
       rules: filterRules(defaultConfig.rules, 'order/'),
+    })
+  })
+
+  it('construct config with less opinionated correctly', async () => {
+    const factoryConfig = await lumirelle({
+      lessOpinionated: true,
+    })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      rules: {
+        ...defaultConfig.rules,
+        ...LESS_OPINIONATED_RULES.standard.reduce((acc, rule) => {
+          acc[rule] = null
+          return acc
+        }, {} as Record<string, any>),
+        ...LESS_OPINIONATED_RULES.scss.reduce((acc, rule) => {
+          acc[rule] = null
+          return acc
+        }, {} as Record<string, any>),
+      },
     })
   })
 

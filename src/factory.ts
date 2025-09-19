@@ -3,6 +3,7 @@ import type { OptionsConfig, OptionsStylelint } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
+import { LESS_OPINIONATED_RULES } from './rules'
 
 const ScssPackages = [
   'node-sass',
@@ -32,6 +33,7 @@ export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): Confi
     scss: enableScss = ScssPackages.some(pkg => isPackageExists(pkg)),
     vue: enableVue = VuePackages.some(pkg => isPackageExists(pkg)),
     ordered: enableOrdered = true,
+    lessOpinionated = false,
   } = options
 
   const config: StylelintConfig = {}
@@ -56,12 +58,12 @@ export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): Confi
   // Core rules
   if (enableStandard) {
     config.extends.push('stylelint-config-standard')
-    config.rules['block-no-empty'] = [true, { severity: 'warning' }]
-    config.rules['keyframes-name-pattern'] = null
-    config.rules['no-descending-specificity'] = null
-    config.rules['no-empty-source'] = null
-    config.rules['selector-class-pattern'] = null
-    config.rules['selector-id-pattern'] = null
+
+    if (lessOpinionated) {
+      LESS_OPINIONATED_RULES.standard.forEach((rule) => {
+        config.rules![rule] = null
+      })
+    }
   }
 
   // SCSS support
@@ -71,17 +73,12 @@ export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): Confi
     config.rules['scss/at-if-closing-brace-newline-after'] = null
     config.rules['scss/at-else-closing-brace-newline-after'] = null
     config.rules['scss/at-else-closing-brace-space-after'] = null
-    config.rules['scss/dollar-variable-pattern'] = null
-    /**
-     * Enable for better dev experience, warning for it doesn't provide automatic fix.
-     * @see https://github.com/stylelint-scss/stylelint-scss/tree/master/src/rules/load-no-partial-leading-underscore
-     */
-    config.rules['scss/load-no-partial-leading-underscore'] = [true, { severity: 'warning' }]
-    /**
-     * You should use `%placeholder` to define the style should be reused and extend it instead of other selectors.
-     * @see https://github.com/stylelint-scss/stylelint-scss/tree/master/src/rules/at-extend-no-missing-placeholder
-     */
-    config.rules['scss/at-extend-no-missing-placeholder'] = [true, { severity: 'warning' }]
+
+    if (lessOpinionated) {
+      LESS_OPINIONATED_RULES.scss.forEach((rule) => {
+        config.rules![rule] = null
+      })
+    }
   }
 
   // Vue support
