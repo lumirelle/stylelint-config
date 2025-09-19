@@ -9,11 +9,21 @@ export class ConfigComposer<T extends StylelintConfig = StylelintConfig> extends
     super(() => {})
   }
 
+  /**
+   * Provide overrides to a specific config.
+   *
+   * It will be merged with the original config, or provide a custom function to replace the config entirely.
+   */
   public override(config: T): ConfigComposer<T> {
     this.config = mergeConfigs(this.config, config)
     return this
   }
 
+  /**
+   * Resolve the pipeline and return the final config.
+   *
+   * This returns a promise. Calling `.then()` has the same effect.
+   */
   public toConfig(): Promise<T> {
     return Promise.resolve(this.config)
   }
