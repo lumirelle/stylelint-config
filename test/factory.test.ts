@@ -41,21 +41,34 @@ describe('should', () => {
     expect(factoryConfig).toEqual(defaultConfig)
   })
 
+  it('construct user configs correctly', async () => {
+    const factoryConfig = await lumirelle(
+      {},
+      {
+        rules: {
+          'color-hex-case': 'upper',
+        },
+      },
+    )
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      rules: {
+        ...defaultConfig.rules,
+        'color-hex-case': 'upper',
+      },
+    })
+  })
+
   it('construct overridden config correctly', async () => {
     const factoryConfig = await lumirelle()
-      .override({
-        overrides: [
-          {
-            files: ['**/*.scss'],
-            rules: {
-              'scss/dollar-variable-pattern': '^foo',
-            },
+      .overrides([
+        {
+          files: ['**/*.scss'],
+          rules: {
+            'scss/dollar-variable-pattern': '^foo',
           },
-        ],
-        rules: {
-          'block-no-empty': true,
         },
-      })
+      ])
     expect(factoryConfig).toEqual({
       ...defaultConfig,
       overrides: [
@@ -66,10 +79,7 @@ describe('should', () => {
           },
         },
       ],
-      rules: {
-        ...defaultConfig.rules,
-        'block-no-empty': true,
-      },
+      rules: defaultConfig.rules,
     })
   })
 

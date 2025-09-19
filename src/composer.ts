@@ -1,5 +1,6 @@
 import type { Config as StylelintConfig } from 'stylelint'
-import { mergeConfigs } from './merge'
+
+type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never
 
 /**
  * Using the magic promise to implement a chainable config composer, when accessing this composer, user will get the final config.
@@ -10,12 +11,30 @@ export class ConfigComposer<T extends StylelintConfig = StylelintConfig> extends
   }
 
   /**
-   * Provide overrides to a specific config.
-   *
-   * It will be merged with the original config, or provide a custom function to replace the config entirely.
+   * The config provided will be passed to the `overrides` array.
    */
-  public override(config: T): ConfigComposer<T> {
-    this.config = mergeConfigs(this.config, config)
+  public override(config: StylelintConfigOverride): ConfigComposer<T> {
+    if (config) {
+      this.config.overrides = [
+        ...(this.config.overrides ?? []),
+        config,
+      ]
+    }
+    return this
+  }
+
+  /**
+   * The config provided will be passed to the `overrides` array.
+   *
+   * Support multiple overrides at once.
+   */
+  public overrides(config: StylelintConfigOverride[]): ConfigComposer<T> {
+    if (config) {
+      this.config.overrides = [
+        ...(this.config.overrides ?? []),
+        ...config,
+      ]
+    }
     return this
   }
 

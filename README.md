@@ -29,7 +29,11 @@ _stylelint.config.js_
 ```js
 import { lumirelle } from '@lumirelle/stylelint-config'
 
-export default lumirelle({
+export default lumirelle(
+  /**
+   * Options to generate the configuration
+   */
+  {
   /**
    * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
    * because it found that there are no input files to lint.
@@ -38,54 +42,61 @@ export default lumirelle({
    *
    * @default true
    */
-  allowEmptyInput: true,
+    allowEmptyInput: true,
 
-  /**
-   * Files to ignore, same as `.stylelintignore`.
-   *
-   * NOTE: Stylelint use `micromatch` to match the files.
-   *
-   * @see https://github.com/micromatch/micromatch
-   */
-  ignoreFiles: [
-    'your-ignore-files'
-  ],
+    /**
+     * Files to ignore, same as `.stylelintignore`.
+     *
+     * NOTE: Stylelint use `micromatch` to match the files.
+     *
+     * @see https://github.com/micromatch/micromatch
+     */
+    ignoreFiles: [
+      'your-ignore-files'
+    ],
 
-  /**
-   * Enable stylistic rules.
-   *
-   * @see https://github.com/stylelint-stylistic/stylelint-config#readme
-   * @default true
-   */
-  stylistic: true,
+    /**
+     * Enable stylistic rules.
+     *
+     * @see https://github.com/stylelint-stylistic/stylelint-config#readme
+     * @default true
+     */
+    stylistic: true,
 
-  /**
-   * Core rules. Can't be disabled.
-   */
-  standard: true,
+    /**
+     * Core rules. Can't be disabled.
+     */
+    standard: true,
 
-  /**
-   * Enable SCSS support.
-   *
-   * @default auto-detect based on the dependencies
-   */
-  scss: true,
+    /**
+     * Enable SCSS support.
+     *
+     * @default auto-detect based on the dependencies
+     */
+    scss: true,
 
-  /**
-   * Enable Vue support.
-   *
-   * @default auto-detect based on the dependencies
-   */
-  vue: true,
+    /**
+     * Enable Vue support.
+     *
+     * @default auto-detect based on the dependencies
+     */
+    vue: true,
 
+    /**
+     * Whether to order the stylesheet properties. Powered by `stylelint-config-recess-order`.
+     *
+     * @see https://github.com/stormwarning/stylelint-config-recess-order
+     * @default true
+     */
+    ordered: true,
+  },
   /**
-   * Whether to order the stylesheet properties. Powered by `stylelint-config-recess-order`.
-   *
-   * @see https://github.com/stormwarning/stylelint-config-recess-order
-   * @default true
+   * Additional user-defined Stylelint configuration objects to merge
    */
-  ordered: true,
-})
+  {
+    // Your custom Stylelint configuration
+  }
+)
 ```
 
 ## Sponsors

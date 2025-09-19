@@ -3,6 +3,7 @@ import type { OptionsConfig, OptionsStylelint } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
+import { mergeConfigs } from './merge'
 import { LESS_OPINIONATED_RULES } from './rules'
 
 const ScssPackages = [
@@ -22,9 +23,10 @@ const VuePackages = [
  * Constructs a Stylelint configuration object.
  *
  * @param options Options to generate the configuration
+ * @param userConfigs Additional user-defined Stylelint configuration objects to merge
  * @returns The generated Stylelint configuration object
  */
-export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): ConfigComposer {
+export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsStylelint[]): ConfigComposer {
   const {
     ignoreFiles: userIgnoreFiles = [],
     allowEmptyInput = true,
@@ -96,5 +98,8 @@ export function lumirelle(options: OptionsConfig & OptionsStylelint = {}): Confi
     config.extends.push('stylelint-config-recess-order')
   }
 
-  return new ConfigComposer(config)
+  // Merged user config
+  const finalConfig = mergeConfigs(config, ...userConfigs)
+
+  return new ConfigComposer(finalConfig)
 }
