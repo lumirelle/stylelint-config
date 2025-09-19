@@ -59,6 +59,13 @@ runWithConfig('ordered', {
   stylistic: false,
   ordered: true,
 }, '*.{css,scss,css.vue,scss.vue}')
+runWithConfig('all', {
+  standard: true,
+  scss: true,
+  vue: true,
+  stylistic: true,
+  ordered: true,
+}, '*.*')
 
 function runWithConfig(name: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
   it.concurrent(name, async ({ expect }) => {

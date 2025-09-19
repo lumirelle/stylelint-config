@@ -1,0 +1,35 @@
+<style lang="scss">
+@media (width <= 480px) {
+  .bd-example-standard {
+    position: relative;
+    inset: 1px;
+  }
+
+  .bd-example-scss {
+    $var: 1;
+
+    @if $var == 1 {
+      .foo {
+        color: red;
+      }
+    }
+    @else {
+      .foo {
+        color: blue;
+      }
+    }
+  }
+
+  .bd-example-stylistic {
+    font-family: "Bad Indent", serif;
+    color: red;
+  }
+
+  .bd-example-ordered {
+    position: relative;
+    top: 1px;
+    right: 1px;
+    display: block;
+  }
+}
+</style>

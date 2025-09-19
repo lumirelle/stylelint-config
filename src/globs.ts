@@ -25,4 +25,10 @@ export const GLOB_EXCLUDE = [
 
   '**/*.min.*',
   '**/__snapshots__/**',
+
+  '*.{c,m,}js{,x}',
+  '*.{c,m,}ts{,x}',
+  '*.json{,c}',
+  '*.{x,y,ya,to}ml',
+  '*.md{,x}',
 ]
