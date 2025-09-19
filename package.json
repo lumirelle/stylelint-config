@@ -47,15 +47,15 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "@stylistic/stylelint-config": "^3.0.1",
-    "stylelint": "^16.24.0",
-    "stylelint-config-recess-order": "^7.3.0",
-    "stylelint-config-standard": "^39.0.0",
-    "stylelint-config-standard-scss": "^16.0.0",
-    "stylelint-config-standard-vue": "^1.0.0"
+    "stylelint": ">=16.0.0"
   },
   "dependencies": {
-    "local-pkg": "catalog:prod"
+    "@stylistic/stylelint-config": "catalog:prod",
+    "local-pkg": "catalog:prod",
+    "stylelint-config-recess-order": "catalog:prod",
+    "stylelint-config-standard": "catalog:prod",
+    "stylelint-config-standard-scss": "catalog:prod",
+    "stylelint-config-standard-vue": "catalog:prod"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:cli",

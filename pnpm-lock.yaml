@@ -54,9 +54,24 @@ catalogs:
       specifier: ^9.2.0
       version: 9.2.0
   prod:
+    '@stylistic/stylelint-config':
+      specifier: ^3.0.1
+      version: 3.0.1
     local-pkg:
       specifier: ^1.1.2
       version: 1.1.2
+    stylelint-config-recess-order:
+      specifier: ^7.3.0
+      version: 7.3.0
+    stylelint-config-standard:
+      specifier: ^39.0.0
+      version: 39.0.0
+    stylelint-config-standard-scss:
+      specifier: ^16.0.0
+      version: 16.0.0
+    stylelint-config-standard-vue:
+      specifier: ^1.0.0
+      version: 1.0.0
   testing:
     execa:
       specifier: ^9.6.0
@@ -93,22 +108,22 @@ importers:
   .:
     dependencies:
       '@stylistic/stylelint-config':
-        specifier: ^3.0.1
+        specifier: catalog:prod
         version: 3.0.1(stylelint@16.24.0(typescript@5.9.2))
       local-pkg:
         specifier: catalog:prod
         version: 1.1.2
       stylelint-config-recess-order:
-        specifier: ^7.3.0
+        specifier: catalog:prod
         version: 7.3.0(stylelint-order@7.0.0(stylelint@16.24.0(typescript@5.9.2)))(stylelint@16.24.0(typescript@5.9.2))
       stylelint-config-standard:
-        specifier: ^39.0.0
+        specifier: catalog:prod
         version: 39.0.0(stylelint@16.24.0(typescript@5.9.2))
       stylelint-config-standard-scss:
-        specifier: ^16.0.0
+        specifier: catalog:prod
         version: 16.0.0(postcss@8.5.6)(stylelint@16.24.0(typescript@5.9.2))
       stylelint-config-standard-vue:
-        specifier: ^1.0.0
+        specifier: catalog:prod
         version: 1.0.0(postcss-html@1.8.0)(stylelint@16.24.0(typescript@5.9.2))
     devDependencies:
       '@antfu/eslint-config':
