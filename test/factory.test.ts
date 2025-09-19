@@ -1,16 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle } from '../src/factory'
 import { GLOB_EXCLUDE } from '../src/globs'
+import { resolvePackagePath } from '../src/resolve'
 import { LESS_OPINIONATED_RULES } from '../src/rules'
 
 const defaultConfig = {
   allowEmptyInput: true,
   extends: [
-    '@stylistic/stylelint-config',
-    'stylelint-config-standard',
-    'stylelint-config-standard-scss',
-    'stylelint-config-standard-vue/scss',
-    'stylelint-config-recess-order',
+    resolvePackagePath('@stylistic/stylelint-config'),
+    resolvePackagePath('stylelint-config-standard'),
+    resolvePackagePath('stylelint-config-standard-scss'),
+    resolvePackagePath('stylelint-config-standard-vue/scss'),
+    resolvePackagePath('stylelint-config-recess-order'),
   ],
   ignoreFiles: [
     ...GLOB_EXCLUDE,
@@ -89,7 +90,7 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== '@stylistic/stylelint-config'),
+      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
       rules: filterRules(defaultConfig.rules, '@stylistic/'),
     })
   })
@@ -101,10 +102,10 @@ describe('should', () => {
     expect(factoryConfig).toEqual({
       ...defaultConfig,
       extends: defaultConfig.extends.reduce((acc, ext) => {
-        if (ext === 'stylelint-config-standard-vue/scss') {
-          acc.push('stylelint-config-standard-vue')
+        if (ext === resolvePackagePath('stylelint-config-standard-vue/scss')) {
+          acc.push(resolvePackagePath('stylelint-config-standard-vue'))
         }
-        else if (ext !== 'stylelint-config-standard-scss') {
+        else if (ext !== resolvePackagePath('stylelint-config-standard-scss')) {
           acc.push(ext)
         }
         return acc
@@ -119,7 +120,7 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== 'stylelint-config-standard-vue/scss'),
+      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-standard-vue/scss')),
       rules: filterRules(defaultConfig.rules, 'vue/'),
     })
   })
@@ -131,7 +132,7 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== 'stylelint-config-standard-vue/scss' && ext !== 'stylelint-config-standard-scss'),
+      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-standard-vue/scss') && ext !== resolvePackagePath('stylelint-config-standard-scss')),
       rules: filterRules(defaultConfig.rules, ['scss/', 'vue/']),
     })
   })
@@ -142,7 +143,7 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== 'stylelint-config-recess-order'),
+      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-recess-order')),
       rules: filterRules(defaultConfig.rules, 'order/'),
     })
   })
@@ -176,7 +177,7 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext === 'stylelint-config-standard'),
+      extends: defaultConfig.extends.filter(ext => ext === resolvePackagePath('stylelint-config-standard')),
       rules: filterRules(defaultConfig.rules, ['scss/', 'vue/', '@stylistic/', 'order/']),
     })
   })

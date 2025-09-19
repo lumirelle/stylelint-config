@@ -4,6 +4,7 @@ import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
 import { mergeConfigs } from './merge'
+import { resolvePackagePath } from './resolve'
 import { LESS_OPINIONATED_RULES } from './rules'
 
 const ScssPackages = [
@@ -53,13 +54,13 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   // Stylistic rules
   if (enableStylistic) {
-    config.extends.push('@stylistic/stylelint-config')
+    config.extends.push(resolvePackagePath('@stylistic/stylelint-config'))
     config.rules['@stylistic/max-line-length'] = null
   }
 
   // Core rules
   if (enableStandard) {
-    config.extends.push('stylelint-config-standard')
+    config.extends.push(resolvePackagePath('stylelint-config-standard'))
 
     if (lessOpinionated) {
       LESS_OPINIONATED_RULES.standard.forEach((rule) => {
@@ -70,7 +71,7 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   // SCSS support
   if (enableScss) {
-    config.extends.push('stylelint-config-standard-scss')
+    config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
     config.rules['scss/at-if-closing-brace-space-after'] = null
     config.rules['scss/at-if-closing-brace-newline-after'] = null
     config.rules['scss/at-else-closing-brace-newline-after'] = null
@@ -86,16 +87,16 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
   // Vue support
   if (enableVue) {
     if (enableScss) {
-      config.extends.push('stylelint-config-standard-vue/scss')
+      config.extends.push(resolvePackagePath('stylelint-config-standard-vue/scss'))
     }
     else {
-      config.extends.push('stylelint-config-standard-vue')
+      config.extends.push(resolvePackagePath('stylelint-config-standard-vue'))
     }
   }
 
   // Ordered properties
   if (enableOrdered) {
-    config.extends.push('stylelint-config-recess-order')
+    config.extends.push(resolvePackagePath('stylelint-config-recess-order'))
   }
 
   // Merged user config

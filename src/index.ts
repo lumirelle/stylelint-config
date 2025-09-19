@@ -4,6 +4,7 @@ export * from './composer'
 export * from './factory'
 export * from './globs'
 export * from './merge'
+export * from './resolve'
 export * from './rules'
 export * from './types'
 
