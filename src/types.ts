@@ -30,10 +30,20 @@ export interface OptionsConfig {
   /**
    * Enable stylistic rules.
    *
-   * @see https://github.com/stylelint-stylistic/stylelint-config#readme
    * @default true
+   * @notice Stylistic rules will be forcibly disabled when `formatter` is enabled.
+   * @see https://github.com/stylelint-stylistic/stylelint-config#readme
    */
   stylistic?: boolean
+
+  /**
+   * Use custom formatter to format the styles file. Currently only `prettier` is supported.
+   *
+   * If set to `true`, it will use `prettier` as the formatter.
+   *
+   * @default false
+   */
+  formatter?: boolean | 'prettier'
 
   /**
    * Core rules. Can't be disabled.
@@ -48,6 +58,13 @@ export interface OptionsConfig {
   scss?: boolean
 
   /**
+   * Tailwind CSS support.
+   *
+   * @default false
+   */
+  tailwindcss?: boolean
+
+  /**
    * Enable Vue support.
    *
    * @default auto-detect based on the dependencies
@@ -57,8 +74,8 @@ export interface OptionsConfig {
   /**
    * Whether to order the stylesheet properties. Powered by `stylelint-config-recess-order`.
    *
-   * @see https://github.com/stormwarning/stylelint-config-recess-order
    * @default true
+   * @see https://github.com/stormwarning/stylelint-config-recess-order
    */
   ordered?: boolean
 
@@ -95,6 +112,6 @@ export interface OptionsConfig {
   lessOpinionated?: boolean
 }
 
-export interface OptionsStylelint extends Omit<StylelintConfig, ''> {
+export interface OptionsStylelint extends Omit<StylelintConfig, ''> {}
 
-}
+export type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never

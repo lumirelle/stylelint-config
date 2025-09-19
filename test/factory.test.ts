@@ -9,20 +9,26 @@ const defaultConfig = {
   extends: [
     resolvePackagePath('@stylistic/stylelint-config'),
     resolvePackagePath('stylelint-config-standard'),
-    resolvePackagePath('stylelint-config-standard-scss'),
     resolvePackagePath('stylelint-config-standard-vue/scss'),
     resolvePackagePath('stylelint-config-recess-order'),
   ],
   ignoreFiles: [
     ...GLOB_EXCLUDE,
   ],
+  overrides: [
+    {
+      files: ['**/*.scss', '**/*.sass'],
+      extends: [resolvePackagePath('stylelint-config-standard-scss')],
+      rules: {
+        'scss/at-if-closing-brace-space-after': null,
+        'scss/at-if-closing-brace-newline-after': null,
+        'scss/at-else-closing-brace-newline-after': null,
+        'scss/at-else-closing-brace-space-after': null,
+      },
+    },
+  ],
   rules: {
     '@stylistic/max-line-length': null,
-
-    'scss/at-if-closing-brace-space-after': null,
-    'scss/at-if-closing-brace-newline-after': null,
-    'scss/at-else-closing-brace-newline-after': null,
-    'scss/at-else-closing-brace-space-after': null,
   },
 }
 
@@ -91,6 +97,20 @@ describe('should', () => {
     expect(factoryConfig).toEqual({
       ...defaultConfig,
       extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
+      rules: filterRules(defaultConfig.rules, '@stylistic/'),
+    })
+  })
+
+  it('construct config with formatter correctly', async () => {
+    const factoryConfig = await lumirelle({
+      formatter: true,
+    })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      extends: [
+        resolvePackagePath('stylelint-prettier/recommended'),
+        ...defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
+      ],
       rules: filterRules(defaultConfig.rules, '@stylistic/'),
     })
   })

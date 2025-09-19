@@ -1,0 +1,3 @@
+.my-element {
+  color: --alpha(var(--color-lime-300) / 50%);
+}

@@ -1,5 +1,5 @@
 import type { Config as StylelintConfig } from 'stylelint'
-import type { OptionsConfig, OptionsStylelint } from './types'
+import type { OptionsConfig, OptionsStylelint, StylelintConfigOverride } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
@@ -32,8 +32,10 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
     ignoreFiles: userIgnoreFiles = [],
     allowEmptyInput = true,
     stylistic: enableStylistic = true,
+    formatter: enableFormatter = false,
     standard: enableStandard = true,
     scss: enableScss = ScssPackages.some(pkg => isPackageExists(pkg)),
+    tailwindcss: enableTailwindCSS = false,
     vue: enableVue = VuePackages.some(pkg => isPackageExists(pkg)),
     ordered: enableOrdered = true,
     lessOpinionated = false,
@@ -51,11 +53,19 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   config.extends = []
   config.rules = {}
+  config.overrides = []
 
   // Stylistic rules
-  if (enableStylistic) {
+  if (enableStylistic && !enableFormatter) {
     config.extends.push(resolvePackagePath('@stylistic/stylelint-config'))
     config.rules['@stylistic/max-line-length'] = null
+  }
+
+  // Formatter
+  if (enableFormatter) {
+    if (typeof enableFormatter === 'boolean' || enableFormatter === 'prettier') {
+      config.extends.push(resolvePackagePath('stylelint-prettier/recommended'))
+    }
   }
 
   // Core rules
@@ -71,17 +81,50 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   // SCSS support
   if (enableScss) {
-    config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
-    config.rules['scss/at-if-closing-brace-space-after'] = null
-    config.rules['scss/at-if-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-space-after'] = null
+    // By default, `stylelint-config-standard-scss` enables rules for all file types.
+    // We need to override it to only apply to SCSS files.
+    const scssConfig: StylelintConfigOverride = {
+      files: ['**/*.scss', '**/*.sass'],
+    }
+    scssConfig.extends = [resolvePackagePath('stylelint-config-standard-scss')]
+    scssConfig.rules = {}
+    scssConfig.rules['scss/at-if-closing-brace-space-after'] = null
+    scssConfig.rules['scss/at-if-closing-brace-newline-after'] = null
+    scssConfig.rules['scss/at-else-closing-brace-newline-after'] = null
+    scssConfig.rules['scss/at-else-closing-brace-space-after'] = null
 
     if (lessOpinionated) {
       LESS_OPINIONATED_RULES.scss.forEach((rule) => {
-        config.rules![rule] = null
+        scssConfig.rules![rule] = null
       })
     }
+
+    config.overrides.push(scssConfig)
+  }
+
+  if (enableTailwindCSS) {
+    const ignoreAtRules = [
+      'tailwind',
+      'theme',
+      'source',
+      'utility', // Tailwind CSS 4
+      'layer', // Tailwind CSS 3
+      'variant',
+      'custom-variant',
+      'apply',
+      'reference',
+      'config',
+      'plugin',
+    ]
+    config.rules['at-rule-no-unknown'] = [true, {
+      ignoreAtRules,
+    }]
+    config.overrides.push({
+      files: ['**/*.scss', '**/*.sass'],
+      rules: {
+        'scss/at-rule-no-unknown': [true, { ignoreAtRules }],
+      },
+    })
   }
 
   // Vue support

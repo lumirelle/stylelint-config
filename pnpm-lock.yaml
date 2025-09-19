@@ -72,6 +72,9 @@ catalogs:
     stylelint-config-standard-vue:
       specifier: ^1.0.0
       version: 1.0.0
+    stylelint-prettier:
+      specifier: ^5.0.3
+      version: 5.0.3
   testing:
     execa:
       specifier: ^9.6.0
@@ -125,6 +128,9 @@ importers:
       stylelint-config-standard-vue:
         specifier: catalog:prod
         version: 1.0.0(postcss-html@1.8.0)(stylelint@16.24.0(typescript@5.9.2))
+      stylelint-prettier:
+        specifier: catalog:prod
+        version: 5.0.3(prettier@3.6.2)(stylelint@16.24.0(typescript@5.9.2))
     devDependencies:
       '@antfu/eslint-config':
         specifier: catalog:cli
@@ -3281,6 +3287,13 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.18.0
+
+  stylelint-prettier@5.0.3:
+    resolution: {integrity: sha512-B6V0oa35ekRrKZlf+6+jA+i50C4GXJ7X1PPmoCqSUoXN6BrNF6NhqqhanvkLjqw2qgvrS0wjdpeC+Tn06KN3jw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+      stylelint: '>=16.0.0'
 
   stylelint-scss@6.12.1:
     resolution: {integrity: sha512-UJUfBFIvXfly8WKIgmqfmkGKPilKB4L5j38JfsDd+OCg2GBdU0vGUV08Uw82tsRZzd4TbsUURVVNGeOhJVF7pA==}
@@ -6738,6 +6751,12 @@ snapshots:
     dependencies:
       postcss: 8.5.6
       postcss-sorting: 9.1.0(postcss@8.5.6)
+      stylelint: 16.24.0(typescript@5.9.2)
+
+  stylelint-prettier@5.0.3(prettier@3.6.2)(stylelint@16.24.0(typescript@5.9.2)):
+    dependencies:
+      prettier: 3.6.2
+      prettier-linter-helpers: 1.0.0
       stylelint: 16.24.0(typescript@5.9.2)
 
   stylelint-scss@6.12.1(stylelint@16.24.0(typescript@5.9.2)):
