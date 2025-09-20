@@ -28,22 +28,15 @@ export interface OptionsConfig {
   ignoreFiles?: string | string[]
 
   /**
-   * Enable stylistic rules.
+   * Use custom formatter to format the styles file. Currently support `stylistic` and `prettier`.
    *
-   * @default true
-   * @notice Stylistic rules will be forcibly disabled when `formatter` is enabled.
-   * @see https://github.com/stylelint-stylistic/stylelint-config#readme
+   * If set to `true`, it will use `stylistic` as the formatter.
+   *
+   * @default 'stylistic'
+   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
+   * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
    */
-  stylistic?: boolean
-
-  /**
-   * Use custom formatter to format the styles file. Currently only `prettier` is supported.
-   *
-   * If set to `true`, it will use `prettier` as the formatter.
-   *
-   * @default false
-   */
-  formatter?: boolean | 'prettier'
+  formatter?: boolean | 'prettier' | 'stylistic'
 
   /**
    * Core rules. Can't be disabled.

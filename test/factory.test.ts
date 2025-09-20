@@ -83,20 +83,9 @@ describe('should', () => {
     })
   })
 
-  it('construct config without stylistic correctly', async () => {
+  it('construct config with formatter prettier correctly', async () => {
     const factoryConfig = await lumirelle({
-      stylistic: false,
-    })
-    expect(factoryConfig).toEqual({
-      ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
-      rules: filterRules(defaultConfig.rules, '@stylistic/'),
-    })
-  })
-
-  it('construct config with formatter correctly', async () => {
-    const factoryConfig = await lumirelle({
-      formatter: true,
+      formatter: 'prettier',
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
@@ -104,6 +93,17 @@ describe('should', () => {
         resolvePackagePath('stylelint-prettier/recommended'),
         ...defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
       ],
+      rules: filterRules(defaultConfig.rules, '@stylistic/'),
+    })
+  })
+
+  it('construct config without formatter correctly', async () => {
+    const factoryConfig = await lumirelle({
+      formatter: false,
+    })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
       rules: filterRules(defaultConfig.rules, '@stylistic/'),
     })
   })
@@ -253,7 +253,7 @@ describe('should', () => {
 
   it('construct config without all features correctly', async () => {
     const factoryConfig = await lumirelle({
-      stylistic: false,
+      formatter: false,
       scss: false,
       vue: false,
       ordered: false,

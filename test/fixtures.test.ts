@@ -22,7 +22,7 @@ runWithConfig('standard', {
   scss: false,
   tailwindcss: false,
   vue: false,
-  stylistic: false,
+  formatter: false,
   ordered: false,
 }, 'css.css')
 runWithConfig('standard+scss', {
@@ -30,7 +30,7 @@ runWithConfig('standard+scss', {
   scss: true,
   tailwindcss: false,
   vue: false,
-  stylistic: false,
+  formatter: false,
   ordered: false,
 }, '(css.css|scss.scss)')
 runWithConfig('standard+vue', {
@@ -38,7 +38,7 @@ runWithConfig('standard+vue', {
   scss: false,
   tailwindcss: false,
   vue: true,
-  stylistic: false,
+  formatter: false,
   ordered: false,
 }, '(css.css|css.vue)')
 runWithConfig('standard+vue+scss', {
@@ -46,7 +46,7 @@ runWithConfig('standard+vue+scss', {
   scss: true,
   tailwindcss: false,
   vue: true,
-  stylistic: false,
+  formatter: false,
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('stylistic', {
@@ -54,7 +54,7 @@ runWithConfig('stylistic', {
   scss: true,
   tailwindcss: false,
   vue: true,
-  stylistic: true,
+  formatter: 'stylistic',
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('ordered', {
@@ -62,7 +62,7 @@ runWithConfig('ordered', {
   scss: true,
   tailwindcss: false,
   vue: true,
-  stylistic: false,
+  formatter: false,
   ordered: true,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('tailwind-no-output', {
@@ -70,7 +70,7 @@ runWithConfig('tailwind-no-output', {
   scss: true,
   tailwindcss: true,
   vue: true,
-  stylistic: false,
+  formatter: false,
   ordered: false,
 }, 'tailwind*')
 runWithConfig('all', {
@@ -78,7 +78,7 @@ runWithConfig('all', {
   scss: true,
   tailwindcss: true,
   vue: true,
-  stylistic: true,
+  formatter: 'stylistic',
   ordered: true,
 }, '*.*')
 

@@ -31,8 +31,7 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
   const {
     ignoreFiles: userIgnoreFiles = [],
     allowEmptyInput = true,
-    stylistic: enableStylistic = true,
-    formatter: enableFormatter = false,
+    formatter: enableFormatter = 'stylistic',
     scss: enableScss = ScssPackages.some(pkg => isPackageExists(pkg)),
     tailwindcss: enableTailwindCSS = false,
     vue: enableVue = VuePackages.some(pkg => isPackageExists(pkg)),
@@ -53,15 +52,13 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
   config.extends = []
   config.rules = {}
 
-  // Stylistic rules
-  if (enableStylistic && !enableFormatter) {
-    config.extends.push(resolvePackagePath('@stylistic/stylelint-config'))
-    config.rules['@stylistic/max-line-length'] = null
-  }
-
   // Formatter
   if (enableFormatter) {
-    if (typeof enableFormatter === 'boolean' || enableFormatter === 'prettier') {
+    if (typeof enableFormatter === 'boolean' || enableFormatter === 'stylistic') {
+      config.extends.push(resolvePackagePath('@stylistic/stylelint-config'))
+      config.rules['@stylistic/max-line-length'] = null
+    }
+    else if (enableFormatter === 'prettier') {
       config.extends.push(resolvePackagePath('stylelint-prettier/recommended'))
     }
   }
