@@ -33,7 +33,6 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
     allowEmptyInput = true,
     stylistic: enableStylistic = true,
     formatter: enableFormatter = false,
-    standard: enableStandard = true,
     scss: enableScss = ScssPackages.some(pkg => isPackageExists(pkg)),
     tailwindcss: enableTailwindCSS = false,
     vue: enableVue = VuePackages.some(pkg => isPackageExists(pkg)),
@@ -68,11 +67,31 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
   }
 
   // Core rules
+  const enableStandard = true
   if (enableStandard) {
     config.extends.push(resolvePackagePath('stylelint-config-standard'))
 
     if (lessOpinionated) {
-      LESS_OPINIONATED_RULES.standard.forEach((rule) => {
+      const disabledRules: string[] = []
+      if (typeof lessOpinionated === 'object') {
+        if (lessOpinionated.pattern) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.standard.pattern)
+        }
+        if (lessOpinionated.cleanliness) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.standard.cleanliness)
+        }
+        if (lessOpinionated.maintainability) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.standard.maintainability)
+        }
+      }
+      else {
+        disabledRules.push(...[
+          ...LESS_OPINIONATED_RULES.standard.pattern,
+          ...LESS_OPINIONATED_RULES.standard.cleanliness,
+          ...LESS_OPINIONATED_RULES.standard.maintainability,
+        ])
+      }
+      disabledRules.forEach((rule) => {
         config.rules![rule] = null
       })
     }
@@ -87,7 +106,26 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
     config.rules['scss/at-else-closing-brace-space-after'] = null
 
     if (lessOpinionated) {
-      LESS_OPINIONATED_RULES.scss.forEach((rule) => {
+      const disabledRules: string[] = []
+      if (typeof lessOpinionated === 'object') {
+        if (lessOpinionated.pattern) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.scss.pattern)
+        }
+        if (lessOpinionated.cleanliness) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.scss.cleanliness)
+        }
+        if (lessOpinionated.maintainability) {
+          disabledRules.push(...LESS_OPINIONATED_RULES.scss.maintainability)
+        }
+      }
+      else {
+        disabledRules.push(...[
+          ...LESS_OPINIONATED_RULES.scss.pattern,
+          ...LESS_OPINIONATED_RULES.scss.cleanliness,
+          ...LESS_OPINIONATED_RULES.scss.maintainability,
+        ])
+      }
+      disabledRules.forEach((rule) => {
         config.rules![rule] = null
       })
     }

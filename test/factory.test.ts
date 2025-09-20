@@ -161,22 +161,92 @@ describe('should', () => {
     })
   })
 
-  it('construct config with less opinionated correctly', async () => {
+  it('construct config with less opinionated pattern correctly', async () => {
     const factoryConfig = await lumirelle({
-      lessOpinionated: true,
+      lessOpinionated: {
+        pattern: true,
+      },
     })
+    const disabledRules = [
+      ...LESS_OPINIONATED_RULES.standard.pattern,
+      ...LESS_OPINIONATED_RULES.scss.pattern,
+    ]
     expect(factoryConfig).toEqual({
       ...defaultConfig,
       rules: {
         ...defaultConfig.rules,
-        ...LESS_OPINIONATED_RULES.standard.reduce((acc, rule) => {
+        ...disabledRules.reduce((acc, rule) => {
           acc[rule] = null
           return acc
-        }, {} as Record<string, any>),
-        ...LESS_OPINIONATED_RULES.scss.reduce((acc, rule) => {
+        }, {} as Record<string, null>),
+      },
+    })
+  })
+
+  it('construct config with less opinionated cleanliness correctly', async () => {
+    const factoryConfig = await lumirelle({
+      lessOpinionated: {
+        cleanliness: true,
+      },
+    })
+    const disabledRules = [
+      ...LESS_OPINIONATED_RULES.standard.cleanliness,
+      ...LESS_OPINIONATED_RULES.scss.cleanliness,
+    ]
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      rules: {
+        ...defaultConfig.rules,
+        ...disabledRules.reduce((acc, rule) => {
           acc[rule] = null
           return acc
-        }, {} as Record<string, any>),
+        }, {} as Record<string, null>),
+      },
+    })
+  })
+
+  it('construct config with less opinionated maintainability correctly', async () => {
+    const factoryConfig = await lumirelle({
+      lessOpinionated: {
+        maintainability: true,
+      },
+    })
+    const disabledRules = [
+      ...LESS_OPINIONATED_RULES.standard.maintainability,
+      ...LESS_OPINIONATED_RULES.scss.maintainability,
+    ]
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      rules: {
+        ...defaultConfig.rules,
+        ...disabledRules.reduce((acc, rule) => {
+          acc[rule] = null
+          return acc
+        }, {} as Record<string, null>),
+      },
+    })
+  })
+
+  it('construct config with less opinionated all correctly', async () => {
+    const factoryConfig = await lumirelle({
+      lessOpinionated: true,
+    })
+    const disabledRules = [
+      ...LESS_OPINIONATED_RULES.standard.pattern,
+      ...LESS_OPINIONATED_RULES.standard.cleanliness,
+      ...LESS_OPINIONATED_RULES.standard.maintainability,
+      ...LESS_OPINIONATED_RULES.scss.pattern,
+      ...LESS_OPINIONATED_RULES.scss.cleanliness,
+      ...LESS_OPINIONATED_RULES.scss.maintainability,
+    ]
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      rules: {
+        ...defaultConfig.rules,
+        ...disabledRules.reduce((acc, rule) => {
+          acc[rule] = null
+          return acc
+        }, {} as Record<string, null>),
       },
     })
   })

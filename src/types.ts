@@ -82,36 +82,47 @@ export interface OptionsConfig {
   /**
    * Disable some opinionated rules to standard preference.
    *
-   * Core rules affected:
+   * You can also specify which category of rules to disable by providing an object with the category names as keys.
    *
-   * - Symbol pattern rules:
+   * Rules affected:
+   *
+   * - Symbol "pattern" rules:
    *   - `custom-property-pattern`
    *   - `keyframes-name-pattern`
    *   - `selector-class-pattern`
    *   - `selector-id-pattern`
-   * - Code cleanliness rules:
-   *   - `block-no-empty`
-   *   - `no-empty-source`
-   * - Code maintainability rules:
-   *   - `no-descending-specificity`
-   *
-   * SCSS rules affected:
-   *
-   * - Symbol pattern rules:
    *   - `scss/at-mixin-pattern`
    *   - `scss/dollar-variable-pattern`
-   * - Code cleanliness rules:
+   * - Code "cleanliness" rules:
+   *   - `block-no-empty`
+   *   - `no-empty-source`
    *   - `scss/load-no-partial-leading-underscore`
    *   - `scss/operator-no-unspaced`
-   * - Code maintainability rules:
+   * - Code "maintainability" rules:
+   *   - `no-descending-specificity`
    *   - `scss/at-extend-no-missing-placeholder`
    *   - `scss/no-global-function-names`
    *
    * @default false
    */
-  lessOpinionated?: boolean
+  lessOpinionated?: boolean | OptionsOpinionated
 }
 
 export interface OptionsStylelint extends Omit<StylelintConfig, ''> {}
 
 export type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never
+
+export interface OptionsOpinionated {
+  /**
+   * Whether to disable pattern rules.
+   */
+  pattern?: boolean
+  /**
+   * Whether to disable cleanliness rules.
+   */
+  cleanliness?: boolean
+  /**
+   * Whether to disable maintainability rules.
+   */
+  maintainability?: boolean
+}
