@@ -49,7 +49,9 @@ export default lumirelle(
      *
      * NOTE: Stylelint use `micromatch` to match the files.
      *
-     * @see https://github.com/micromatch/micromatch
+     * @default GLOB_EXCLUDE
+     * @see [micromatch](https://github.com/micromatch/micromatch)
+     * @see [GLOB_EXCLUDE](https://github.com/lumirelle/stylelint-config/blob/main/src/globs.ts#L6)
      */
     ignoreFiles: [
       'your-ignore-files'
@@ -58,10 +60,20 @@ export default lumirelle(
     /**
      * Enable stylistic rules.
      *
-     * @see https://github.com/stylelint-stylistic/stylelint-config#readme
      * @default true
+     * @notice Stylistic rules will be forcibly disabled when `formatter` is enabled.
+     * @see https://github.com/stylelint-stylistic/stylelint-config#readme
      */
     stylistic: true,
+
+    /**
+     * Use custom formatter to format the styles file. Currently only `prettier` is supported.
+     *
+     * If set to `true`, it will use `prettier` as the formatter.
+     *
+     * @default false
+     */
+    formatter: false,
 
     /**
      * Core rules. Can't be disabled.
@@ -74,6 +86,13 @@ export default lumirelle(
      * @default auto-detect based on the dependencies
      */
     scss: true,
+
+    /**
+     * Tailwind CSS support. Let Stylelint do not validate Tailwind specific at-rules.
+     *
+     * @default false
+     */
+    tailwindcss: false,
 
     /**
      * Enable Vue support.
@@ -89,6 +108,47 @@ export default lumirelle(
      * @default true
      */
     ordered: true,
+
+    /**
+     * Disable some opinionated rules to standard preference.
+     *
+     * You can also specify which category of rules to disable by providing an object with the category names as keys.
+     *
+     * Rules affected:
+     *
+     * - Symbol "pattern" rules:
+     *   - `custom-property-pattern`
+     *   - `keyframes-name-pattern`
+     *   - `selector-class-pattern`
+     *   - `selector-id-pattern`
+     *   - `scss/at-mixin-pattern`
+     *   - `scss/dollar-variable-pattern`
+     * - Code "cleanliness" rules:
+     *   - `block-no-empty`
+     *   - `no-empty-source`
+     *   - `scss/load-no-partial-leading-underscore`
+     *   - `scss/operator-no-unspaced`
+     * - Code "maintainability" rules:
+     *   - `no-descending-specificity`
+     *   - `scss/at-extend-no-missing-placeholder`
+     *   - `scss/no-global-function-names`
+     *
+     * @default false
+     */
+    lessOpinionated: {
+      /**
+       * Whether to disable pattern rules.
+       */
+      pattern: true,
+      /**
+       * Whether to disable cleanliness rules.
+       */
+      cleanliness: true,
+      /**
+       * Whether to disable maintainability rules.
+       */
+      maintainability: true,
+    }
   },
   /**
    * Additional user-defined Stylelint configuration objects to merge
