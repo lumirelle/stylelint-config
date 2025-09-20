@@ -21,9 +21,7 @@
   }
 
   .bd-example-stylistic {
-    font-family: "Bad Indent", serif;
-    color: red;
-  }
+      font-family: "Bad Indent",serif; color: red;}
 
   .bd-example-ordered {
     position: relative;

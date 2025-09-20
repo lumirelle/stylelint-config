@@ -1,4 +1,10 @@
-import type { Config as StylelintConfig } from 'stylelint'
+import type { Config } from 'stylelint'
+
+export interface StylelintConfig extends Config {
+  extends: string[]
+  rules: NonNullable<Config['rules']>
+  ignoreFiles: string[]
+}
 
 export type Awaitable<T> = T | Promise<T>
 

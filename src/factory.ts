@@ -1,11 +1,14 @@
-import type { Config as StylelintConfig } from 'stylelint'
-import type { OptionsConfig, OptionsStylelint } from './types'
+import type { OptionsConfig, OptionsStylelint, StylelintConfig } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
 import { mergeConfigs } from './merge'
-import { resolvePackagePath } from './resolve'
-import { LESS_OPINIONATED_RULES } from './rules'
+import { setup as setupFormatter } from './modules/formatter'
+import { setup as setupOrdered } from './modules/ordered'
+import { setup as setupScss } from './modules/scss'
+import { setup as setupStandard } from './modules/standard'
+import { setup as setupTailwindCSS } from './modules/tailwindcss'
+import { setup as setupVue } from './modules/vue'
 
 const ScssPackages = [
   'node-sass',
@@ -21,6 +24,20 @@ const VuePackages = [
 ]
 
 /**
+ * Default options
+ */
+const defaultOptions: OptionsConfig = {
+  ignoreFiles: [],
+  allowEmptyInput: true,
+  formatter: 'stylistic',
+  scss: ScssPackages.some(pkg => isPackageExists(pkg)),
+  tailwindcss: false,
+  vue: VuePackages.some(pkg => isPackageExists(pkg)),
+  ordered: true,
+  lessOpinionated: false,
+}
+
+/**
  * Constructs a Stylelint configuration object.
  *
  * @param options Options to generate the configuration
@@ -28,141 +45,37 @@ const VuePackages = [
  * @returns The generated Stylelint configuration object
  */
 export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsStylelint[]): ConfigComposer {
-  const {
-    ignoreFiles: userIgnoreFiles = [],
-    allowEmptyInput = true,
-    formatter: enableFormatter = 'stylistic',
-    scss: enableScss = ScssPackages.some(pkg => isPackageExists(pkg)),
-    tailwindcss: enableTailwindCSS = false,
-    vue: enableVue = VuePackages.some(pkg => isPackageExists(pkg)),
-    ordered: enableOrdered = true,
-    lessOpinionated = false,
-  } = options
+  const mergedOptions = { ...defaultOptions, ...options }
 
-  const config: StylelintConfig = {}
-
-  config.ignoreFiles = [
-    ...GLOB_EXCLUDE,
-    ...(Array.isArray(userIgnoreFiles) ? userIgnoreFiles : [userIgnoreFiles]),
-  ]
+  const config: StylelintConfig = {
+    extends: [],
+    rules: {},
+    ignoreFiles: [...GLOB_EXCLUDE],
+  }
 
   // Base configuration
-  config.allowEmptyInput = allowEmptyInput
-
-  config.extends = []
-  config.rules = {}
+  config.allowEmptyInput = mergedOptions.allowEmptyInput
+  if (mergedOptions.ignoreFiles) {
+    if (Array.isArray(mergedOptions.ignoreFiles)) {
+      config.ignoreFiles.push(...mergedOptions.ignoreFiles)
+    }
+    else {
+      config.ignoreFiles.push(mergedOptions.ignoreFiles)
+    }
+  }
 
   // Formatter
-  if (enableFormatter) {
-    if (typeof enableFormatter === 'boolean' || enableFormatter === 'stylistic') {
-      config.extends.push(resolvePackagePath('@stylistic/stylelint-config'))
-      config.rules['@stylistic/max-line-length'] = null
-    }
-    else if (enableFormatter === 'prettier') {
-      config.extends.push(resolvePackagePath('stylelint-prettier/recommended'))
-    }
-  }
-
+  setupFormatter(mergedOptions, config)
   // Core rules
-  const enableStandard = true
-  if (enableStandard) {
-    config.extends.push(resolvePackagePath('stylelint-config-standard'))
-
-    if (lessOpinionated) {
-      const disabledRules: string[] = []
-      if (typeof lessOpinionated === 'object') {
-        if (lessOpinionated.pattern) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.standard.pattern)
-        }
-        if (lessOpinionated.cleanliness) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.standard.cleanliness)
-        }
-        if (lessOpinionated.maintainability) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.standard.maintainability)
-        }
-      }
-      else {
-        disabledRules.push(...[
-          ...LESS_OPINIONATED_RULES.standard.pattern,
-          ...LESS_OPINIONATED_RULES.standard.cleanliness,
-          ...LESS_OPINIONATED_RULES.standard.maintainability,
-        ])
-      }
-      disabledRules.forEach((rule) => {
-        config.rules![rule] = null
-      })
-    }
-  }
-
+  setupStandard(mergedOptions, config)
   // SCSS support
-  if (enableScss) {
-    config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
-    config.rules['scss/at-if-closing-brace-space-after'] = null
-    config.rules['scss/at-if-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-space-after'] = null
-
-    if (lessOpinionated) {
-      const disabledRules: string[] = []
-      if (typeof lessOpinionated === 'object') {
-        if (lessOpinionated.pattern) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.scss.pattern)
-        }
-        if (lessOpinionated.cleanliness) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.scss.cleanliness)
-        }
-        if (lessOpinionated.maintainability) {
-          disabledRules.push(...LESS_OPINIONATED_RULES.scss.maintainability)
-        }
-      }
-      else {
-        disabledRules.push(...[
-          ...LESS_OPINIONATED_RULES.scss.pattern,
-          ...LESS_OPINIONATED_RULES.scss.cleanliness,
-          ...LESS_OPINIONATED_RULES.scss.maintainability,
-        ])
-      }
-      disabledRules.forEach((rule) => {
-        config.rules![rule] = null
-      })
-    }
-  }
-
-  if (enableTailwindCSS) {
-    const ignoreAtRules = [
-      'tailwind',
-      'theme',
-      'source',
-      'utility', // Tailwind CSS 4
-      'layer', // Tailwind CSS 3
-      'variant',
-      'custom-variant',
-      'reference',
-      'config',
-      'plugin',
-    ]
-    if (!enableScss) {
-      config.rules['at-rule-no-unknown'] = [true, { ignoreAtRules }]
-    }
-    else {
-      config.rules['scss/at-rule-no-unknown'] = [true, { ignoreAtRules }]
-    }
-  }
-
+  setupScss(mergedOptions, config)
+  // Tailwind CSS support
+  setupTailwindCSS(mergedOptions, config)
   // Vue support
-  if (enableVue) {
-    if (enableScss) {
-      config.extends.push(resolvePackagePath('stylelint-config-standard-vue/scss'))
-    }
-    else {
-      config.extends.push(resolvePackagePath('stylelint-config-standard-vue'))
-    }
-  }
-
+  setupVue(mergedOptions, config)
   // Ordered properties
-  if (enableOrdered) {
-    config.extends.push(resolvePackagePath('stylelint-config-recess-order'))
-  }
+  setupOrdered(mergedOptions, config)
 
   // Merged user config
   const finalConfig = mergeConfigs(config, ...userConfigs)

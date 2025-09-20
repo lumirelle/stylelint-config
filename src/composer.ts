@@ -1,5 +1,4 @@
-import type { Config as StylelintConfig } from 'stylelint'
-import type { StylelintConfigOverride } from './types'
+import type { StylelintConfig, StylelintConfigOverride } from './types'
 
 /**
  * Using the magic promise to implement a chainable config composer, when accessing this composer, user will get the final config.

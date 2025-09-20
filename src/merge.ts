@@ -1,4 +1,4 @@
-import type { Config as StylelintConfig } from 'stylelint'
+import type { StylelintConfig } from './types'
 
 /**
  * Merge multiple flat configs into a single flat config.
