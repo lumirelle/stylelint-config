@@ -6,7 +6,7 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-Lumirelle's Stylelint config.
+Lumirelle's Stylelint config. Easy to use, customizable, and works with CSS, SCSS, Vue, and Tailwind CSS.
 
 ## Install
 
@@ -58,20 +58,13 @@ export default lumirelle(
     ],
 
     /**
-     * Enable stylistic rules.
+     * Use custom formatter to format the styles file. Currently support `stylistic` and `prettier`.
      *
-     * @default true
-     * @notice Stylistic rules will be forcibly disabled when `formatter` is enabled.
-     * @see https://github.com/stylelint-stylistic/stylelint-config#readme
-     */
-    stylistic: true,
-
-    /**
-     * Use custom formatter to format the styles file. Currently only `prettier` is supported.
+     * If set to `true`, it will use `stylistic` as the formatter.
      *
-     * If set to `true`, it will use `prettier` as the formatter.
-     *
-     * @default false
+     * @default 'stylistic'
+     * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
+     * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
      */
     formatter: false,
 
