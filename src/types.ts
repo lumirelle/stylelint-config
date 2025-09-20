@@ -58,7 +58,7 @@ export interface OptionsConfig {
   scss?: boolean
 
   /**
-   * Tailwind CSS support.
+   * Tailwind CSS support. Let Stylelint do not validate Tailwind specific at-rules.
    *
    * @default false
    */

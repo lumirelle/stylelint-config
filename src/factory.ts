@@ -1,5 +1,5 @@
 import type { Config as StylelintConfig } from 'stylelint'
-import type { OptionsConfig, OptionsStylelint, StylelintConfigOverride } from './types'
+import type { OptionsConfig, OptionsStylelint } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
@@ -53,7 +53,6 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   config.extends = []
   config.rules = {}
-  config.overrides = []
 
   // Stylistic rules
   if (enableStylistic && !enableFormatter) {
@@ -81,25 +80,17 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
 
   // SCSS support
   if (enableScss) {
-    // By default, `stylelint-config-standard-scss` enables rules for all file types.
-    // We need to override it to only apply to SCSS files.
-    const scssConfig: StylelintConfigOverride = {
-      files: ['**/*.scss', '**/*.sass'],
-    }
-    scssConfig.extends = [resolvePackagePath('stylelint-config-standard-scss')]
-    scssConfig.rules = {}
-    scssConfig.rules['scss/at-if-closing-brace-space-after'] = null
-    scssConfig.rules['scss/at-if-closing-brace-newline-after'] = null
-    scssConfig.rules['scss/at-else-closing-brace-newline-after'] = null
-    scssConfig.rules['scss/at-else-closing-brace-space-after'] = null
+    config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
+    config.rules['scss/at-if-closing-brace-space-after'] = null
+    config.rules['scss/at-if-closing-brace-newline-after'] = null
+    config.rules['scss/at-else-closing-brace-newline-after'] = null
+    config.rules['scss/at-else-closing-brace-space-after'] = null
 
     if (lessOpinionated) {
       LESS_OPINIONATED_RULES.scss.forEach((rule) => {
-        scssConfig.rules![rule] = null
+        config.rules![rule] = null
       })
     }
-
-    config.overrides.push(scssConfig)
   }
 
   if (enableTailwindCSS) {
@@ -111,20 +102,16 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsSt
       'layer', // Tailwind CSS 3
       'variant',
       'custom-variant',
-      'apply',
       'reference',
       'config',
       'plugin',
     ]
-    config.rules['at-rule-no-unknown'] = [true, {
-      ignoreAtRules,
-    }]
-    config.overrides.push({
-      files: ['**/*.scss', '**/*.sass'],
-      rules: {
-        'scss/at-rule-no-unknown': [true, { ignoreAtRules }],
-      },
-    })
+    if (!enableScss) {
+      config.rules['at-rule-no-unknown'] = [true, { ignoreAtRules }]
+    }
+    else {
+      config.rules['scss/at-rule-no-unknown'] = [true, { ignoreAtRules }]
+    }
   }
 
   // Vue support

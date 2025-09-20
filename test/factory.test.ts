@@ -9,26 +9,20 @@ const defaultConfig = {
   extends: [
     resolvePackagePath('@stylistic/stylelint-config'),
     resolvePackagePath('stylelint-config-standard'),
+    resolvePackagePath('stylelint-config-standard-scss'),
     resolvePackagePath('stylelint-config-standard-vue/scss'),
     resolvePackagePath('stylelint-config-recess-order'),
   ],
   ignoreFiles: [
     ...GLOB_EXCLUDE,
   ],
-  overrides: [
-    {
-      files: ['**/*.scss', '**/*.sass'],
-      extends: [resolvePackagePath('stylelint-config-standard-scss')],
-      rules: {
-        'scss/at-if-closing-brace-space-after': null,
-        'scss/at-if-closing-brace-newline-after': null,
-        'scss/at-else-closing-brace-newline-after': null,
-        'scss/at-else-closing-brace-space-after': null,
-      },
-    },
-  ],
   rules: {
     '@stylistic/max-line-length': null,
+
+    'scss/at-if-closing-brace-space-after': null,
+    'scss/at-if-closing-brace-newline-after': null,
+    'scss/at-else-closing-brace-newline-after': null,
+    'scss/at-else-closing-brace-space-after': null,
   },
 }
 
@@ -86,7 +80,6 @@ describe('should', () => {
           },
         },
       ],
-      rules: defaultConfig.rules,
     })
   })
 

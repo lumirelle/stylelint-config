@@ -20,48 +20,63 @@ afterAll(async () => {
 runWithConfig('standard', {
   standard: true,
   scss: false,
+  tailwindcss: false,
   vue: false,
   stylistic: false,
   ordered: false,
-}, '*.css')
+}, 'css.css')
 runWithConfig('standard+scss', {
   standard: true,
   scss: true,
+  tailwindcss: false,
   vue: false,
   stylistic: false,
   ordered: false,
-}, '*.{css,scss}')
+}, '(css.css|scss.scss)')
 runWithConfig('standard+vue', {
   standard: true,
   scss: false,
+  tailwindcss: false,
   vue: true,
   stylistic: false,
   ordered: false,
-}, '*.{css,css.vue}')
+}, '(css.css|css.vue)')
 runWithConfig('standard+vue+scss', {
   standard: true,
   scss: true,
+  tailwindcss: false,
   vue: true,
   stylistic: false,
   ordered: false,
-}, '*.{css,scss,css.vue,scss.vue}')
+}, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('stylistic', {
   standard: true,
   scss: true,
+  tailwindcss: false,
   vue: true,
   stylistic: true,
   ordered: false,
-}, '*.{css,scss,css.vue,scss.vue}')
+}, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('ordered', {
   standard: true,
   scss: true,
+  tailwindcss: false,
   vue: true,
   stylistic: false,
   ordered: true,
-}, '*.{css,scss,css.vue,scss.vue}')
+}, '(css.css|scss.scss|css.vue|scss.vue)')
+runWithConfig('tailwind-no-output', {
+  standard: true,
+  scss: true,
+  tailwindcss: true,
+  vue: true,
+  stylistic: false,
+  ordered: false,
+}, 'tailwind*')
 runWithConfig('all', {
   standard: true,
   scss: true,
+  tailwindcss: true,
   vue: true,
   stylistic: true,
   ordered: true,
