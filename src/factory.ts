@@ -1,4 +1,4 @@
-import type { OptionsConfig, OptionsStylelint, StylelintConfig } from './types'
+import type { DefaultStylelintConfig, OptionsConfig, StylelintConfig } from './types'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
@@ -44,10 +44,10 @@ const defaultOptions: OptionsConfig = {
  * @param userConfigs Additional user-defined Stylelint configuration objects to merge
  * @returns The generated Stylelint configuration object
  */
-export function lumirelle(options: OptionsConfig = {}, ...userConfigs: OptionsStylelint[]): ConfigComposer {
+export function lumirelle(options: OptionsConfig = {}, ...userConfigs: StylelintConfig[]): ConfigComposer {
   const mergedOptions = { ...defaultOptions, ...options }
 
-  const config: StylelintConfig = {
+  const config: DefaultStylelintConfig = {
     extends: [],
     rules: {},
     ignoreFiles: [...GLOB_EXCLUDE],

@@ -1,6 +1,6 @@
-import type { OptionsConfig, StylelintConfig } from '../types'
+import type { DefaultStylelintConfig, OptionsConfig } from '../types'
 
-export function setup(options: OptionsConfig, config: StylelintConfig): void {
+export function setup(options: OptionsConfig, config: DefaultStylelintConfig): void {
   if (options.tailwindcss) {
     const ignoreAtRules = [
       'tailwind',

@@ -1,8 +1,8 @@
-import type { OptionsConfig, StylelintConfig } from '../types'
+import type { DefaultStylelintConfig, OptionsConfig } from '../types'
 import { resolvePackagePath } from '../resolve'
 import { LESS_OPINIONATED_RULES } from '../rules'
 
-export function setup(options: OptionsConfig, config: StylelintConfig): void {
+export function setup(options: OptionsConfig, config: DefaultStylelintConfig): void {
   if (options.scss) {
     config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
     config.rules['scss/at-if-closing-brace-space-after'] = null

@@ -1,12 +1,18 @@
 import type { Config } from 'stylelint'
 
-export interface StylelintConfig extends Config {
+/* --------------------------------- Config --------------------------------- */
+
+export type StylelintConfig = Config
+
+export interface DefaultStylelintConfig extends StylelintConfig {
   extends: string[]
-  rules: NonNullable<Config['rules']>
+  rules: NonNullable<StylelintConfig['rules']>
   ignoreFiles: string[]
 }
 
-export type Awaitable<T> = T | Promise<T>
+export type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never
+
+/* --------------------------------- Options -------------------------------- */
 
 export interface OptionsConfig {
   /**
@@ -106,10 +112,6 @@ export interface OptionsConfig {
    */
   lessOpinionated?: boolean | OptionsOpinionated
 }
-
-export interface OptionsStylelint extends Omit<StylelintConfig, ''> {}
-
-export type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never
 
 export interface OptionsOpinionated {
   /**
