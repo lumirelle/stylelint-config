@@ -48,3 +48,5 @@ onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
   - simple-git-hooks
+
+verifyDepsBeforeRun: install
