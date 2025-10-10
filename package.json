@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "0.0.2",
-  "packageManager": "pnpm@10.18.1",
+  "packageManager": "pnpm@10.18.2",
   "description": "Lumirelle's Stylelint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
