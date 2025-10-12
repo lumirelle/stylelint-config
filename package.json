@@ -39,10 +39,11 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "eslint",
-    "prepublishOnly": "nr build",
-    "release": "bumpp && pnpm publish",
+    "prerelease": "nr test:run && nr typecheck",
+    "release": "nr prerelease && bumpp && pnpm publish",
     "start": "tsx src/index.ts",
     "test": "vitest",
+    "test:run": "vitest run",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks"
   },
