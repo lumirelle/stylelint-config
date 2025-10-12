@@ -48,18 +48,18 @@ export class ConfigComposer<T extends StylelintConfig = StylelintConfig> extends
   }
 
   // eslint-disable-next-line ts/explicit-function-return-type
-  then(onFulfilled: (value: T) => any, onRejected?: (reason: any) => any) {
+  override then(onFulfilled: (value: T) => any, onRejected?: (reason: any) => any) {
     return this.toConfig()
       .then(onFulfilled, onRejected)
   }
 
   // eslint-disable-next-line ts/explicit-function-return-type
-  catch(onRejected: (reason: any) => any) {
+  override catch(onRejected: (reason: any) => any) {
     return this.toConfig().catch(onRejected)
   }
 
   // eslint-disable-next-line ts/explicit-function-return-type
-  finally(onFinally: () => any) {
+  override finally(onFinally: () => any) {
     return this.toConfig().finally(onFinally)
   }
 }

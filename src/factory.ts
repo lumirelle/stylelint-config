@@ -54,7 +54,9 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: Stylelint
   }
 
   // Base configuration
-  config.allowEmptyInput = mergedOptions.allowEmptyInput
+  if (mergedOptions.allowEmptyInput) {
+    config.allowEmptyInput = mergedOptions.allowEmptyInput
+  }
   if (mergedOptions.ignoreFiles) {
     if (Array.isArray(mergedOptions.ignoreFiles)) {
       config.ignoreFiles.push(...mergedOptions.ignoreFiles)
