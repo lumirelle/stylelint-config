@@ -1,13 +1,24 @@
 import type { DefaultStylelintConfig, OptionsConfig } from '../types'
-import { resolvePackagePath } from '../resolve'
 
 export function setup(options: OptionsConfig, config: DefaultStylelintConfig): void {
-  if (options.vue) {
-    if (options.scss) {
-      config.extends.push(resolvePackagePath('stylelint-config-standard-vue/scss'))
+  if (options.tailwindcss) {
+    const ignoreAtRules = [
+      'tailwind',
+      'theme',
+      'source',
+      'utility', // Tailwind CSS 4
+      'layer', // Tailwind CSS 3
+      'variant',
+      'custom-variant',
+      'reference',
+      'config',
+      'plugin',
+    ]
+    if (!options.scss) {
+      config.rules['at-rule-no-unknown'] = [true, { ignoreAtRules }]
     }
     else {
-      config.extends.push(resolvePackagePath('stylelint-config-standard-vue'))
+      config.rules['scss/at-rule-no-unknown'] = [true, { ignoreAtRules }]
     }
   }
 }
