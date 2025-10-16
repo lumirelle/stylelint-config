@@ -70,6 +70,13 @@ export interface OptionsConfig {
   tailwindcss?: boolean
 
   /**
+   * HTML syntax support.
+   *
+   * @default true
+   */
+  html?: boolean
+
+  /**
    * Enable Vue support.
    *
    * @default auto-detect based on the dependencies

@@ -10,6 +10,7 @@ const defaultConfig = {
     resolvePackagePath('@stylistic/stylelint-config'),
     resolvePackagePath('stylelint-config-standard'),
     resolvePackagePath('stylelint-config-standard-scss'),
+    resolvePackagePath('stylelint-config-html'),
     resolvePackagePath('stylelint-config-standard-vue/scss'),
     resolvePackagePath('stylelint-config-recess-order'),
   ],
@@ -260,7 +261,10 @@ describe('should', () => {
     })
     expect(factoryConfig).toEqual({
       ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext === resolvePackagePath('stylelint-config-standard')),
+      extends: [
+        resolvePackagePath('stylelint-config-standard'),
+        resolvePackagePath('stylelint-config-html'),
+      ],
       rules: filterRules(defaultConfig.rules, ['scss/', 'vue/', '@stylistic/', 'order/']),
     })
   })

@@ -74,6 +74,7 @@
     "sass-embedded": "catalog:testing",
     "simple-git-hooks": "catalog:cli",
     "stylelint": "catalog:dev",
+    "stylelint-config-html": "catalog:prod",
     "taze": "catalog:cli",
     "tinyexec": "catalog:utils",
     "tinyglobby": "catalog:testing",

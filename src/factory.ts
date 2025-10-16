@@ -4,6 +4,7 @@ import { ConfigComposer } from './composer'
 import { GLOB_EXCLUDE } from './globs'
 import { mergeConfigs } from './merge'
 import { setup as setupFormatter } from './modules/formatter'
+import { setup as setupHtml } from './modules/html'
 import { setup as setupOrdered } from './modules/ordered'
 import { setup as setupScss } from './modules/scss'
 import { setup as setupStandard } from './modules/standard'
@@ -32,6 +33,7 @@ const defaultOptions: OptionsConfig = {
   formatter: 'stylistic',
   scss: ScssPackages.some(pkg => isPackageExists(pkg)),
   tailwindcss: false,
+  html: true,
   vue: VuePackages.some(pkg => isPackageExists(pkg)),
   ordered: true,
   lessOpinionated: false,
@@ -74,6 +76,8 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: Stylelint
   setupScss(mergedOptions, config)
   // Tailwind CSS support
   setupTailwindCSS(mergedOptions, config)
+  // HTML syntax support
+  setupHtml(mergedOptions, config)
   // Vue support
   setupVue(mergedOptions, config)
   // Ordered properties
