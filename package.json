@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "0.0.4",
-  "packageManager": "pnpm@10.18.2",
+  "packageManager": "pnpm@10.19.0",
   "description": "Lumirelle's Stylelint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "dev": "tsdown --watch",
     "lint": "eslint",
     "prerelease": "nr test:run && nr typecheck",
-    "release": "nr prerelease && bumpp && pnpm publish",
+    "release": "nr prerelease && bumpp && na publish",
     "start": "tsx src/index.ts",
     "test": "vitest",
     "test:run": "vitest run",
@@ -88,7 +88,7 @@
     "yaml": "catalog:testing"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+    "pre-commit": "na exec lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
