@@ -55,8 +55,8 @@ catalogs:
       version: 9.3.0
   prod:
     '@lumirelle/defu':
-      specifier: ^1.0.0
-      version: 1.0.0
+      specifier: ^1.0.2
+      version: 1.0.2
     '@stylistic/stylelint-config':
       specifier: ^3.0.1
       version: 3.0.1
@@ -118,7 +118,7 @@ importers:
     dependencies:
       '@lumirelle/defu':
         specifier: catalog:prod
-        version: 1.0.0
+        version: 1.0.2
       '@stylistic/stylelint-config':
         specifier: catalog:prod
         version: 3.0.1(stylelint@16.25.0(typescript@5.9.3))
@@ -642,8 +642,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@lumirelle/defu@1.0.0':
-    resolution: {integrity: sha512-fHL2gMgEMzg9FjRhruUAfPZ34fPRVzaSpcIA8QE5UYxBVhdABV8cpgLSmURqQClGgsofx68d6EWKGyn27ZKihg==}
+  '@lumirelle/defu@1.0.2':
+    resolution: {integrity: sha512-AVyvArqRL9Vf/B8ta5nwQ/SinLRaKMMZ7jOVbEmTh1Ed1NcUFKcY2IFQsBGXFo8BeawcUfB5gO4sQfmMmZ/yKA==}
 
   '@napi-rs/wasm-runtime@1.0.7':
     resolution: {integrity: sha512-SeDnOO0Tk7Okiq6DbXmmBODgOAb9dp9gjlphokTUxmt8U3liIP1ZsozBahH69j/RJv+Rfs6IwUKHTgQYJ/HBAw==}
@@ -3557,7 +3557,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@lumirelle/defu@1.0.0': {}
+  '@lumirelle/defu@1.0.2': {}
 
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:

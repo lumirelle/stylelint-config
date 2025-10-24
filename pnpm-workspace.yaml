@@ -24,7 +24,7 @@ catalogs:
   inlined:
     '@antfu/utils': ^9.3.0
   prod:
-    '@lumirelle/defu': ^1.0.1
+    '@lumirelle/defu': ^1.0.2
     '@stylistic/stylelint-config': ^3.0.1
     local-pkg: ^1.1.2
     stylelint-config-html: ^1.1.0
