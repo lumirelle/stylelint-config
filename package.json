@@ -51,6 +51,7 @@
     "stylelint": ">=16.0.0"
   },
   "dependencies": {
+    "@lumirelle/defu": "catalog:prod",
     "@stylistic/stylelint-config": "catalog:prod",
     "local-pkg": "catalog:prod",
     "stylelint-config-recess-order": "catalog:prod",

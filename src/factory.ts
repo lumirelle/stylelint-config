@@ -1,8 +1,9 @@
-import type { DefaultStylelintConfig, OptionsConfig, StylelintConfig } from './types'
+import type { OptionsConfig, StylelintConfig, StylelintConfigWithDefaults, StylelintOverrideConfig } from './types'
+import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
+import { defu } from './defu'
 import { GLOB_EXCLUDE } from './globs'
-import { mergeConfigs } from './merge'
 import { setup as setupFormatter } from './modules/formatter'
 import { setup as setupHtml } from './modules/html'
 import { setup as setupOrdered } from './modules/ordered'
@@ -28,7 +29,6 @@ const VuePackages = [
  * Default options
  */
 const defaultOptions: OptionsConfig = {
-  ignoreFiles: [],
   allowEmptyInput: true,
   formatter: 'stylistic',
   scss: ScssPackages.some(pkg => isPackageExists(pkg)),
@@ -46,26 +46,15 @@ const defaultOptions: OptionsConfig = {
  * @param userConfigs Additional user-defined Stylelint configuration objects to merge
  * @returns The generated Stylelint configuration object
  */
-export function lumirelle(options: OptionsConfig = {}, ...userConfigs: StylelintConfig[]): ConfigComposer {
-  const mergedOptions = { ...defaultOptions, ...options }
-
-  const config: DefaultStylelintConfig = {
-    extends: [],
-    rules: {},
-    ignoreFiles: [...GLOB_EXCLUDE],
-  }
+export function lumirelle(options: OptionsConfig = {}, ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]): ConfigComposer {
+  const mergedOptions = defu(options, defaultOptions)
 
   // Base configuration
-  if (mergedOptions.allowEmptyInput) {
-    config.allowEmptyInput = mergedOptions.allowEmptyInput
-  }
-  if (mergedOptions.ignoreFiles) {
-    if (Array.isArray(mergedOptions.ignoreFiles)) {
-      config.ignoreFiles.push(...mergedOptions.ignoreFiles)
-    }
-    else {
-      config.ignoreFiles.push(mergedOptions.ignoreFiles)
-    }
+  const config: StylelintConfigWithDefaults = {
+    allowEmptyInput: mergedOptions.allowEmptyInput,
+    ignoreFiles: [...GLOB_EXCLUDE, ...toArray(mergedOptions.ignoreFiles)],
+    extends: [],
+    rules: {},
   }
 
   // Formatter
@@ -84,7 +73,16 @@ export function lumirelle(options: OptionsConfig = {}, ...userConfigs: Stylelint
   setupOrdered(mergedOptions, config)
 
   // Merged user config
-  const finalConfig = mergeConfigs(config, ...userConfigs)
+  let finalConfig: StylelintConfig = config
+  for (let i = 0; i < userConfigs.length; i++) {
+    const userConfig = userConfigs[i]
+    if ('files' in userConfig) {
+      finalConfig = defu({ overrides: [userConfig] }, finalConfig)
+    }
+    else {
+      finalConfig = defu(userConfig, finalConfig)
+    }
+  }
 
   return new ConfigComposer(finalConfig)
 }

@@ -1,22 +1,35 @@
+import type { ElementOf } from '@antfu/utils'
 import type { Config } from 'stylelint'
 
 /* --------------------------------- Config --------------------------------- */
 
+/**
+ * General Stylelint configuration.
+ */
 export type StylelintConfig = Config
 
-export interface DefaultStylelintConfig extends StylelintConfig {
+/**
+ * Stylelint general configuration with defaults.
+ */
+export interface StylelintConfigWithDefaults extends StylelintConfig {
+  ignoreFiles: string[]
   extends: string[]
   rules: NonNullable<StylelintConfig['rules']>
-  ignoreFiles: string[]
 }
 
-export type StylelintConfigOverride = StylelintConfig['overrides'] extends ((infer U)[] | undefined) ? U : never
+/**
+ * Stylelint configuration for specific files.
+ */
+export type StylelintOverrideConfig = ElementOf<NonNullable<StylelintConfig['overrides']>>
 
 /* --------------------------------- Options -------------------------------- */
 
+/**
+ * Options for generating Stylelint configuration.
+ */
 export interface OptionsConfig {
   /**
-   * If true, Stylelint does not throw an error when the glob pattern matches no files.
+   * If `true`, Stylelint does not throw an error when there are no input files to lint.
    *
    * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
    * because it found that there are no input files to lint.
@@ -31,10 +44,12 @@ export interface OptionsConfig {
   /**
    * Files to ignore, same as `.stylelintignore`.
    *
-   * Stylelint use `micromatch` to match the files.
+   * Notice that, Stylelint use `micromatch` to match the files, the behavior is different from another widely used glob
+   * package `tinyglobby`.
    *
    * @default GLOB_EXCLUDE
    * @see [micromatch](https://github.com/micromatch/micromatch)
+   * @see [tinyglobby](https://github.com/SuperchupuDev/tinyglobby)
    * @see [GLOB_EXCLUDE](https://github.com/lumirelle/stylelint-config/blob/main/src/globs.ts#L6)
    */
   ignoreFiles?: string | string[]
@@ -120,6 +135,9 @@ export interface OptionsConfig {
   lessOpinionated?: boolean | OptionsOpinionated
 }
 
+/**
+ * Options to opinionated rules.
+ */
 export interface OptionsOpinionated {
   /**
    * Whether to disable pattern rules.

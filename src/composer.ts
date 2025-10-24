@@ -1,39 +1,25 @@
-import type { StylelintConfig, StylelintConfigOverride } from './types'
+import type { StylelintConfig, StylelintOverrideConfig } from './types'
+import { defu } from './defu'
 
 /**
  * Using the magic promise to implement a chainable config composer, when accessing this composer, user will get the final config.
  */
-export class ConfigComposer<T extends StylelintConfig = StylelintConfig> extends Promise<T> {
-  constructor(private config: T) {
+export class ConfigComposer extends Promise<StylelintConfig> {
+  constructor(private config: StylelintConfig) {
     super(() => {})
   }
 
   /**
-   * The config provided will be passed to the `overrides` array of Stylelint configuration.
-   *
-   * @see https://stylelint.io/user-guide/configure/#overrides
+   * Append the provided config, which will override the existing config.
    */
-  public override(config: StylelintConfigOverride): ConfigComposer<T> {
-    if (config) {
-      this.config.overrides = [
-        ...(this.config.overrides ?? []),
-        config,
-      ]
+  public append(config: StylelintConfig | StylelintOverrideConfig): ConfigComposer {
+    // Override config
+    if ('files' in config) {
+      this.config = defu({ overrides: [config] }, this.config)
     }
-    return this
-  }
-
-  /**
-   * The configs provided will be merged with the `overrides` array of Stylelint configuration.
-   *
-   * @see https://stylelint.io/user-guide/configure/#overrides
-   */
-  public overrides(config: StylelintConfigOverride[]): ConfigComposer<T> {
-    if (config) {
-      this.config.overrides = [
-        ...(this.config.overrides ?? []),
-        ...config,
-      ]
+    // General config
+    else {
+      this.config = defu(config, this.config)
     }
     return this
   }
@@ -43,23 +29,20 @@ export class ConfigComposer<T extends StylelintConfig = StylelintConfig> extends
    *
    * This returns a promise. Calling `.then()` has the same effect.
    */
-  public toConfig(): Promise<T> {
+  public toConfig(): Promise<StylelintConfig> {
     return Promise.resolve(this.config)
   }
 
-  // eslint-disable-next-line ts/explicit-function-return-type
-  override then(onFulfilled: (value: T) => any, onRejected?: (reason: any) => any) {
+  override then(onFulfilled: (value: StylelintConfig) => any, onRejected?: (reason: any) => any): Promise<any> {
     return this.toConfig()
       .then(onFulfilled, onRejected)
   }
 
-  // eslint-disable-next-line ts/explicit-function-return-type
-  override catch(onRejected: (reason: any) => any) {
+  override catch(onRejected: (reason: any) => any): Promise<any> {
     return this.toConfig().catch(onRejected)
   }
 
-  // eslint-disable-next-line ts/explicit-function-return-type
-  override finally(onFinally: () => any) {
+  override finally(onFinally: () => any): Promise<any> {
     return this.toConfig().finally(onFinally)
   }
 }

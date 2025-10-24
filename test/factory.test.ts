@@ -51,26 +51,18 @@ describe('should', () => {
           'color-hex-case': 'upper',
         },
       },
-    )
-    expect(factoryConfig).toEqual({
-      ...defaultConfig,
-      rules: {
-        ...defaultConfig.rules,
-        'color-hex-case': 'upper',
-      },
-    })
-  })
-
-  it('construct overridden config correctly', async () => {
-    const factoryConfig = await lumirelle()
-      .overrides([
-        {
-          files: ['**/*.scss'],
-          rules: {
-            'scss/dollar-variable-pattern': '^foo',
-          },
+      {
+        rules: {
+          'color-hex-case': null,
         },
-      ])
+      },
+      {
+        files: ['**/*.scss'],
+        rules: {
+          'scss/dollar-variable-pattern': '^foo',
+        },
+      },
+    )
     expect(factoryConfig).toEqual({
       ...defaultConfig,
       overrides: [
@@ -81,6 +73,45 @@ describe('should', () => {
           },
         },
       ],
+      rules: {
+        ...defaultConfig.rules,
+        'color-hex-case': null,
+      },
+    })
+  })
+
+  it('append config correctly', async () => {
+    const factoryConfig = await lumirelle()
+      .append({
+        rules: {
+          'color-hex-case': 'upper',
+        },
+      })
+      .append({
+        rules: {
+          'color-hex-case': null,
+        },
+      })
+      .append({
+        files: ['**/*.scss'],
+        rules: {
+          'scss/dollar-variable-pattern': '^foo',
+        },
+      })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      overrides: [
+        {
+          files: ['**/*.scss'],
+          rules: {
+            'scss/dollar-variable-pattern': '^foo',
+          },
+        },
+      ],
+      rules: {
+        ...defaultConfig.rules,
+        'color-hex-case': null,
+      },
     })
   })
 

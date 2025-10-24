@@ -31,26 +31,31 @@ import { lumirelle } from '@lumirelle/stylelint-config'
 
 export default lumirelle(
   /**
-   * Options to generate the configuration
+   * Options for generating Stylelint configuration.
    */
   {
   /**
+   * If `true`, Stylelint does not throw an error when there are no input files to lint.
+   *
    * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
    * because it found that there are no input files to lint.
    *
    * So I set it to `true` by default here.
    *
    * @default true
+   * @see [allowEmptyInput](https://stylelint.io/user-guide/configure/#allowemptyinput)
    */
     allowEmptyInput: true,
 
     /**
      * Files to ignore, same as `.stylelintignore`.
      *
-     * NOTE: Stylelint use `micromatch` to match the files.
+     * Notice that, Stylelint use `micromatch` to match the files, the behavior is different from another widely used glob
+     * package `tinyglobby`.
      *
      * @default GLOB_EXCLUDE
      * @see [micromatch](https://github.com/micromatch/micromatch)
+     * @see [tinyglobby](https://github.com/SuperchupuDev/tinyglobby)
      * @see [GLOB_EXCLUDE](https://github.com/lumirelle/stylelint-config/blob/main/src/globs.ts#L6)
      */
     ignoreFiles: [
@@ -144,12 +149,29 @@ export default lumirelle(
     }
   },
   /**
-   * Additional user-defined Stylelint configuration objects to merge
+   * Additional user-defined Stylelint configuration objects to merge.
+   *
+   * Both general and file-specific configuration objects are supported.
    */
   {
-    // Your custom Stylelint configuration
+    // This is a general configuration object, which will be merged into the final config directly.
+    rules: {
+      'selector-class-pattern': null,
+    },
+  },
+  {
+    // This is a file-specific configuration object, which will be merged into the `overrides` section of the final config.
+    files: ['**/*.scss'],
+    rules: {
+      'scss/at-if-closing-brace-space-after': null,
+    },
   }
-)
+  // This just equivant to passing the config objects to the `lumirelle` function like above.
+).append({
+  rules: {
+    'selector-class-pattern': null,
+  },
+})
 ```
 
 ## Sponsors

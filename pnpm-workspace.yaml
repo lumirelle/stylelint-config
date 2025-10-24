@@ -12,18 +12,19 @@ catalogs:
     czg: ^1.12.0
     eslint: ^9.38.0
     eslint-plugin-format: ^1.0.2
-    lint-staged: ^16.2.5
+    lint-staged: ^16.2.6
     simple-git-hooks: ^2.13.1
     taze: ^19.8.1
     tsdown: ^0.15.9
     tsx: ^4.20.6
     typescript: ^5.9.3
-    vite: ^7.1.11
+    vite: ^7.1.12
   dev:
     stylelint: ^16.25.0
   inlined:
     '@antfu/utils': ^9.3.0
   prod:
+    '@lumirelle/defu': ^1.0.1
     '@stylistic/stylelint-config': ^3.0.1
     local-pkg: ^1.1.2
     stylelint-config-html: ^1.1.0

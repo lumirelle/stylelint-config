@@ -4,6 +4,5 @@
   GLOB_EXCLUDE: object
   LESS_OPINIONATED_RULES: object
   lumirelle: function
-  mergeConfigs: function
   resolvePackagePath: function
   resolvePackagePaths: function
