@@ -34,8 +34,8 @@ catalogs:
     stylelint-config-standard-vue: ^1.0.0
     stylelint-prettier: ^5.0.3
   testing:
-    execa: ^9.6.0
     sass-embedded: ^1.93.3
+    tinyexec: ^1.0.1
     tinyglobby: ^0.2.15
     vitest: ^4.0.6
     vitest-package-exports: ^0.1.1
@@ -43,8 +43,6 @@ catalogs:
     yaml: ^2.8.1
   types:
     '@types/node': ^24.9.2
-  utils:
-    tinyexec: ^1.0.1
 
 ignoreWorkspaceRootCheck: true
 

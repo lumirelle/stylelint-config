@@ -2,9 +2,9 @@ import type { OptionsConfig } from '../src/types'
 
 import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-import { execa } from 'execa'
-import { glob } from 'tinyglobby'
+import { x } from 'tinyexec'
 
+import { glob } from 'tinyglobby'
 import { afterAll, beforeAll, it } from 'vitest'
 
 const isWindows = process.platform === 'win32'
@@ -119,9 +119,11 @@ export default lumirelle(
 )
 `)
 
-    await execa('npx', ['stylelint', filePatterns, '--fix'], {
-      cwd: target,
-      stdio: 'pipe',
+    await x('npx', ['stylelint', filePatterns, '--fix'], {
+      nodeOptions: {
+        cwd: target,
+        stdio: 'pipe',
+      },
     })
 
     const files = await glob('**/*', {
