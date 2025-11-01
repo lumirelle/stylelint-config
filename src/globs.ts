@@ -25,6 +25,7 @@ export const GLOB_EXCLUDE = [
 
   '**/*.min.*',
   '**/__snapshots__/**',
+  '**/coverage/**',
 
   '*.{c,m,}js{,x}',
   '*.{c,m,}ts{,x}',
