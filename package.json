@@ -39,6 +39,7 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "lint": "eslint",
+    "prepublishOnly": "nr build",
     "prerelease": "nr test:run && nr typecheck",
     "release": "nr prerelease && bumpp && na publish",
     "start": "tsx src/index.ts",
