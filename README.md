@@ -4,6 +4,7 @@
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![bundle][bundle-src]][bundle-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
+[![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
 Lumirelle's Stylelint config. Easy to use, customizable, and works with CSS, SCSS, Vue, and Tailwind CSS.
@@ -188,13 +189,15 @@ export default lumirelle(
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/@lumirelle/stylelint-config?style=flat&colorA=080f12&colorB=1fa669
+[npm-version-src]: https://img.shields.io/npm/v/@lumirelle/stylelint-config?style=flat&colorA=18181B&colorB=F0DB4F
 [npm-version-href]: https://npmjs.com/package/@lumirelle/stylelint-config
-[npm-downloads-src]: https://img.shields.io/npm/dm/@lumirelle/stylelint-config?style=flat&colorA=080f12&colorB=1fa669
+[npm-downloads-src]: https://img.shields.io/npm/dm/@lumirelle/stylelint-config?style=flat&colorA=18181B&colorB=F0DB4F
 [npm-downloads-href]: https://npmjs.com/package/@lumirelle/stylelint-config
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/@lumirelle/stylelint-config?style=flat&colorA=080f12&colorB=1fa669&label=minzip
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@lumirelle/stylelint-config?style=flat&colorA=18181B&colorB=F0DB4F&label=minzip
 [bundle-href]: https://bundlephobia.com/result?p=@lumirelle/stylelint-config
-[license-src]: https://img.shields.io/github/license/lumirelle/stylelint-config.svg?style=flat&colorA=080f12&colorB=1fa669
-[license-href]: https://github.com/lumirelle/stylelint-config/blob/main/LICENSE
-[jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
+[jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=18181B&colorB=F0DB4F
 [jsdocs-href]: https://www.jsdocs.io/package/@lumirelle/stylelint-config
+[codecov-src]: https://img.shields.io/codecov/c/gh/lumirelle/stylelint-config/main?style=flat&colorA=18181B&colorB=F0DB4F
+[codecov-href]: https://codecov.io/gh/lumirelle/stylelint-config
+[license-src]: https://img.shields.io/github/license/lumirelle/stylelint-config.svg?style=flat&colorA=18181B&colorB=F0DB4F
+[license-href]: https://github.com/lumirelle/stylelint-config/blob/main/LICENSE
