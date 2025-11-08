@@ -7,7 +7,7 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-Lumirelle's Stylelint config. Easy to use, customizable, and works with CSS, SCSS, Vue, and Tailwind CSS.
+Lumirelle's StyleLint config. Easy to use, customizable, and works with CSS, SCSS, Vue, and Tailwind CSS.
 
 ## Install
 
@@ -23,7 +23,7 @@ pnpm add -D @lumirelle/stylelint-config
 
 ## Usage
 
-Use the exported helper function called `lumirelle` to construct your Stylelint configuration:
+Use the exported helper function called `lumirelle` to construct your StyleLint configuration:
 
 _stylelint.config.js_
 
@@ -32,26 +32,13 @@ import { lumirelle } from '@lumirelle/stylelint-config'
 
 export default lumirelle(
   /**
-   * Options for generating Stylelint configuration.
+   * Options for generating StyleLint configuration.
    */
   {
-  /**
-   * If `true`, Stylelint does not throw an error when there are no input files to lint.
-   *
-   * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
-   * because it found that there are no input files to lint.
-   *
-   * So I set it to `true` by default here.
-   *
-   * @default true
-   * @see [allowEmptyInput](https://stylelint.io/user-guide/configure/#allowemptyinput)
-   */
-    allowEmptyInput: true,
-
     /**
      * Files to ignore, same as `.stylelintignore`.
      *
-     * Notice that, Stylelint use `micromatch` to match the files, the behavior is different from another widely used glob
+     * Notice that, StyleLint use `micromatch` to match the files, the behavior is different from another widely used glob
      * package `tinyglobby`.
      *
      * @default GLOB_EXCLUDE
@@ -64,9 +51,10 @@ export default lumirelle(
     ],
 
     /**
-     * Use custom formatter to format the styles file. Currently support `stylistic` and `prettier`.
+     * Use custom formatter to format the styles file. Currently support `stylistic` (powered by stylelint-stylistic) and
+     * `prettier` (powered by stylelint-prettier).
      *
-     * If set to `true`, it will use `stylistic` as the formatter.
+     * If set to `true`, it will use `stylelint-stylistic` as the formatter.
      *
      * @default 'stylistic'
      * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
@@ -77,7 +65,7 @@ export default lumirelle(
     /**
      * Core rules. Can't be disabled.
      */
-    standard: true,
+    css: true,
 
     /**
      * Enable SCSS support.
@@ -87,11 +75,20 @@ export default lumirelle(
     scss: true,
 
     /**
-     * Tailwind CSS support. Let Stylelint do not validate Tailwind specific at-rules.
+     * Enable Tailwind CSS support.
+     *
+     * If enabled, StyleLint will not validate Tailwind CSS specific at-rules.
      *
      * @default false
      */
     tailwindcss: false,
+
+    /**
+     * Enable HTML support.
+     *
+     * @default true
+     */
+    html: true,
 
     /**
      * Enable Vue support.
@@ -116,21 +113,10 @@ export default lumirelle(
      * Rules affected:
      *
      * - Symbol "pattern" rules:
-     *   - `custom-property-pattern`
-     *   - `keyframes-name-pattern`
      *   - `selector-class-pattern`
      *   - `selector-id-pattern`
-     *   - `scss/at-mixin-pattern`
-     *   - `scss/dollar-variable-pattern`
-     * - Code "cleanliness" rules:
-     *   - `block-no-empty`
-     *   - `no-empty-source`
-     *   - `scss/load-no-partial-leading-underscore`
-     *   - `scss/operator-no-unspaced`
      * - Code "maintainability" rules:
      *   - `no-descending-specificity`
-     *   - `scss/at-extend-no-missing-placeholder`
-     *   - `scss/no-global-function-names`
      *
      * @default false
      */
@@ -140,35 +126,34 @@ export default lumirelle(
        */
       pattern: true,
       /**
-       * Whether to disable cleanliness rules.
-       */
-      cleanliness: true,
-      /**
        * Whether to disable maintainability rules.
        */
       maintainability: true,
     }
   },
   /**
-   * Additional user-defined Stylelint configuration objects to merge.
+   * Additional user-defined StyleLint configuration objects to mix.
    *
    * Both general and file-specific configuration objects are supported.
+   *
+   * @see [general config](https://stylelint.io/user-guide/configure)
+   * @see [file-specific config](https://stylelint.io/user-guide/configure#overrides)
    */
   {
-    // This is a general configuration object, which will be merged into the final config directly.
+    // This is a general configuration object, which will be mixed into the final config directly.
     rules: {
       'selector-class-pattern': null,
     },
   },
   {
-    // This is a file-specific configuration object, which will be merged into the `overrides` section of the final config.
+    // This is a file-specific configuration object, which will be mixed into the `overrides` section of the final config.
     files: ['**/*.scss'],
     rules: {
       'scss/at-if-closing-brace-space-after': null,
     },
   }
-  // This just equivant to passing the config objects to the `lumirelle` function like above.
-).append({
+  // This just equivalent to passing the config objects to the `lumirelle` function like above.
+).mix({
   rules: {
     'selector-class-pattern': null,
   },

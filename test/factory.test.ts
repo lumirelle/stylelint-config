@@ -80,19 +80,19 @@ describe('should', () => {
     })
   })
 
-  it('append config correctly', async () => {
+  it('mix config correctly', async () => {
     const factoryConfig = await lumirelle()
-      .append({
+      .mix({
         rules: {
           'color-hex-case': 'upper',
         },
       })
-      .append({
+      .mix({
         rules: {
           'color-hex-case': null,
         },
       })
-      .append({
+      .mix({
         files: ['**/*.scss'],
         rules: {
           'scss/dollar-variable-pattern': '^foo',

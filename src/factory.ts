@@ -1,16 +1,16 @@
-import type { OptionsConfig, StylelintConfig, StylelintConfigWithDefaults, StylelintOverrideConfig } from './types'
+import type { OptionsConfig, StylelintConfig, StylelintOverrideConfig } from './types'
 import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
+import { css } from './configs/css'
+import { formatter } from './configs/formatter'
+import { html } from './configs/html'
+import { ordered } from './configs/ordered'
+import { scss } from './configs/scss'
+import { tailwindcss } from './configs/tailwindcss'
+import { vue } from './configs/vue'
 import { defu } from './defu'
 import { GLOB_EXCLUDE } from './globs'
-import { setup as setupFormatter } from './modules/formatter'
-import { setup as setupHtml } from './modules/html'
-import { setup as setupOrdered } from './modules/ordered'
-import { setup as setupScss } from './modules/scss'
-import { setup as setupStandard } from './modules/standard'
-import { setup as setupTailwindCSS } from './modules/tailwindcss'
-import { setup as setupVue } from './modules/vue'
 
 const ScssPackages = [
   'node-sass',
@@ -26,61 +26,58 @@ const VuePackages = [
 ]
 
 /**
- * Default options
- */
-const defaultOptions: OptionsConfig = {
-  allowEmptyInput: true,
-  formatter: 'stylistic',
-  scss: ScssPackages.some(pkg => isPackageExists(pkg)),
-  tailwindcss: false,
-  html: true,
-  vue: VuePackages.some(pkg => isPackageExists(pkg)),
-  ordered: true,
-  lessOpinionated: false,
-}
-
-/**
- * Constructs a Stylelint configuration object.
+ * Constructs a StyleLint configuration object.
  *
- * @param options Options to generate the configuration
- * @param userConfigs Additional user-defined Stylelint configuration objects to merge
- * @returns The generated Stylelint configuration object
+ * @param {OptionsConfig} options
+ *   The options for generating the StyleLint configuration.
+ * @param {(StylelintConfig | StylelintOverrideConfig)[]} userConfigs
+ *   The user configurations to be mixed into the generated configuration.
+ * @returns {Promise<StylelintConfig>}
+ *   The mixed StyleLint configuration object.
  */
-export function lumirelle(options: OptionsConfig = {}, ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]): ConfigComposer {
-  const mergedOptions = defu(options, defaultOptions)
+export function lumirelle(
+  options: OptionsConfig = {},
+  ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]
+): ConfigComposer {
+  const {
+    formatter: formatterOptions = 'stylistic',
+    scss: scssOptions = ScssPackages.some(pkg => isPackageExists(pkg)),
+    tailwindcss: tailwindcssOptions = false,
+    html: htmlOptions = true,
+    vue: vueOptions = VuePackages.some(pkg => isPackageExists(pkg)),
+    ordered: orderedOptions = true,
+    lessOpinionated: lessOpinionatedOptions = false,
+    stylistic: stylisticOptions = true,
+  } = options
 
   // Base configuration
-  const config: StylelintConfigWithDefaults = {
-    allowEmptyInput: mergedOptions.allowEmptyInput,
-    ignoreFiles: [...GLOB_EXCLUDE, ...toArray(mergedOptions.ignoreFiles)],
-    extends: [],
-    rules: {},
-  }
+  const configs: (StylelintConfig | StylelintOverrideConfig)[] = [
+    {
+      allowEmptyInput: true,
+      ignoreFiles: [...GLOB_EXCLUDE, ...toArray(options.ignoreFiles)],
+    },
+  ]
 
-  // Formatter
-  setupFormatter(mergedOptions, config)
-  // Core rules
-  setupStandard(mergedOptions, config)
-  // SCSS support
-  setupScss(mergedOptions, config)
-  // Tailwind CSS support
-  setupTailwindCSS(mergedOptions, config)
-  // HTML syntax support
-  setupHtml(mergedOptions, config)
-  // Vue support
-  setupVue(mergedOptions, config)
-  // Ordered properties
-  setupOrdered(mergedOptions, config)
+  // Additional configurations
+  configs.push(
+    formatter(formatterOptions, typeof stylisticOptions === 'object' ? stylisticOptions : {}),
+    css(lessOpinionatedOptions),
+    scss(scssOptions),
+    tailwindcss(tailwindcssOptions, scssOptions),
+    html(htmlOptions),
+    vue(vueOptions, scssOptions),
+    ordered(orderedOptions),
+    ...userConfigs,
+  )
 
   // Merged user config
-  let finalConfig: StylelintConfig = config
-  for (let i = 0; i < userConfigs.length; i++) {
-    const userConfig = userConfigs[i]
-    if ('files' in userConfig) {
-      finalConfig = defu({ overrides: [userConfig] }, finalConfig)
+  let finalConfig: StylelintConfig = {}
+  for (const config of configs) {
+    if ('files' in config) {
+      finalConfig = defu({ overrides: [config] }, finalConfig)
     }
     else {
-      finalConfig = defu(userConfig, finalConfig)
+      finalConfig = defu(config, finalConfig)
     }
   }
 

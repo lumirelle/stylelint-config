@@ -10,9 +10,9 @@ export class ConfigComposer extends Promise<StylelintConfig> {
   }
 
   /**
-   * Append the provided config, which will override the existing config.
+   * Mix the provided config, which will merge into the existing config.
    */
-  public append(config: StylelintConfig | StylelintOverrideConfig): ConfigComposer {
+  public mix(config: StylelintConfig | StylelintOverrideConfig): ConfigComposer {
     // Override config
     if ('files' in config) {
       this.config = defu({ overrides: [config] }, this.config)

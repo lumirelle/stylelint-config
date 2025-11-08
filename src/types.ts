@@ -4,47 +4,71 @@ import type { Config } from 'stylelint'
 /* --------------------------------- Config --------------------------------- */
 
 /**
- * General Stylelint configuration.
+ * General StyleLint configuration.
  */
 export type StylelintConfig = Config
 
 /**
- * Stylelint general configuration with defaults.
- */
-export interface StylelintConfigWithDefaults extends StylelintConfig {
-  ignoreFiles: string[]
-  extends: string[]
-  rules: NonNullable<StylelintConfig['rules']>
-}
-
-/**
- * Stylelint configuration for specific files.
+ * StyleLint configuration for specific files.
  */
 export type StylelintOverrideConfig = ElementOf<NonNullable<StylelintConfig['overrides']>>
+
+export interface StylisticConfig {
+  /**
+   * The indentation level to use.
+   *
+   * @default 2
+   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-stylistic/blob/main/lib/rules/indentation/README.md)
+   * @see [prettier](https://prettier.io/docs/options#tab-width)
+   */
+  indent?: number | 'tab'
+  /**
+   * The quotes to use.
+   *
+   * @default 'single'
+   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-stylistic/blob/main/lib/rules/string-quotes/README.md)
+   * @see [prettier](https://prettier.io/docs/options#quotes)
+   */
+  quotes?: 'single' | 'double'
+  /**
+   * The maximum line length to use.
+   *
+   * @default 120
+   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-stylistic/blob/main/lib/rules/max-line-length/README.md)
+   * @see [prettier](https://prettier.io/docs/options#print-width)
+   */
+  maxLineLength?: number
+}
 
 /* --------------------------------- Options -------------------------------- */
 
 /**
- * Options for generating Stylelint configuration.
+ * Options for formatter configuration.
+ */
+export type OptionsFormatter = 'prettier' | 'stylistic'
+
+/**
+ * Options to opinionated rules.
+ */
+export interface OptionsOpinionated {
+  /**
+   * Whether to disable pattern rules.
+   */
+  pattern?: boolean
+  /**
+   * Whether to disable maintainability rules.
+   */
+  maintainability?: boolean
+}
+
+/**
+ * Options for generating StyleLint configuration.
  */
 export interface OptionsConfig {
   /**
-   * If `true`, Stylelint does not throw an error when there are no input files to lint.
-   *
-   * This is an meaningless option and Stylelint set it to `false` by default, which may causes command line error just
-   * because it found that there are no input files to lint.
-   *
-   * So I set it to `true` by default here.
-   *
-   * @default true
-   * @see [allowEmptyInput](https://stylelint.io/user-guide/configure/#allowemptyinput)
-   */
-  allowEmptyInput?: boolean
-
-  /**
    * Files to ignore, same as `.stylelintignore`.
    *
-   * Notice that, Stylelint use `micromatch` to match the files, the behavior is different from another widely used glob
+   * Notice that, StyleLint use `micromatch` to match the files, the behavior is different from another widely used glob
    * package `tinyglobby`.
    *
    * @default GLOB_EXCLUDE
@@ -55,20 +79,21 @@ export interface OptionsConfig {
   ignoreFiles?: string | string[]
 
   /**
-   * Use custom formatter to format the styles file. Currently support `stylistic` and `prettier`.
+   * Use custom formatter to format the styles file. Currently support `stylistic` (powered by stylelint-stylistic) and
+   * `prettier` (powered by stylelint-prettier).
    *
-   * If set to `true`, it will use `stylistic` as the formatter.
+   * If set to `true`, it will use `stylelint-stylistic` as the formatter.
    *
    * @default 'stylistic'
    * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
    * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
    */
-  formatter?: boolean | 'prettier' | 'stylistic'
+  formatter?: boolean | OptionsFormatter
 
   /**
    * Core rules. Can't be disabled.
    */
-  standard?: true
+  css?: true
 
   /**
    * Enable SCSS support.
@@ -78,14 +103,16 @@ export interface OptionsConfig {
   scss?: boolean
 
   /**
-   * Tailwind CSS support. Let Stylelint do not validate Tailwind specific at-rules.
+   * Enable Tailwind CSS support.
+   *
+   * If enabled, StyleLint will not validate Tailwind CSS specific at-rules.
    *
    * @default false
    */
   tailwindcss?: boolean
 
   /**
-   * HTML syntax support.
+   * Enable HTML support.
    *
    * @default true
    */
@@ -114,41 +141,19 @@ export interface OptionsConfig {
    * Rules affected:
    *
    * - Symbol "pattern" rules:
-   *   - `custom-property-pattern`
-   *   - `keyframes-name-pattern`
    *   - `selector-class-pattern`
    *   - `selector-id-pattern`
-   *   - `scss/at-mixin-pattern`
-   *   - `scss/dollar-variable-pattern`
-   * - Code "cleanliness" rules:
-   *   - `block-no-empty`
-   *   - `no-empty-source`
-   *   - `scss/load-no-partial-leading-underscore`
-   *   - `scss/operator-no-unspaced`
    * - Code "maintainability" rules:
    *   - `no-descending-specificity`
-   *   - `scss/at-extend-no-missing-placeholder`
-   *   - `scss/no-global-function-names`
    *
    * @default false
    */
   lessOpinionated?: boolean | OptionsOpinionated
-}
 
-/**
- * Options to opinionated rules.
- */
-export interface OptionsOpinionated {
   /**
-   * Whether to disable pattern rules.
+   * Enable stylistic rules.
+   *
+   * @default true
    */
-  pattern?: boolean
-  /**
-   * Whether to disable cleanliness rules.
-   */
-  cleanliness?: boolean
-  /**
-   * Whether to disable maintainability rules.
-   */
-  maintainability?: boolean
+  stylistic?: boolean | StylisticConfig
 }

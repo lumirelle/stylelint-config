@@ -1,22 +1,16 @@
 export const LESS_OPINIONATED_RULES = {
   standard: {
     pattern: [
-      'custom-property-pattern',
-      'keyframes-name-pattern',
       'selector-class-pattern',
       'selector-id-pattern',
     ],
-    cleanliness: ['block-no-empty', 'no-empty-source'],
+    cleanliness: [],
     maintainability: ['no-descending-specificity'],
   },
   scss: {
-    pattern: [
-      'scss/at-mixin-pattern',
-      'scss/dollar-variable-pattern',
-    ],
+    pattern: [],
     cleanliness: [
       'scss/load-no-partial-leading-underscore',
-      'scss/operator-no-unspaced',
     ],
     maintainability: [
       'scss/at-extend-no-missing-placeholder',

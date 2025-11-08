@@ -18,7 +18,7 @@ afterAll(async () => {
 })
 
 runWithConfig('standard', {
-  standard: true,
+  css: true,
   scss: false,
   tailwindcss: false,
   html: false,
@@ -27,7 +27,7 @@ runWithConfig('standard', {
   ordered: false,
 }, 'css.css')
 runWithConfig('standard+scss', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: false,
   html: false,
@@ -36,7 +36,7 @@ runWithConfig('standard+scss', {
   ordered: false,
 }, '(css.css|scss.scss)')
 runWithConfig('standard+html', {
-  standard: true,
+  css: true,
   scss: false,
   tailwindcss: false,
   html: true,
@@ -45,7 +45,7 @@ runWithConfig('standard+html', {
   ordered: false,
 }, '(css.css|css.html)')
 runWithConfig('standard+vue', {
-  standard: true,
+  css: true,
   scss: false,
   tailwindcss: false,
   html: false,
@@ -54,7 +54,7 @@ runWithConfig('standard+vue', {
   ordered: false,
 }, '(css.css|css.vue)')
 runWithConfig('standard+vue+scss', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: false,
   html: false,
@@ -63,7 +63,7 @@ runWithConfig('standard+vue+scss', {
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('stylistic', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: false,
   html: true,
@@ -72,7 +72,7 @@ runWithConfig('stylistic', {
   ordered: false,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
 runWithConfig('ordered', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: false,
   html: true,
@@ -81,7 +81,7 @@ runWithConfig('ordered', {
   ordered: true,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
 runWithConfig('tailwind-no-output', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: true,
   html: true,
@@ -90,7 +90,7 @@ runWithConfig('tailwind-no-output', {
   ordered: false,
 }, 'tailwind*')
 runWithConfig('all', {
-  standard: true,
+  css: true,
   scss: true,
   tailwindcss: true,
   html: true,
