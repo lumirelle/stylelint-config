@@ -20,9 +20,9 @@
   }
 
   .bad-example-formatter {
-    font-family: 'Bad Indent', serif;
-    color: red;
-  }
+      font-family: "Bad Indent",serif;
+       color: red;
+      }
 
   .bad-example-ordered {
     display: block;

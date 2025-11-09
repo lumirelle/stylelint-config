@@ -119,11 +119,6 @@ catalogs:
       specifier: ^7.7.1
       version: 7.7.1
 
-patchedDependencies:
-  stylelint-prettier:
-    hash: 19857371b5fe8ea96227c32c39eeeedf94d06c3e4f96b643676bd4c268cbc7fc
-    path: patches/stylelint-prettier.patch
-
 importers:
 
   .:
@@ -209,7 +204,7 @@ importers:
         version: 16.25.0(typescript@5.9.3)
       stylelint-prettier:
         specifier: catalog:inlined
-        version: 5.0.3(patch_hash=19857371b5fe8ea96227c32c39eeeedf94d06c3e4f96b643676bd4c268cbc7fc)(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3))
+        version: 5.0.3(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3))
       taze:
         specifier: catalog:dev
         version: 19.9.0
@@ -5852,7 +5847,7 @@ snapshots:
       postcss-sorting: 9.1.0(postcss@8.5.6)
       stylelint: 16.25.0(typescript@5.9.3)
 
-  stylelint-prettier@5.0.3(patch_hash=19857371b5fe8ea96227c32c39eeeedf94d06c3e4f96b643676bd4c268cbc7fc)(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3)):
+  stylelint-prettier@5.0.3(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3)):
     dependencies:
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0

@@ -92,9 +92,13 @@ export interface OptionsConfig {
    *
    * If set to `true`, it will use `stylelint-stylistic` as the formatter.
    *
+   * Because `stylelint-prettier` is not available for HTML-like files, so it is recommended to use `stylistic`
+   * formatter.
+   *
    * @default 'stylistic'
    * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
    * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
+   * @see [stylelint-prettier issues: Ignored vue file style block?](https://github.com/prettier/stylelint-prettier/issues/322)
    */
   formatter?: boolean | OptionsFormatter | StylisticConfig
 
