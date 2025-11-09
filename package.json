@@ -54,7 +54,6 @@
   "dependencies": {
     "@lumirelle/defu": "catalog:prod",
     "@stylistic/stylelint-config": "catalog:prod",
-    "@types/lodash.clonedeep": "catalog:types",
     "local-pkg": "catalog:prod",
     "lodash.clonedeep": "catalog:prod",
     "postcss-scss": "catalog:prod",
@@ -68,6 +67,7 @@
     "@antfu/ni": "catalog:dev",
     "@antfu/utils": "catalog:inlined",
     "@lumirelle/stylelint-config": "workspace:*",
+    "@types/lodash.clonedeep": "catalog:types",
     "@types/node": "catalog:types",
     "@types/semver": "catalog:types",
     "@vitest/coverage-v8": "catalog:testing",

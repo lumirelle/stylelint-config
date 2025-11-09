@@ -129,9 +129,6 @@ importers:
       '@stylistic/stylelint-config':
         specifier: catalog:prod
         version: 3.0.1(stylelint@16.25.0(typescript@5.9.3))
-      '@types/lodash.clonedeep':
-        specifier: catalog:types
-        version: 4.5.9
       local-pkg:
         specifier: catalog:prod
         version: 1.1.2
@@ -166,6 +163,9 @@ importers:
       '@lumirelle/stylelint-config':
         specifier: workspace:*
         version: 'link:'
+      '@types/lodash.clonedeep':
+        specifier: catalog:types
+        version: 4.5.9
       '@types/node':
         specifier: catalog:types
         version: 24.10.0
