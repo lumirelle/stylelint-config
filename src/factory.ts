@@ -47,7 +47,6 @@ export function lumirelle(
     vue: vueOptions = VuePackages.some(pkg => isPackageExists(pkg)),
     ordered: orderedOptions = true,
     lessOpinionated: lessOpinionatedOptions = false,
-    stylistic: stylisticOptions = true,
   } = options
 
   // Base configuration
@@ -60,17 +59,21 @@ export function lumirelle(
 
   // Additional configurations
   configs.push(
-    formatter(formatterOptions, typeof stylisticOptions === 'object' ? stylisticOptions : {}),
     css(lessOpinionatedOptions),
     scss(scssOptions),
-    tailwindcss(tailwindcssOptions, scssOptions),
     html(htmlOptions),
     vue(vueOptions, scssOptions),
+    tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
+    formatter(formatterOptions),
     ordered(orderedOptions),
     ...userConfigs,
   )
 
   // Merged user config
+  return new ConfigComposer(mergeConfigs(configs))
+}
+
+export function mergeConfigs(configs: (StylelintConfig | StylelintOverrideConfig)[]): StylelintConfig {
   let finalConfig: StylelintConfig = {}
   for (const config of configs) {
     if ('files' in config) {
@@ -80,6 +83,5 @@ export function lumirelle(
       finalConfig = defu(config, finalConfig)
     }
   }
-
-  return new ConfigComposer(finalConfig)
+  return finalConfig
 }

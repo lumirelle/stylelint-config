@@ -1,14 +1,16 @@
 <style>
 @media (width <= 480px) {
-  .bd-example-standard {
+  .bad-example-css {
     position: relative;
     inset: 1px;
   }
 
-  .bd-example-stylistic {
-      font-family: "Bad Indent",serif; color: red;}
+  .bad-example-formatter {
+    font-family: 'Bad Indent', serif;
+    color: red;
+  }
 
-  .bd-example-ordered {
+  .bad-example-ordered {
     display: block;
     right: 1px;
     position: relative;

@@ -17,7 +17,7 @@ afterAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
 })
 
-runWithConfig('standard', {
+runWithConfig('css', {
   css: true,
   scss: false,
   tailwindcss: false,
@@ -26,7 +26,7 @@ runWithConfig('standard', {
   formatter: false,
   ordered: false,
 }, 'css.css')
-runWithConfig('standard+scss', {
+runWithConfig('css+scss', {
   css: true,
   scss: true,
   tailwindcss: false,
@@ -35,7 +35,7 @@ runWithConfig('standard+scss', {
   formatter: false,
   ordered: false,
 }, '(css.css|scss.scss)')
-runWithConfig('standard+html', {
+runWithConfig('css+html', {
   css: true,
   scss: false,
   tailwindcss: false,
@@ -44,7 +44,7 @@ runWithConfig('standard+html', {
   formatter: false,
   ordered: false,
 }, '(css.css|css.html)')
-runWithConfig('standard+vue', {
+runWithConfig('css+vue', {
   css: true,
   scss: false,
   tailwindcss: false,
@@ -53,7 +53,7 @@ runWithConfig('standard+vue', {
   formatter: false,
   ordered: false,
 }, '(css.css|css.vue)')
-runWithConfig('standard+vue+scss', {
+runWithConfig('css+vue+scss', {
   css: true,
   scss: true,
   tailwindcss: false,
@@ -69,6 +69,15 @@ runWithConfig('stylistic', {
   html: true,
   vue: true,
   formatter: 'stylistic',
+  ordered: false,
+}, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
+runWithConfig('prettier', {
+  css: true,
+  scss: true,
+  tailwindcss: false,
+  html: true,
+  vue: true,
+  formatter: 'prettier',
   ordered: false,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
 runWithConfig('ordered', {

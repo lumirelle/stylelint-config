@@ -2,13 +2,11 @@ import type { StylelintConfig } from '../types'
 import { resolvePackagePath } from '../resolve'
 
 export function html(options: boolean): StylelintConfig {
-  const config: StylelintConfig = {}
-  config.extends = []
-  config.rules = {}
-
   if (options === true) {
-    config.extends.push(resolvePackagePath('stylelint-config-html'))
+    return {
+      extends: [resolvePackagePath('stylelint-config-html')],
+    }
   }
 
-  return config
+  return {}
 }

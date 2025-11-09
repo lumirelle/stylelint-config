@@ -1,13 +1,15 @@
 {
-	"Module": {
-		"prefix": "md",
-		"description": "Module",
+	"config": {
+		"prefix": "config",
+		"description": "Config",
 		"scope": "typescript",
 		"body": [
-			"import type { OptionsConfig, StylelintConfig } from '../types'",
+			"import type { StylelintConfig, StylelintOverrideConfig } from '../types'",
 			"",
-			"export function setup(options: OptionsConfig, config: StylelintConfig): void {",
+			"export function config(): StylelintConfig | StylelintOverrideConfig {",
 			"  $0",
+			"",
+			"  return {}",
 			"}",
 			""
 		]

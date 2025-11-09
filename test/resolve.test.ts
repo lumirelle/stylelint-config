@@ -10,8 +10,7 @@ describe('resolve', () => {
   it('should resolve multiple package names without throwing', () => {
     const packageNames = [
       '@stylistic/stylelint-config',
-      'stylelint-config-standard',
-      'stylelint-config-standard-scss',
+      'stylelint-config-html',
     ]
     expect(() => resolvePackagePaths(packageNames)).not.toThrow()
   })

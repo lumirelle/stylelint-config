@@ -1,33 +1,46 @@
-import type { StylelintConfig } from '../types'
+import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+
+export const tailwindcssIgnoreAtRules = [
+  'tailwind',
+  'theme',
+  'source',
+  'utility', // Tailwind CSS 4
+  'layer', // Tailwind CSS 3
+  'variant',
+  'custom-variant',
+  'reference',
+  'config',
+  'plugin',
+]
 
 export function tailwindcss(
   options: boolean,
   scss: boolean,
-): StylelintConfig {
-  const config: StylelintConfig = {}
-  config.extends = []
-  config.rules = {}
-
+  vue: boolean,
+): StylelintConfig | StylelintOverrideConfig {
   if (options === true) {
-    const ignoreAtRules = [
-      'tailwind',
-      'theme',
-      'source',
-      'utility', // Tailwind CSS 4
-      'layer', // Tailwind CSS 3
-      'variant',
-      'custom-variant',
-      'reference',
-      'config',
-      'plugin',
-    ]
+    const config = {
+      rules: {
+        'at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
+      },
+    }
     if (scss === true) {
-      config.rules['scss/at-rule-no-unknown'] = [true, { ignoreAtRules }]
+      return {
+        ...config,
+        overrides: [
+          {
+            files: vue ? ['**/*.vue', '**/*.scss'] : ['**/*.scss'],
+            rules: {
+              'scss/at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
+            },
+          },
+        ],
+      }
     }
     else {
-      config.rules['at-rule-no-unknown'] = [true, { ignoreAtRules }]
+      return config
     }
   }
 
-  return config
+  return {}
 }

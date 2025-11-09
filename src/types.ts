@@ -15,6 +15,14 @@ export type StylelintOverrideConfig = ElementOf<NonNullable<StylelintConfig['ove
 
 export interface StylisticConfig {
   /**
+   * Which formatter to use.
+   *
+   * @default 'stylistic'
+   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-stylistic)
+   * @see [prettier](https://prettier.io/docs)
+   */
+  use?: OptionsFormatter
+  /**
    * The indentation level to use.
    *
    * @default 2
@@ -88,7 +96,7 @@ export interface OptionsConfig {
    * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
    * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
    */
-  formatter?: boolean | OptionsFormatter
+  formatter?: boolean | OptionsFormatter | StylisticConfig
 
   /**
    * Core rules. Can't be disabled.
@@ -149,11 +157,4 @@ export interface OptionsConfig {
    * @default false
    */
   lessOpinionated?: boolean | OptionsOpinionated
-
-  /**
-   * Enable stylistic rules.
-   *
-   * @default true
-   */
-  stylistic?: boolean | StylisticConfig
 }

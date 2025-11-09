@@ -40,6 +40,8 @@
     "css",
     "postcss",
     "scss",
+    "vue",
+    "html",
     "vue"
   ]
 }

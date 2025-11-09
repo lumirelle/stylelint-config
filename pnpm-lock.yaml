@@ -52,34 +52,37 @@ catalogs:
     '@antfu/utils':
       specifier: ^9.3.0
       version: 9.3.0
+    stylelint-prettier:
+      specifier: ^5.0.3
+      version: 5.0.3
   prod:
     '@lumirelle/defu':
-      specifier: ^1.0.2
-      version: 1.0.2
+      specifier: ^1.1.0
+      version: 1.1.0
     '@stylistic/stylelint-config':
       specifier: ^3.0.1
       version: 3.0.1
     local-pkg:
       specifier: ^1.1.2
       version: 1.1.2
+    lodash.clonedeep:
+      specifier: ^4.5.0
+      version: 4.5.0
+    postcss-scss:
+      specifier: ^4.0.9
+      version: 4.0.9
+    semver:
+      specifier: ^7.7.3
+      version: 7.7.3
     stylelint-config-html:
       specifier: ^1.1.0
       version: 1.1.0
     stylelint-config-recess-order:
       specifier: ^7.4.0
       version: 7.4.0
-    stylelint-config-standard:
-      specifier: ^39.0.1
-      version: 39.0.1
-    stylelint-config-standard-scss:
-      specifier: ^16.0.0
-      version: 16.0.0
-    stylelint-config-standard-vue:
-      specifier: ^1.0.0
-      version: 1.0.0
-    stylelint-prettier:
-      specifier: ^5.0.3
-      version: 5.0.3
+    stylelint-scss:
+      specifier: ^6.12.1
+      version: 6.12.1
   testing:
     '@vitest/coverage-v8':
       specifier: ^4.0.8
@@ -106,9 +109,15 @@ catalogs:
       specifier: ^2.8.1
       version: 2.8.1
   types:
+    '@types/lodash.clonedeep':
+      specifier: ^4.5.9
+      version: 4.5.9
     '@types/node':
       specifier: ^24.10.0
       version: 24.10.0
+    '@types/semver':
+      specifier: ^7.7.1
+      version: 7.7.1
 
 importers:
 
@@ -116,31 +125,34 @@ importers:
     dependencies:
       '@lumirelle/defu':
         specifier: catalog:prod
-        version: 1.0.2
+        version: 1.1.0
       '@stylistic/stylelint-config':
         specifier: catalog:prod
         version: 3.0.1(stylelint@16.25.0(typescript@5.9.3))
+      '@types/lodash.clonedeep':
+        specifier: catalog:types
+        version: 4.5.9
       local-pkg:
         specifier: catalog:prod
         version: 1.1.2
+      lodash.clonedeep:
+        specifier: catalog:prod
+        version: 4.5.0
+      postcss-scss:
+        specifier: catalog:prod
+        version: 4.0.9(postcss@8.5.6)
+      semver:
+        specifier: catalog:prod
+        version: 7.7.3
       stylelint-config-html:
         specifier: catalog:prod
         version: 1.1.0(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3))
       stylelint-config-recess-order:
         specifier: catalog:prod
         version: 7.4.0(stylelint-order@7.0.0(stylelint@16.25.0(typescript@5.9.3)))(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-standard:
+      stylelint-scss:
         specifier: catalog:prod
-        version: 39.0.1(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-standard-scss:
-        specifier: catalog:prod
-        version: 16.0.0(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-standard-vue:
-        specifier: catalog:prod
-        version: 1.0.0(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-prettier:
-        specifier: catalog:prod
-        version: 5.0.3(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3))
+        version: 6.12.1(stylelint@16.25.0(typescript@5.9.3))
     devDependencies:
       '@antfu/eslint-config':
         specifier: catalog:dev
@@ -157,6 +169,9 @@ importers:
       '@types/node':
         specifier: catalog:types
         version: 24.10.0
+      '@types/semver':
+        specifier: catalog:types
+        version: 7.7.1
       '@vitest/coverage-v8':
         specifier: catalog:testing
         version: 4.0.8(vitest@4.0.8(@types/debug@4.1.12)(@types/node@24.10.0)(jiti@2.6.1)(sass-embedded@1.93.3)(sass@1.93.3)(tsx@4.20.6)(yaml@2.8.1))
@@ -187,6 +202,9 @@ importers:
       stylelint:
         specifier: catalog:dev
         version: 16.25.0(typescript@5.9.3)
+      stylelint-prettier:
+        specifier: catalog:inlined
+        version: 5.0.3(prettier@3.6.2)(stylelint@16.25.0(typescript@5.9.3))
       taze:
         specifier: catalog:dev
         version: 19.9.0
@@ -644,8 +662,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@lumirelle/defu@1.0.2':
-    resolution: {integrity: sha512-AVyvArqRL9Vf/B8ta5nwQ/SinLRaKMMZ7jOVbEmTh1Ed1NcUFKcY2IFQsBGXFo8BeawcUfB5gO4sQfmMmZ/yKA==}
+  '@lumirelle/defu@1.1.0':
+    resolution: {integrity: sha512-YZu3tcGxBTGThS+Jos/c8uqtAP+MS0e42gydT8/wFzoMx8rC8ndObk+oz/7g8imZviAc888Rlv/1SM1i8/xDjg==}
 
   '@napi-rs/wasm-runtime@1.0.7':
     resolution: {integrity: sha512-SeDnOO0Tk7Okiq6DbXmmBODgOAb9dp9gjlphokTUxmt8U3liIP1ZsozBahH69j/RJv+Rfs6IwUKHTgQYJ/HBAw==}
@@ -1001,6 +1019,12 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
+  '@types/lodash.clonedeep@4.5.9':
+    resolution: {integrity: sha512-19429mWC+FyaAhOLzsS8kZUsI+/GmBAQ0HFiCPsKGU+7pBXOQWhyrY6xNNDwUSX8SMZMJvuFVMF9O5dQOlQK9Q==}
+
+  '@types/lodash@4.17.20':
+    resolution: {integrity: sha512-H3MHACvFUEiujabxhaI/ImO6gUrd8oOurg7LQtS7mbwIXA/cUqWrvBsaeJ23aZEPk1TAYkurjfMbSELfoCXlGA==}
+
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
 
@@ -1009,6 +1033,9 @@ packages:
 
   '@types/node@24.10.0':
     resolution: {integrity: sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==}
+
+  '@types/semver@7.7.1':
+    resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2079,6 +2106,9 @@ packages:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
 
+  lodash.clonedeep@4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
@@ -2789,52 +2819,6 @@ packages:
       stylelint: '>=16.18'
       stylelint-order: '>=7'
 
-  stylelint-config-recommended-scss@16.0.2:
-    resolution: {integrity: sha512-aUTHhPPWCvFyWaxtckJlCPaXTDFsp4pKO8evXNCsW9OwsaUWyMd6jvcUhSmfGWPrTddvzNqK4rS/UuSLcbVGdQ==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      postcss: ^8.3.3
-      stylelint: ^16.24.0
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-
-  stylelint-config-recommended-vue@1.6.1:
-    resolution: {integrity: sha512-lLW7hTIMBiTfjenGuDq2kyHA6fBWd/+Df7MO4/AWOxiFeXP9clbpKgg27kHfwA3H7UNMGC7aeP3mNlZB5LMmEQ==}
-    engines: {node: ^12 || >=14}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
-
-  stylelint-config-recommended@17.0.0:
-    resolution: {integrity: sha512-WaMSdEiPfZTSFVoYmJbxorJfA610O0tlYuU2aEwY33UQhSPgFbClrVJYWvy3jGJx+XW37O+LyNLiZOEXhKhJmA==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      stylelint: ^16.23.0
-
-  stylelint-config-standard-scss@16.0.0:
-    resolution: {integrity: sha512-/FHECLUu+med/e6OaPFpprG86ShC4SYT7Tzb2PTVdDjJsehhFBOioSlWqYFqJxmGPIwO3AMBxNo+kY3dxrbczA==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      postcss: ^8.3.3
-      stylelint: ^16.23.1
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-
-  stylelint-config-standard-vue@1.0.0:
-    resolution: {integrity: sha512-wAzU7p6DSlo04pWfCbOcaMq09Nojt0FEsbdxhCBTdC7IguD9ZVl7FP/bvyA0HAHjZGC4JkW7m6WiQaoVMDSuFw==}
-    engines: {node: ^12 || >=14}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
-
-  stylelint-config-standard@39.0.1:
-    resolution: {integrity: sha512-b7Fja59EYHRNOTa3aXiuWnhUWXFU2Nfg6h61bLfAb5GS5fX3LMUD0U5t4S8N/4tpHQg3Acs2UVPR9jy2l1g/3A==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      stylelint: ^16.23.0
-
   stylelint-order@7.0.0:
     resolution: {integrity: sha512-rSWxx0KscYfxU02wEskKXES9lkRzuuONMMNkZ7SUc6uiF3tDKm7e+sE0Ax/SBlG4TUf1sp1R6f3/SlsPGmzthg==}
     engines: {node: '>=20.19.0'}
@@ -3541,7 +3525,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@lumirelle/defu@1.0.2': {}
+  '@lumirelle/defu@1.1.0': {}
 
   '@napi-rs/wasm-runtime@1.0.7':
     dependencies:
@@ -3797,6 +3781,12 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
+  '@types/lodash.clonedeep@4.5.9':
+    dependencies:
+      '@types/lodash': 4.17.20
+
+  '@types/lodash@4.17.20': {}
+
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
@@ -3806,6 +3796,8 @@ snapshots:
   '@types/node@24.10.0':
     dependencies:
       undici-types: 7.16.0
+
+  '@types/semver@7.7.1': {}
 
   '@types/unist@3.0.3': {}
 
@@ -4978,6 +4970,8 @@ snapshots:
     dependencies:
       p-locate: 5.0.0
 
+  lodash.clonedeep@4.5.0: {}
+
   lodash.merge@4.6.2: {}
 
   lodash.truncate@4.4.2: {}
@@ -5846,48 +5840,6 @@ snapshots:
     dependencies:
       stylelint: 16.25.0(typescript@5.9.3)
       stylelint-order: 7.0.0(stylelint@16.25.0(typescript@5.9.3))
-
-  stylelint-config-recommended-scss@16.0.2(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      postcss-scss: 4.0.9(postcss@8.5.6)
-      stylelint: 16.25.0(typescript@5.9.3)
-      stylelint-config-recommended: 17.0.0(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-scss: 6.12.1(stylelint@16.25.0(typescript@5.9.3))
-    optionalDependencies:
-      postcss: 8.5.6
-
-  stylelint-config-recommended-vue@1.6.1(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      postcss-html: 1.8.0
-      semver: 7.7.3
-      stylelint: 16.25.0(typescript@5.9.3)
-      stylelint-config-html: 1.1.0(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-recommended: 17.0.0(stylelint@16.25.0(typescript@5.9.3))
-
-  stylelint-config-recommended@17.0.0(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      stylelint: 16.25.0(typescript@5.9.3)
-
-  stylelint-config-standard-scss@16.0.0(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      stylelint: 16.25.0(typescript@5.9.3)
-      stylelint-config-recommended-scss: 16.0.2(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-standard: 39.0.1(stylelint@16.25.0(typescript@5.9.3))
-    optionalDependencies:
-      postcss: 8.5.6
-
-  stylelint-config-standard-vue@1.0.0(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      postcss-html: 1.8.0
-      stylelint: 16.25.0(typescript@5.9.3)
-      stylelint-config-html: 1.1.0(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-recommended-vue: 1.6.1(postcss-html@1.8.0)(stylelint@16.25.0(typescript@5.9.3))
-      stylelint-config-standard: 39.0.1(stylelint@16.25.0(typescript@5.9.3))
-
-  stylelint-config-standard@39.0.1(stylelint@16.25.0(typescript@5.9.3)):
-    dependencies:
-      stylelint: 16.25.0(typescript@5.9.3)
-      stylelint-config-recommended: 17.0.0(stylelint@16.25.0(typescript@5.9.3))
 
   stylelint-order@7.0.0(stylelint@16.25.0(typescript@5.9.3)):
     dependencies:

@@ -1,24 +1,16 @@
-import type { StylelintConfig } from '../types'
+import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+import postcssSCSS from 'postcss-scss'
 import { resolvePackagePath } from '../resolve'
+import { useSCSSRules } from '../rules/scss'
 
-export function scss(options: boolean): StylelintConfig {
-  const config: StylelintConfig = {}
-  config.extends = []
-  config.rules = {}
-
+export function scss(options: boolean): StylelintConfig | StylelintOverrideConfig {
   if (options === true) {
-    config.extends.push(resolvePackagePath('stylelint-config-standard-scss'))
-    config.rules['scss/at-if-closing-brace-space-after'] = null
-    config.rules['scss/at-if-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-newline-after'] = null
-    config.rules['scss/at-else-closing-brace-space-after'] = null
-    config.rules['scss/dollar-variable-pattern'] = [
-      '^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$',
-      {
-        message: (name: string) => `Expected SCSS variable name "${name}" to be kebab-case, start with "--" or nothing.`,
-      },
-    ]
+    return {
+      files: ['**/*.scss'],
+      customSyntax: postcssSCSS,
+      plugins: [resolvePackagePath('stylelint-scss')],
+      rules: useSCSSRules(),
+    }
   }
-
-  return config
+  return {}
 }
