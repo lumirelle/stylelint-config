@@ -4,6 +4,9 @@ packages:
   - packages/*
   - examples/*
 
+patchedDependencies:
+  stylelint-prettier: patches/stylelint-prettier.patch
+
 catalogs:
   dev:
     '@antfu/eslint-config': ^6.2.0
