@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle, resolvePackagePath } from '../src'
 import { mergeConfigs } from '../src/factory'
-import { defaultConfig, defaultCSSConfig, defaultHTMLConfig, defaultOrderedConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
+import { defaultConfig, defaultCSSConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
 
 function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
   const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes]
@@ -124,32 +124,9 @@ describe('should', () => {
     })
   })
 
-  it('construct config with formatter prettier correctly', async () => {
+  it('construct config without stylistic correctly', async () => {
     expect(await lumirelle({
-      formatter: 'prettier',
-    }),
-    ).toEqual({
-      ...defaultConfig,
-      extends: [
-        ...defaultHTMLConfig.extends,
-        resolvePackagePath('stylelint-prettier/recommended'),
-        ...defaultOrderedConfig.extends,
-      ],
-      rules: {
-        ...filterRules(defaultConfig.rules, '@stylistic/'),
-        'prettier/prettier': [true, {
-          singleQuote: true,
-          useTabs: false,
-          tabWidth: 2,
-          printWidth: 120,
-        }],
-      },
-    })
-  })
-
-  it('construct config without formatter correctly', async () => {
-    expect(await lumirelle({
-      formatter: false,
+      stylistic: false,
     })).toEqual({
       ...defaultConfig,
       extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
@@ -262,7 +239,7 @@ describe('should', () => {
 
   it('construct config without all features correctly', async () => {
     expect(await lumirelle({
-      formatter: false,
+      stylistic: false,
       scss: false,
       vue: false,
       ordered: false,

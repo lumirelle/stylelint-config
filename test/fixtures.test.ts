@@ -23,7 +23,7 @@ runWithConfig('css', {
   tailwindcss: false,
   html: false,
   vue: false,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, 'css.css')
 runWithConfig('css+scss', {
@@ -32,7 +32,7 @@ runWithConfig('css+scss', {
   tailwindcss: false,
   html: false,
   vue: false,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss)')
 runWithConfig('css+html', {
@@ -41,7 +41,7 @@ runWithConfig('css+html', {
   tailwindcss: false,
   html: true,
   vue: false,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, '(css.css|css.html)')
 runWithConfig('css+vue', {
@@ -50,7 +50,7 @@ runWithConfig('css+vue', {
   tailwindcss: false,
   html: false,
   vue: true,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, '(css.css|css.vue)')
 runWithConfig('css+vue+scss', {
@@ -59,7 +59,7 @@ runWithConfig('css+vue+scss', {
   tailwindcss: false,
   html: false,
   vue: true,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
 runWithConfig('stylistic', {
@@ -68,16 +68,7 @@ runWithConfig('stylistic', {
   tailwindcss: false,
   html: true,
   vue: true,
-  formatter: 'stylistic',
-  ordered: false,
-}, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
-runWithConfig('prettier', {
-  css: true,
-  scss: true,
-  tailwindcss: false,
-  html: true,
-  vue: true,
-  formatter: 'prettier',
+  stylistic: true,
   ordered: false,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
 runWithConfig('ordered', {
@@ -86,7 +77,7 @@ runWithConfig('ordered', {
   tailwindcss: false,
   html: true,
   vue: true,
-  formatter: false,
+  stylistic: false,
   ordered: true,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
 runWithConfig('tailwind-no-output', {
@@ -95,7 +86,7 @@ runWithConfig('tailwind-no-output', {
   tailwindcss: true,
   html: true,
   vue: true,
-  formatter: false,
+  stylistic: false,
   ordered: false,
 }, 'tailwind*')
 runWithConfig('all', {
@@ -104,7 +95,7 @@ runWithConfig('all', {
   tailwindcss: true,
   html: true,
   vue: true,
-  formatter: 'stylistic',
+  stylistic: true,
   ordered: true,
 }, '*.*')
 

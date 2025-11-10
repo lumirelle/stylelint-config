@@ -51,25 +51,14 @@ export default lumirelle(
     ],
 
     /**
-     * Use custom formatter to format the styles file. Currently support `stylistic` (powered by stylelint-stylistic) and
-     * `prettier` (powered by stylelint-prettier).
+     * Stylistic configuration. Powered by `stylelint-stylistic`.
      *
-     * If set to `true`, it will use `stylelint-stylistic` as the formatter.
+     * If set to `true`, it will use the default stylistic config as below.
      *
-     * Because `stylelint-prettier` is not available for HTML-like files, so it is recommended to use `stylistic`
-     * formatter.
+     * If you want to use `prettier` as the formatter, you can set it to `false` to disable the stylistic config.
      *
-     * @default 'stylistic'
-     * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-config#readme)
-     * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
-     * @see [stylelint-prettier issues: Ignored vue file style block?](https://github.com/prettier/stylelint-prettier/issues/322)
-     */
-    formatter: false,
-
-    /**
-     * Stylistic configuration.
-     *
-     * @default {
+     * @default
+     * {
      *   indent: 2,
      *   quotes: 'single',
      *   maxLineLength: 120,

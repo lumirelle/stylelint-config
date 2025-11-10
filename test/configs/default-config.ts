@@ -8,7 +8,7 @@ export const defaultCSSConfig = {
   rules: useCSSRules(),
 }
 
-export const stylisticFormatterConfig = {
+export const defaultStylisticConfig = {
   extends: [resolvePackagePath('@stylistic/stylelint-config')],
   rules: {
     '@stylistic/indentation': 2,
@@ -16,18 +16,6 @@ export const stylisticFormatterConfig = {
     '@stylistic/max-line-length': 120,
     '@stylistic/block-closing-brace-newline-after': ['always', {
       ignoreAtRules: ['if', 'else'],
-    }],
-  },
-}
-
-export const prettierFormatterConfig = {
-  extends: [resolvePackagePath('stylelint-prettier/recommended')],
-  rules: {
-    'prettier/prettier': [true, {
-      singleQuote: true,
-      useTabs: false,
-      tabWidth: 2,
-      printWidth: 120,
     }],
   },
 }
@@ -76,14 +64,14 @@ export const defaultConfig = {
   allowEmptyInput: true,
   extends: [
     ...defaultHTMLConfig.extends,
-    ...stylisticFormatterConfig.extends,
+    ...defaultStylisticConfig.extends,
     ...defaultOrderedConfig.extends,
   ],
   ignoreFiles: [
     ...GLOB_EXCLUDE,
   ],
   rules: {
-    ...stylisticFormatterConfig.rules,
+    ...defaultStylisticConfig.rules,
     ...defaultCSSConfig.rules,
   },
   overrides: [

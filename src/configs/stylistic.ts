@@ -1,0 +1,28 @@
+import type { StylelintConfig, StylelintOverrideConfig, StylisticConfig } from '../types'
+import { resolvePackagePath } from '../resolve'
+
+export function stylistic(
+  stylistic: boolean | StylisticConfig,
+): StylelintConfig | StylelintOverrideConfig {
+  const {
+    indent = 2,
+    quotes = 'single',
+    maxLineLength = 120,
+  } = typeof stylistic === 'object' ? stylistic : {}
+
+  if (stylistic === true || typeof stylistic === 'object') {
+    return {
+      extends: [resolvePackagePath('@stylistic/stylelint-config')],
+      rules: {
+        '@stylistic/indentation': indent,
+        '@stylistic/string-quotes': quotes,
+        '@stylistic/max-line-length': maxLineLength,
+        '@stylistic/block-closing-brace-newline-after': ['always', {
+          ignoreAtRules: ['if', 'else'],
+        }],
+      },
+    }
+  }
+
+  return {}
+}

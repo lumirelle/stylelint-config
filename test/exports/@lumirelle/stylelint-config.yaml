@@ -2,7 +2,6 @@
   ConfigComposer: function
   css: function
   default: function
-  formatter: function
   GLOB_EXCLUDE: object
   html: function
   lumirelle: function
@@ -10,5 +9,6 @@
   resolvePackagePath: function
   resolvePackagePaths: function
   scss: function
+  stylistic: function
   tailwindcss: function
   vue: function

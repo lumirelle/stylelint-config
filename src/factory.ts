@@ -3,10 +3,10 @@ import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
 import { css } from './configs/css'
-import { formatter } from './configs/formatter'
 import { html } from './configs/html'
 import { ordered } from './configs/ordered'
 import { scss } from './configs/scss'
+import { stylistic } from './configs/stylistic'
 import { tailwindcss } from './configs/tailwindcss'
 import { vue } from './configs/vue'
 import { defu } from './defu'
@@ -40,7 +40,6 @@ export function lumirelle(
   ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]
 ): ConfigComposer {
   const {
-    formatter: formatterOptions = 'stylistic',
     scss: scssOptions = ScssPackages.some(pkg => isPackageExists(pkg)),
     tailwindcss: tailwindcssOptions = false,
     html: htmlOptions = true,
@@ -69,7 +68,7 @@ export function lumirelle(
     html(htmlOptions),
     vue(vueOptions, scssOptions),
     tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
-    formatter(formatterOptions, stylisticOptions),
+    stylistic(stylisticOptions),
     ordered(orderedOptions),
     ...userConfigs,
   )
