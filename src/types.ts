@@ -107,6 +107,11 @@ export interface OptionsConfig {
   /**
    * Enable Less support.
    *
+   * Requires peer dependencies:
+   *
+   * - `postcss-less`
+   * - `stylelint-less`
+   *
    * As StyleLint doesn't support both SCSS and LESS in the same file (e.g. in a single `.vue` file), if you enable both
    * SCSS and LESS, only SCSS will take effect.
    *
