@@ -13,8 +13,8 @@ function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
   }, {} as Record<string, any>)
 }
 
-describe('should', () => {
-  it('merged config correctly', async () => {
+describe('factory config', () => {
+  it('should merge multiple configs correctly', async () => {
     expect(mergeConfigs([
       {
         files: ['**/*.scss'],
@@ -45,12 +45,12 @@ describe('should', () => {
       })
   })
 
-  it('construct default config correctly', async () => {
+  it('should construct default config correctly', async () => {
     expect(await lumirelle())
       .toEqual(defaultConfig)
   })
 
-  it('construct user configs correctly', async () => {
+  it('should construct config with user overrides correctly', async () => {
     expect(await lumirelle(
       {},
       {
@@ -88,7 +88,7 @@ describe('should', () => {
     })
   })
 
-  it('mix config correctly', async () => {
+  it('should mix configs using .mix() method correctly', async () => {
     expect(await lumirelle()
       .mix({
         rules: {
@@ -124,7 +124,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without stylistic correctly', async () => {
+  it('should construct config without stylistic rules correctly', async () => {
     expect(await lumirelle({
       stylistic: false,
     })).toEqual({
@@ -134,7 +134,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without SCSS correctly', async () => {
+  it('should construct config without SCSS support correctly', async () => {
     const factoryConfig = await lumirelle({
       scss: false,
     })
@@ -161,7 +161,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with LESS but SCSS correctly', async () => {
+  it('should construct config with LESS but without SCSS correctly', async () => {
     const factoryConfig = await lumirelle({
       scss: false,
       less: true,
@@ -182,7 +182,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with LESS and SCSS correctly', async () => {
+  it('should construct config with both LESS and SCSS correctly', async () => {
     const factoryConfig = await lumirelle({
       less: true,
       scss: true,
@@ -205,7 +205,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without Vue correctly', async () => {
+  it('should construct config without Vue support correctly', async () => {
     expect(await lumirelle({
       vue: false,
     })).toEqual({
@@ -216,7 +216,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without Vue but LESS correctly', async () => {
+  it('should construct config without Vue but with LESS correctly', async () => {
     expect(await lumirelle({
       vue: false,
       less: true,
@@ -228,7 +228,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without SCSS & Vue but LESS correctly', async () => {
+  it('should construct config without SCSS and Vue but with LESS correctly', async () => {
     expect(await lumirelle({
       scss: false,
       vue: false,
@@ -243,7 +243,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without ordered correctly', async () => {
+  it('should construct config without property ordering correctly', async () => {
     expect(await lumirelle({
       ordered: false,
     })).toEqual({
@@ -253,7 +253,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with less opinionated pattern correctly', async () => {
+  it('should construct config with less opinionated pattern rules correctly', async () => {
     expect(await lumirelle({
       lessOpinionated: {
         pattern: true,
@@ -268,7 +268,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with less opinionated maintainability correctly', async () => {
+  it('should construct config with less opinionated maintainability rules correctly', async () => {
     expect(await lumirelle({
       lessOpinionated: {
         maintainability: true,
@@ -282,7 +282,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with less opinionated all correctly', async () => {
+  it('should construct config with all less opinionated rules correctly', async () => {
     expect(await lumirelle({
       lessOpinionated: true,
     })).toEqual({
@@ -296,7 +296,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config with all features correctly', async () => {
+  it('should construct config with all features enabled correctly', async () => {
     expect(await lumirelle({
       stylistic: true,
       scss: true,
@@ -321,7 +321,7 @@ describe('should', () => {
     })
   })
 
-  it('construct config without all features correctly', async () => {
+  it('should construct config with all features disabled correctly', async () => {
     expect(await lumirelle({
       stylistic: false,
       scss: false,

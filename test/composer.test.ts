@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { ConfigComposer } from '../src'
 
-describe('composer', () => {
-  it('should created correctly', async () => {
+describe('config composer', () => {
+  it('should create ConfigComposer instance correctly', async () => {
     const config = {
       rules: {
         test: true,
@@ -17,7 +17,7 @@ describe('composer', () => {
       .toEqual(config)
   })
 
-  it('should mix configs correctly', async () => {
+  it('should mix multiple configs using .mix() method correctly', async () => {
     const config = {
       rules: {
         test: true,
@@ -45,7 +45,7 @@ describe('composer', () => {
       })
   })
 
-  it('should return config correctly', async () => {
+  it('should support Promise methods (then/catch/finally) correctly', async () => {
     const config = {
       rules: {
         test: true,

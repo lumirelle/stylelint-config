@@ -2,7 +2,7 @@ import cloneDeep from 'lodash.clonedeep'
 import { describe, expect, it } from 'vitest'
 
 describe('cloneDeep', () => {
-  it('should clone', () => {
+  it('should deep clone objects with nested structures', () => {
     const a = {
       b: [1, 2],
       c: { d: [4, 5] },

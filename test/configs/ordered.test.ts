@@ -3,11 +3,11 @@ import { ordered } from '../../src'
 import { defaultOrderedConfig } from './default-config'
 
 describe('ordered config', () => {
-  it('should be generated with nothing', () => {
+  it('should generate empty config when property ordering is disabled', () => {
     expect(ordered(false)).toEqual({})
   })
 
-  it('should be generated correctly', () => {
+  it('should generate ordered config with property ordering rules when enabled', () => {
     expect(ordered(true)).toEqual(defaultOrderedConfig)
   })
 })

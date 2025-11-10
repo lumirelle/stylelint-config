@@ -9,16 +9,16 @@ const customStylisticConfig = {
 } as const
 
 describe('stylistic config', () => {
-  it('should be generated with nothing', () => {
+  it('should generate empty config when stylistic is disabled', () => {
     expect(stylistic(false)).toEqual({})
   })
 
-  it('should be generated with stylistic correctly', () => {
+  it('should generate stylistic config with default settings', () => {
     expect(stylistic(true)).toEqual(defaultStylisticConfig)
     expect(stylistic({})).toEqual(defaultStylisticConfig)
   })
 
-  it('should be generated with stylistic and custom stylistic config correctly', () => {
+  it('should generate stylistic config with custom settings', () => {
     expect(stylistic(customStylisticConfig))
       .toEqual({
         ...defaultStylisticConfig,

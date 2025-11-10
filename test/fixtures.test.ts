@@ -17,7 +17,7 @@ afterAll(async () => {
   await fs.rm('_fixtures', { recursive: true, force: true })
 })
 
-runWithConfig('css', {
+runWithConfig('should format basic CSS files', 'css', {
   css: true,
   scss: false,
   less: false,
@@ -27,7 +27,7 @@ runWithConfig('css', {
   stylistic: false,
   ordered: false,
 }, 'css.css')
-runWithConfig('css+scss', {
+runWithConfig('should format CSS and SCSS files together', 'css+scss', {
   css: true,
   scss: true,
   less: false,
@@ -37,7 +37,7 @@ runWithConfig('css+scss', {
   stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss)')
-runWithConfig('css+less', {
+runWithConfig('should format CSS and Less files together', 'css+less', {
   css: true,
   scss: false,
   less: true,
@@ -47,7 +47,7 @@ runWithConfig('css+less', {
   stylistic: false,
   ordered: false,
 }, '(css.css|less.less)')
-runWithConfig('css+html', {
+runWithConfig('should format CSS files with HTML support', 'css+html', {
   css: true,
   scss: false,
   less: false,
@@ -57,7 +57,7 @@ runWithConfig('css+html', {
   stylistic: false,
   ordered: false,
 }, '(css.css|css.html)')
-runWithConfig('css+vue', {
+runWithConfig('should format CSS in Vue components', 'css+vue', {
   css: true,
   scss: false,
   less: false,
@@ -67,7 +67,7 @@ runWithConfig('css+vue', {
   stylistic: false,
   ordered: false,
 }, '(css.css|css.vue)')
-runWithConfig('css+vue+scss', {
+runWithConfig('should format CSS and SCSS in Vue components', 'css+vue+scss', {
   css: true,
   scss: true,
   less: false,
@@ -77,7 +77,7 @@ runWithConfig('css+vue+scss', {
   stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
-runWithConfig('css+vue+less', {
+runWithConfig('should format CSS and Less in Vue components', 'css+vue+less', {
   css: true,
   scss: false,
   less: true,
@@ -87,7 +87,7 @@ runWithConfig('css+vue+less', {
   stylistic: false,
   ordered: false,
 }, '(css.css|less.less|css.vue|less.vue)')
-runWithConfig('stylistic+scss', {
+runWithConfig('should apply stylistic rules with SCSS support', 'stylistic+scss', {
   css: true,
   scss: true,
   less: false,
@@ -97,7 +97,7 @@ runWithConfig('stylistic+scss', {
   stylistic: true,
   ordered: false,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
-runWithConfig('stylistic+less', {
+runWithConfig('should apply stylistic rules with Less support', 'stylistic+less', {
   css: true,
   scss: false,
   less: true,
@@ -107,7 +107,7 @@ runWithConfig('stylistic+less', {
   stylistic: true,
   ordered: false,
 }, '(css.css|less.less|css.html|css.vue|less.vue)')
-runWithConfig('ordered+scss', {
+runWithConfig('should order properties with SCSS support', 'ordered+scss', {
   css: true,
   scss: true,
   less: false,
@@ -117,7 +117,7 @@ runWithConfig('ordered+scss', {
   stylistic: false,
   ordered: true,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
-runWithConfig('ordered+less', {
+runWithConfig('should order properties with Less support', 'ordered+less', {
   css: true,
   scss: false,
   less: true,
@@ -127,7 +127,7 @@ runWithConfig('ordered+less', {
   stylistic: false,
   ordered: true,
 }, '(css.css|less.less|css.html|css.vue|less.vue)')
-runWithConfig('tailwind-no-output', {
+runWithConfig('should allow Tailwind CSS at-rules', 'tailwind-no-output', {
   css: true,
   scss: true,
   less: false,
@@ -137,7 +137,7 @@ runWithConfig('tailwind-no-output', {
   stylistic: false,
   ordered: false,
 }, 'tailwind*')
-runWithConfig('all+scss', {
+runWithConfig('should apply all features with SCSS support', 'all+scss', {
   css: true,
   scss: true,
   less: false,
@@ -147,7 +147,7 @@ runWithConfig('all+scss', {
   stylistic: true,
   ordered: true,
 }, '*.{css,scss,html,vue,js}')
-runWithConfig('all+less', {
+runWithConfig('should apply all features with Less support', 'all+less', {
   css: true,
   scss: false,
   less: true,
@@ -158,11 +158,11 @@ runWithConfig('all+less', {
   ordered: true,
 }, '*.{css,less,html,vue,js}')
 
-function runWithConfig(name: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
-  it.concurrent(name, async ({ expect }) => {
+function runWithConfig(displayName: string, dirName: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
+  it.concurrent(displayName, async ({ expect }) => {
     const from = resolve('fixtures/input')
-    const output = resolve('fixtures/output', name)
-    const target = resolve('_fixtures', name)
+    const output = resolve('fixtures/output', dirName)
+    const target = resolve('_fixtures', dirName)
 
     await fs.cp(from, target, {
       recursive: true,

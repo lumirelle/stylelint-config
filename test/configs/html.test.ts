@@ -3,11 +3,11 @@ import { html } from '../../src'
 import { defaultHTMLConfig } from './default-config'
 
 describe('html config', () => {
-  it('should be generated with nothing', () => {
+  it('should generate empty config when HTML support is disabled', () => {
     expect(html(false)).toEqual({})
   })
 
-  it('should be generated correctly', () => {
+  it('should generate HTML config with all rules when enabled', () => {
     expect(html(true)).toEqual(defaultHTMLConfig)
   })
 })
