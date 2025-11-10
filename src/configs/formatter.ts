@@ -2,16 +2,16 @@ import type { OptionsFormatter, StylelintConfig, StylelintOverrideConfig, Stylis
 import { resolvePackagePath } from '../resolve'
 
 export function formatter(
-  options: boolean | OptionsFormatter | StylisticConfig,
+  options: boolean | OptionsFormatter,
+  stylistic: StylisticConfig,
 ): StylelintConfig | StylelintOverrideConfig {
   const {
-    use = (typeof options === 'object' || options === true) ? 'stylistic' : options,
     indent = 2,
     quotes = 'single',
     maxLineLength = 120,
-  } = (typeof options === 'object' ? options : {})
+  } = stylistic
 
-  if (use === 'stylistic') {
+  if (options === true || options === 'stylistic') {
     return {
       extends: [resolvePackagePath('@stylistic/stylelint-config')],
       rules: {
@@ -24,7 +24,7 @@ export function formatter(
       },
     }
   }
-  else if (use === 'prettier') {
+  else if (options === 'prettier') {
     return {
       extends: [resolvePackagePath('stylelint-prettier/recommended')],
       rules: {

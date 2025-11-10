@@ -47,6 +47,11 @@ export function lumirelle(
     vue: vueOptions = VuePackages.some(pkg => isPackageExists(pkg)),
     ordered: orderedOptions = true,
     lessOpinionated: lessOpinionatedOptions = false,
+    stylistic: stylisticOptions = {
+      indent: 2,
+      quotes: 'single',
+      maxLineLength: 120,
+    },
   } = options
 
   // Base configuration
@@ -64,7 +69,7 @@ export function lumirelle(
     html(htmlOptions),
     vue(vueOptions, scssOptions),
     tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
-    formatter(formatterOptions),
+    formatter(formatterOptions, stylisticOptions),
     ordered(orderedOptions),
     ...userConfigs,
   )

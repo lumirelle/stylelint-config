@@ -15,14 +15,6 @@ export type StylelintOverrideConfig = ElementOf<NonNullable<StylelintConfig['ove
 
 export interface StylisticConfig {
   /**
-   * Which formatter to use.
-   *
-   * @default 'stylistic'
-   * @see [stylelint-stylistic](https://github.com/stylelint-stylistic/stylelint-stylistic)
-   * @see [prettier](https://prettier.io/docs)
-   */
-  use?: OptionsFormatter
-  /**
    * The indentation level to use.
    *
    * @default 2
@@ -100,7 +92,19 @@ export interface OptionsConfig {
    * @see [stylelint-prettier](https://github.com/prettier/stylelint-prettier)
    * @see [stylelint-prettier issues: Ignored vue file style block?](https://github.com/prettier/stylelint-prettier/issues/322)
    */
-  formatter?: boolean | OptionsFormatter | StylisticConfig
+  formatter?: boolean | OptionsFormatter
+
+  /**
+   * Stylistic configuration.
+   *
+   * @default
+   * {
+   *   indent: 2,
+   *   quotes: 'single',
+   *   maxLineLength: 120,
+   * }
+   */
+  stylistic?: StylisticConfig
 
   /**
    * Core rules. Can't be disabled.

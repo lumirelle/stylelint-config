@@ -67,6 +67,21 @@ export default lumirelle(
     formatter: false,
 
     /**
+     * Stylistic configuration.
+     *
+     * @default {
+     *   indent: 2,
+     *   quotes: 'single',
+     *   maxLineLength: 120,
+     * }
+     */
+    stylistic: {
+      indent: 2,
+      quotes: 'single',
+      maxLineLength: 120,
+    },
+
+    /**
      * Core rules. Can't be disabled.
      */
     css: true,

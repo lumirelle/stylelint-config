@@ -10,16 +10,16 @@ const customStylisticConfig = {
 
 describe('formatter config', () => {
   it('should be generated with nothing', () => {
-    expect(formatter(false)).toEqual({})
+    expect(formatter(false, {})).toEqual({})
   })
 
   it('should be generated with stylistic correctly', () => {
-    expect(formatter(true)).toEqual(stylisticFormatterConfig)
-    expect(formatter('stylistic')).toEqual(stylisticFormatterConfig)
+    expect(formatter(true, {})).toEqual(stylisticFormatterConfig)
+    expect(formatter('stylistic', {})).toEqual(stylisticFormatterConfig)
   })
 
   it('should be generated with stylistic and custom stylistic config correctly', () => {
-    expect(formatter(customStylisticConfig))
+    expect(formatter(true, customStylisticConfig))
       .toEqual({
         ...stylisticFormatterConfig,
         rules: {
@@ -31,10 +31,7 @@ describe('formatter config', () => {
           }],
         },
       })
-    expect(formatter({
-      use: 'stylistic',
-      ...customStylisticConfig,
-    }))
+    expect(formatter('stylistic', customStylisticConfig))
       .toEqual({
         ...stylisticFormatterConfig,
         rules: {
@@ -49,14 +46,11 @@ describe('formatter config', () => {
   })
 
   it('should be generated with prettier correctly', () => {
-    expect(formatter('prettier')).toEqual(prettierFormatterConfig)
+    expect(formatter('prettier', {})).toEqual(prettierFormatterConfig)
   })
 
   it('should be generated with prettier and custom config correctly', () => {
-    expect(formatter({
-      use: 'prettier',
-      ...customStylisticConfig,
-    }))
+    expect(formatter('prettier', customStylisticConfig))
       .toEqual({
         ...prettierFormatterConfig,
         rules: {
