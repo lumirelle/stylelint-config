@@ -62,6 +62,8 @@
     }
   },
   "dependencies": {
+    "@antfu/install-pkg": "catalog:prod",
+    "@clack/prompts": "catalog:prod",
     "@lumirelle/defu": "catalog:prod",
     "@stylistic/stylelint-config": "catalog:prod",
     "local-pkg": "catalog:prod",

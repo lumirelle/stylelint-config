@@ -56,6 +56,12 @@ catalogs:
       specifier: ^9.3.0
       version: 9.3.0
   prod:
+    '@antfu/install-pkg':
+      specifier: ^1.1.0
+      version: 1.1.0
+    '@clack/prompts':
+      specifier: ^0.11.0
+      version: 0.11.0
     '@lumirelle/defu':
       specifier: ^1.1.0
       version: 1.1.0
@@ -126,6 +132,12 @@ importers:
 
   .:
     dependencies:
+      '@antfu/install-pkg':
+        specifier: catalog:prod
+        version: 1.1.0
+      '@clack/prompts':
+        specifier: catalog:prod
+        version: 0.11.0
       '@lumirelle/defu':
         specifier: catalog:prod
         version: 1.1.0
