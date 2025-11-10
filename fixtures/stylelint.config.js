@@ -1,6 +1,7 @@
 import lumirelle from '@lumirelle/stylelint-config'
 
 export default lumirelle({
+  less: true,
   tailwindcss: true,
   stylistic: {
     indent: 2,

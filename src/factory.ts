@@ -2,6 +2,7 @@ import type { OptionsConfig, StylelintConfig, StylelintOverrideConfig } from './
 import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
 import { ConfigComposer } from './composer'
+import { less } from './configs'
 import { css } from './configs/css'
 import { html } from './configs/html'
 import { ordered } from './configs/ordered'
@@ -40,7 +41,8 @@ export function lumirelle(
   ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]
 ): ConfigComposer {
   const {
-    scss: scssOptions = ScssPackages.some(pkg => isPackageExists(pkg)),
+    scss: userScssOptions,
+    less: userLessOptions,
     tailwindcss: tailwindcssOptions = false,
     html: htmlOptions = true,
     vue: vueOptions = VuePackages.some(pkg => isPackageExists(pkg)),
@@ -52,6 +54,15 @@ export function lumirelle(
       maxLineLength: 120,
     },
   } = options
+
+  let scssOptions = userScssOptions ?? false
+  let lessOptions = userLessOptions ?? false
+  if (userScssOptions == null && userLessOptions == null && ScssPackages.some(pkg => isPackageExists(pkg)))
+    scssOptions = true
+  if (userScssOptions && userLessOptions) {
+    lessOptions = false
+    console.warn('[@lumirelle/stylelint-config] You should not enable both SCSS and LESS support at the same time, LESS support is disabled.')
+  }
 
   // Base configuration
   const configs: (StylelintConfig | StylelintOverrideConfig)[] = [
@@ -65,8 +76,9 @@ export function lumirelle(
   configs.push(
     css(lessOpinionatedOptions),
     scss(scssOptions),
+    less(lessOptions),
     html(htmlOptions),
-    vue(vueOptions, scssOptions),
+    vue(vueOptions, scssOptions, lessOptions),
     tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
     stylistic(stylisticOptions),
     ordered(orderedOptions),

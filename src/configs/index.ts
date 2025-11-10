@@ -1,5 +1,6 @@
 export { css } from './css'
 export { html } from './html'
+export { less } from './less'
 export { ordered } from './ordered'
 export { scss } from './scss'
 export { stylistic } from './stylistic'

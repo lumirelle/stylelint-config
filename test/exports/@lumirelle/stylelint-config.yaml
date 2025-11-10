@@ -4,6 +4,7 @@
   default: function
   GLOB_EXCLUDE: object
   html: function
+  less: function
   lumirelle: function
   ordered: function
   resolvePackagePath: function

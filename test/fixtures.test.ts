@@ -20,6 +20,7 @@ afterAll(async () => {
 runWithConfig('css', {
   css: true,
   scss: false,
+  less: false,
   tailwindcss: false,
   html: false,
   vue: false,
@@ -29,15 +30,27 @@ runWithConfig('css', {
 runWithConfig('css+scss', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: false,
   html: false,
   vue: false,
   stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss)')
+runWithConfig('css+less', {
+  css: true,
+  scss: false,
+  less: true,
+  tailwindcss: false,
+  html: false,
+  vue: false,
+  stylistic: false,
+  ordered: false,
+}, '(css.css|less.less)')
 runWithConfig('css+html', {
   css: true,
   scss: false,
+  less: false,
   tailwindcss: false,
   html: true,
   vue: false,
@@ -47,6 +60,7 @@ runWithConfig('css+html', {
 runWithConfig('css+vue', {
   css: true,
   scss: false,
+  less: false,
   tailwindcss: false,
   html: false,
   vue: true,
@@ -56,48 +70,93 @@ runWithConfig('css+vue', {
 runWithConfig('css+vue+scss', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: false,
   html: false,
   vue: true,
   stylistic: false,
   ordered: false,
 }, '(css.css|scss.scss|css.vue|scss.vue)')
-runWithConfig('stylistic', {
+runWithConfig('css+vue+less', {
+  css: true,
+  scss: false,
+  less: true,
+  tailwindcss: false,
+  html: false,
+  vue: true,
+  stylistic: false,
+  ordered: false,
+}, '(css.css|less.less|css.vue|less.vue)')
+runWithConfig('stylistic+scss', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: false,
   html: true,
   vue: true,
   stylistic: true,
   ordered: false,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
-runWithConfig('ordered', {
+runWithConfig('stylistic+less', {
+  css: true,
+  scss: false,
+  less: true,
+  tailwindcss: false,
+  html: true,
+  vue: true,
+  stylistic: true,
+  ordered: false,
+}, '(css.css|less.less|css.html|css.vue|less.vue)')
+runWithConfig('ordered+scss', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: false,
   html: true,
   vue: true,
   stylistic: false,
   ordered: true,
 }, '(css.css|scss.scss|css.html|css.vue|scss.vue)')
+runWithConfig('ordered+less', {
+  css: true,
+  scss: false,
+  less: true,
+  tailwindcss: false,
+  html: true,
+  vue: true,
+  stylistic: false,
+  ordered: true,
+}, '(css.css|less.less|css.html|css.vue|less.vue)')
 runWithConfig('tailwind-no-output', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: true,
   html: true,
   vue: true,
   stylistic: false,
   ordered: false,
 }, 'tailwind*')
-runWithConfig('all', {
+runWithConfig('all+scss', {
   css: true,
   scss: true,
+  less: false,
   tailwindcss: true,
   html: true,
   vue: true,
   stylistic: true,
   ordered: true,
-}, '*.*')
+}, '*.{css,scss,html,vue,js}')
+runWithConfig('all+less', {
+  css: true,
+  scss: false,
+  less: true,
+  tailwindcss: true,
+  html: true,
+  vue: true,
+  stylistic: true,
+  ordered: true,
+}, '*.{css,less,html,vue,js}')
 
 function runWithConfig(name: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
   it.concurrent(name, async ({ expect }) => {

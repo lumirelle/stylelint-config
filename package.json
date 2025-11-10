@@ -49,7 +49,17 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "stylelint": ">=16.0.0"
+    "postcss-less": ">=6.0.0",
+    "stylelint": ">=16.0.0",
+    "stylelint-less": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "postcss-less": {
+      "optional": true
+    },
+    "stylelint-less": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@lumirelle/defu": "catalog:prod",
@@ -69,6 +79,7 @@
     "@lumirelle/stylelint-config": "workspace:*",
     "@types/lodash.clonedeep": "catalog:types",
     "@types/node": "catalog:types",
+    "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
     "@vitest/coverage-v8": "catalog:testing",
     "bumpp": "catalog:dev",
@@ -76,9 +87,11 @@
     "eslint": "catalog:dev",
     "eslint-plugin-format": "catalog:dev",
     "lint-staged": "catalog:dev",
+    "postcss-less": "catalog:dev",
     "sass-embedded": "catalog:testing",
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:dev",
+    "stylelint-less": "catalog:dev",
     "taze": "catalog:dev",
     "tinyexec": "catalog:testing",
     "tinyglobby": "catalog:testing",

@@ -27,12 +27,18 @@ catalogs:
     lint-staged:
       specifier: ^16.2.6
       version: 16.2.6
+    postcss-less:
+      specifier: ^6.0.0
+      version: 6.0.0
     simple-git-hooks:
       specifier: ^2.13.1
       version: 2.13.1
     stylelint:
       specifier: ^16.25.0
       version: 16.25.0
+    stylelint-less:
+      specifier: ^3.0.1
+      version: 3.0.1
     taze:
       specifier: ^19.9.0
       version: 19.9.0
@@ -109,6 +115,9 @@ catalogs:
     '@types/node':
       specifier: ^24.10.0
       version: 24.10.0
+    '@types/postcss-less':
+      specifier: ^4.0.7
+      version: 4.0.7
     '@types/semver':
       specifier: ^7.7.1
       version: 7.7.1
@@ -163,6 +172,9 @@ importers:
       '@types/node':
         specifier: catalog:types
         version: 24.10.0
+      '@types/postcss-less':
+        specifier: catalog:types
+        version: 4.0.7
       '@types/semver':
         specifier: catalog:types
         version: 7.7.1
@@ -184,6 +196,9 @@ importers:
       lint-staged:
         specifier: catalog:dev
         version: 16.2.6
+      postcss-less:
+        specifier: catalog:dev
+        version: 6.0.0(postcss@8.5.6)
       sass-embedded:
         specifier: catalog:testing
         version: 1.93.3
@@ -193,6 +208,9 @@ importers:
       stylelint:
         specifier: catalog:dev
         version: 16.25.0(typescript@5.9.3)
+      stylelint-less:
+        specifier: catalog:dev
+        version: 3.0.1(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3))
       taze:
         specifier: catalog:dev
         version: 19.9.0
@@ -1021,6 +1039,9 @@ packages:
 
   '@types/node@24.10.0':
     resolution: {integrity: sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==}
+
+  '@types/postcss-less@4.0.7':
+    resolution: {integrity: sha512-trNnU5PNmvMGysyge5Tc7W4CpaU+HHVu9XcGFX9eBlIGcg+NJP6lLJcUna6jjh8/TMjAe0k5mY0+jNRkZLYoaQ==}
 
   '@types/semver@7.7.1':
     resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
@@ -2424,6 +2445,12 @@ packages:
     resolution: {integrity: sha512-5mMeb1TgLWoRKxZ0Xh9RZDfwUUIqRrcxO2uXO+Ezl1N5lqpCiSU5Gk6+1kZediBfBHFtPCdopr2UZ2SgUsKcgQ==}
     engines: {node: ^12 || >=14}
 
+  postcss-less@6.0.0:
+    resolution: {integrity: sha512-FPX16mQLyEjLzEuuJtxA8X3ejDLNGGEG503d2YGZR5Ask1SpDN8KmZUMpzCvyalWRywAn1n1VOA5dcqfCLo5rg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      postcss: ^8.3.5
+
   postcss-media-query-parser@0.2.3:
     resolution: {integrity: sha512-3sOlxmbKcSHMjlUXQZKQ06jOswE7oVkXPxmZdoB1r5l0q6gTFTQSHxNxOrCccElbW7dxNytifNEo8qidX2Vsig==}
 
@@ -2806,6 +2833,12 @@ packages:
     peerDependencies:
       stylelint: '>=16.18'
       stylelint-order: '>=7'
+
+  stylelint-less@3.0.1:
+    resolution: {integrity: sha512-6GkZ4jhmReXxX61IiNaniZFuyTzYTTC4HvRLNNok883d1ux/wUodM1uik+iAHZM1VSCwNASaj0Th6ZX46WZLMw==}
+    peerDependencies:
+      postcss: ^8.4.31
+      stylelint: ^16.0.2
 
   stylelint-order@7.0.0:
     resolution: {integrity: sha512-rSWxx0KscYfxU02wEskKXES9lkRzuuONMMNkZ7SUc6uiF3tDKm7e+sE0Ax/SBlG4TUf1sp1R6f3/SlsPGmzthg==}
@@ -3777,6 +3810,10 @@ snapshots:
   '@types/node@24.10.0':
     dependencies:
       undici-types: 7.16.0
+
+  '@types/postcss-less@4.0.7':
+    dependencies:
+      postcss: 8.5.6
 
   '@types/semver@7.7.1': {}
 
@@ -5461,6 +5498,10 @@ snapshots:
       postcss: 8.5.6
       postcss-safe-parser: 6.0.0(postcss@8.5.6)
 
+  postcss-less@6.0.0(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
+
   postcss-media-query-parser@0.2.3: {}
 
   postcss-resolve-nested-selector@0.1.6: {}
@@ -5821,6 +5862,13 @@ snapshots:
     dependencies:
       stylelint: 16.25.0(typescript@5.9.3)
       stylelint-order: 7.0.0(stylelint@16.25.0(typescript@5.9.3))
+
+  stylelint-less@3.0.1(postcss@8.5.6)(stylelint@16.25.0(typescript@5.9.3)):
+    dependencies:
+      postcss: 8.5.6
+      postcss-resolve-nested-selector: 0.1.6
+      postcss-value-parser: 4.2.0
+      stylelint: 16.25.0(typescript@5.9.3)
 
   stylelint-order@7.0.0(stylelint@16.25.0(typescript@5.9.3)):
     dependencies:

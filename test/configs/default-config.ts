@@ -1,7 +1,9 @@
+import postcssLess from 'postcss-less'
 import postcssSCSS from 'postcss-scss'
 import { GLOB_EXCLUDE, resolvePackagePath } from '../../src'
 import { tailwindcssIgnoreAtRules } from '../../src/configs/tailwindcss'
 import { useCSSRules } from '../../src/rules/css'
+import { useLessRules } from '../../src/rules/less'
 import { useSCSSRules } from '../../src/rules/scss'
 
 export const defaultCSSConfig = {
@@ -33,6 +35,13 @@ export const defaultSCSSConfig = {
   customSyntax: postcssSCSS,
   plugins: [resolvePackagePath('stylelint-scss')],
   rules: useSCSSRules(),
+}
+
+export const defaultLessConfig = {
+  files: ['**/*.less'],
+  customSyntax: postcssLess,
+  plugins: [resolvePackagePath('stylelint-less')],
+  rules: useLessRules(),
 }
 
 export const defaultTailwindCSSConfig = {

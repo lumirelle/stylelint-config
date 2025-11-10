@@ -97,9 +97,22 @@ export interface OptionsConfig {
   /**
    * Enable SCSS support.
    *
-   * @default auto-detect based on the dependencies
+   * As StyleLint doesn't support both SCSS and LESS in the same file (e.g. in a single `.vue` file), if you enable both
+   * SCSS and LESS, only SCSS will take effect.
+   *
+   * @default auto-detect based on the dependencies if both SCSS and LESS are not enabled manually
    */
   scss?: boolean
+
+  /**
+   * Enable Less support.
+   *
+   * As StyleLint doesn't support both SCSS and LESS in the same file (e.g. in a single `.vue` file), if you enable both
+   * SCSS and LESS, only SCSS will take effect.
+   *
+   * @default false
+   */
+  less?: boolean
 
   /**
    * Enable Tailwind CSS support.

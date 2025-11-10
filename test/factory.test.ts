@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle, resolvePackagePath } from '../src'
 import { mergeConfigs } from '../src/factory'
-import { defaultConfig, defaultCSSConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
+import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
 
 function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
   const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes]
@@ -161,6 +161,50 @@ describe('should', () => {
     })
   })
 
+  it('construct config with LESS but SCSS correctly', async () => {
+    const factoryConfig = await lumirelle({
+      scss: false,
+      less: true,
+    })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      overrides: [
+        defaultLessConfig,
+        {
+          ...defaultVueConfig, // Vue override
+          plugins: [resolvePackagePath('stylelint-less')],
+          rules: {
+            ...defaultLessConfig.rules,
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
+    })
+  })
+
+  it('construct config with LESS and SCSS correctly', async () => {
+    const factoryConfig = await lumirelle({
+      less: true,
+      scss: true,
+    })
+    expect(factoryConfig).toEqual({
+      ...defaultConfig,
+      overrides: [
+        defaultSCSSConfig,
+        {
+          ...defaultVueConfig, // Vue override
+          plugins: [
+            resolvePackagePath('stylelint-scss'),
+          ],
+          rules: {
+            ...defaultSCSSConfig.rules,
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
+    })
+  })
+
   it('construct config without Vue correctly', async () => {
     expect(await lumirelle({
       vue: false,
@@ -172,15 +216,30 @@ describe('should', () => {
     })
   })
 
-  it('construct config without SCSS & Vue correctly', async () => {
+  it('construct config without Vue but LESS correctly', async () => {
+    expect(await lumirelle({
+      vue: false,
+      less: true,
+    })).toEqual({
+      ...defaultConfig,
+      overrides: [
+        defaultLessConfig,
+      ],
+    })
+  })
+
+  it('construct config without SCSS & Vue but LESS correctly', async () => {
     expect(await lumirelle({
       scss: false,
       vue: false,
+      less: true,
     })).toEqual({
       ...defaultConfig,
       // extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-standard-vue/scss')),
       rules: filterRules(defaultConfig.rules, ['scss/', 'vue/']),
-      overrides: undefined,
+      overrides: [
+        defaultLessConfig,
+      ],
     })
   })
 
@@ -237,11 +296,37 @@ describe('should', () => {
     })
   })
 
+  it('construct config with all features correctly', async () => {
+    expect(await lumirelle({
+      stylistic: true,
+      scss: true,
+      less: true,
+      vue: true,
+      ordered: true,
+    })).toEqual({
+      ...defaultConfig,
+      overrides: [
+        defaultSCSSConfig,
+        {
+          ...defaultVueConfig, // Vue override
+          plugins: [
+            resolvePackagePath('stylelint-scss'),
+          ],
+          rules: {
+            ...defaultSCSSConfig.rules,
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
+    })
+  })
+
   it('construct config without all features correctly', async () => {
     expect(await lumirelle({
       stylistic: false,
       scss: false,
       vue: false,
+      less: false,
       ordered: false,
     })).toEqual({
       ...defaultConfig,
