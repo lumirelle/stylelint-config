@@ -29,9 +29,10 @@ describe('utils', () => {
       .toBeUndefined()
   })
 
-  it('ensure packages should return nothing if in editor', async () => {
-    expect(await ensurePackages(['not-exist-package'], true))
-      .toBeUndefined()
+  it('ensure packages should throw error if in editor', async () => {
+    await expect(ensurePackages(['not-exist-package'], true))
+      .rejects
+      .toThrow()
   })
 
   it('ensure packages should be stuck', async () => {

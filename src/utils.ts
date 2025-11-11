@@ -19,8 +19,7 @@ export async function ensurePackages(packages: (string | undefined)[], isInEdito
     return
 
   if (isInEditor) {
-    console.warn(`[@lumirelle/stylelint-config] The following packages are required but not installed: ${nonExistingPackages.join(', ')}. Please install them to ensure proper functionality.`)
-    return
+    return Promise.reject(new Error(`[@lumirelle/stylelint-config] The following packages are required but not installed: ${nonExistingPackages.join(', ')}. Please install them to ensure proper functionality.`))
   }
 
   const p = await import('@clack/prompts')
