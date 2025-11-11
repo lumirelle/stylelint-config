@@ -1,4 +1,4 @@
-import type { Awaitable } from '@antfu/utils'
+import type { Awaitable, Nullable } from '@antfu/utils'
 import type { StylelintConfig, StylelintOverrideConfig } from './types'
 import { defu } from './defu'
 
@@ -8,7 +8,7 @@ import { defu } from './defu'
 export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideConfig> {
   private _operations: ((config: StylelintConfig) => Promise<StylelintConfig>)[] = []
 
-  constructor(...configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[]) {
+  constructor(...configs: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]) {
     super(() => {})
 
     if (configs.length > 0)
@@ -18,10 +18,10 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
   /**
    * Mix the provided config, which will merge into the existing config.
    */
-  public mix(...configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[]): ConfigComposer {
+  public mix(...configs: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]): ConfigComposer {
     const promises = Promise.all(configs)
     this._operations.push(async (config) => {
-      const resolved = (await promises).flat().filter(Boolean)
+      const resolved = (await promises).flat().filter(Boolean) as (StylelintConfig | StylelintOverrideConfig)[]
       let result: StylelintConfig = config
       for (const toMerge of resolved) {
         if ('files' in toMerge)

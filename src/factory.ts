@@ -1,4 +1,4 @@
-import type { Awaitable } from '@antfu/utils'
+import type { Awaitable, Nullable } from '@antfu/utils'
 import type { OptionsConfig, StylelintConfig, StylelintOverrideConfig } from './types'
 import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
@@ -65,7 +65,7 @@ export function lumirelle(
   }
 
   // Base configuration
-  const configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[] = [
+  const configs: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[] = [
     {
       allowEmptyInput: true,
       ignoreFiles: [...GLOB_EXCLUDE, ...toArray(options.ignoreFiles)],
