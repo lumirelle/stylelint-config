@@ -6,14 +6,13 @@ import { defu } from './defu'
  * Using the magic promise to implement a chainable config composer, when accessing this composer, user will get the final config.
  */
 export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideConfig> {
-  private _operations: ((config: StylelintConfig | StylelintOverrideConfig) => Promise<StylelintConfig | StylelintOverrideConfig>)[] = []
+  private _operations: ((config: StylelintConfig) => Promise<StylelintConfig>)[] = []
 
-  constructor(configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[]) {
+  constructor(...configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[]) {
     super(() => {})
 
-    if (configs && configs.length > 0) {
+    if (configs.length > 0)
       this.mix(...configs)
-    }
   }
 
   /**
@@ -23,12 +22,14 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
     const promises = Promise.all(configs)
     this._operations.push(async (config) => {
       const resolved = (await promises).flat().filter(Boolean)
-      if ('files' in config) {
-        return defu({ overrides: [config] }, resolved)
+      let result: StylelintConfig = config
+      for (const toMerge of resolved) {
+        if ('files' in toMerge)
+          result = defu({ overrides: [toMerge] }, result)
+        else
+          result = defu(toMerge, result)
       }
-      else {
-        return defu(config, resolved)
-      }
+      return result
     })
     return this
   }
@@ -38,15 +39,14 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
    *
    * This returns a promise. Calling `.then()` has the same effect.
    */
-  public async toConfig(): Promise<StylelintConfig | StylelintOverrideConfig> {
-    let config: StylelintConfig | StylelintOverrideConfig = {}
-    for (const operation of this._operations) {
+  public async toConfig(): Promise<StylelintConfig> {
+    let config: StylelintConfig = {}
+    for (const operation of this._operations)
       config = await operation(config)
-    }
     return config
   }
 
-  override then(onFulfilled: (value: StylelintConfig | StylelintOverrideConfig) => any, onRejected?: (reason: any) => any): Promise<any> {
+  override then(onFulfilled: (value: StylelintConfig) => any, onRejected?: (reason: any) => any): Promise<any> {
     return this.toConfig()
       .then(onFulfilled, onRejected)
   }

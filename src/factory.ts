@@ -86,5 +86,5 @@ export function lumirelle(
   )
 
   // Merged user config
-  return new ConfigComposer(configs)
+  return new ConfigComposer(...configs)
 }

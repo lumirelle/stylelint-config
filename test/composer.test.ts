@@ -3,26 +3,26 @@ import { ConfigComposer } from '../src'
 
 describe('config composer', () => {
   it('should create ConfigComposer instance correctly', async () => {
-    const configs = [{
+    const config = {
       rules: {
         test: true,
       },
-    }]
-    const composer = new ConfigComposer(configs)
+    }
+    const composer = new ConfigComposer(config)
     expect(composer)
       .toBeInstanceOf(ConfigComposer)
     expect(composer)
       .toBeInstanceOf(Promise)
     expect(await composer)
-      .toEqual(configs)
+      .toEqual(config)
   })
 
   it('should mix multiple configs using .mix() method correctly', async () => {
-    const configs = [{
+    const config = {
       rules: {
         test: true,
       },
-    }]
+    }
     const config1 = {
       rules: {
         test: null,
@@ -33,7 +33,7 @@ describe('config composer', () => {
         xxx: null,
       },
     }
-    const composer = new ConfigComposer(configs)
+    const composer = new ConfigComposer(config)
     composer.mix(config1)
     composer.mix(config2)
     expect(await composer)
@@ -46,18 +46,18 @@ describe('config composer', () => {
   })
 
   it('should support Promise methods (then/catch/finally) correctly', async () => {
-    const configs = [{
+    const config = {
       rules: {
         test: true,
       },
-    }]
-    new ConfigComposer(configs).then((finalConfig) => {
-      expect(finalConfig).toEqual(configs)
+    }
+    new ConfigComposer(config).then((finalConfig) => {
+      expect(finalConfig).toEqual(config)
     })
-    new ConfigComposer(configs).catch((reason) => {
+    new ConfigComposer(config).catch((reason) => {
       expect(reason).toBeDefined()
     })
-    new ConfigComposer(configs).finally(() => {
+    new ConfigComposer(config).finally(() => {
       expect(true).toBe(true)
     })
   })
