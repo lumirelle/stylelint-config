@@ -17,6 +17,16 @@ describe('config composer', () => {
       .toEqual(config)
   })
 
+  it('should create ConfigComposer instance with nothing', async () => {
+    const composer = new ConfigComposer()
+    expect(composer)
+      .toBeInstanceOf(ConfigComposer)
+    expect(composer)
+      .toBeInstanceOf(Promise)
+    expect(await composer)
+      .toEqual({})
+  })
+
   it('should mix multiple configs using .mix() method correctly', async () => {
     const config = {
       rules: {
