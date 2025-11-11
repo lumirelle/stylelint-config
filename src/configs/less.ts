@@ -4,9 +4,12 @@ import { resolvePackagePath } from '../resolve'
 import { useLessRules } from '../rules/less'
 import { ensurePackages, interopDefault } from '../utils'
 
-export async function less(options: boolean): Promise<Nullable<StylelintOverrideConfig>> {
+export async function less(
+  options: boolean,
+  isInEditor: boolean,
+): Promise<Nullable<StylelintOverrideConfig>> {
   if (options === true) {
-    await ensurePackages(['postcss-less', 'stylelint-less'])
+    await ensurePackages(['postcss-less', 'stylelint-less'], isInEditor)
     const postcssLess = await interopDefault(import('postcss-less'))
     return {
       files: ['**/*.less'],

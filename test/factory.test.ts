@@ -13,6 +13,14 @@ function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
 }
 
 describe('factory config', () => {
+  it('should warn if in editor', async () => {
+    process.env.VSCODE_PID = '1234'
+    // FIXME(Lumirelle): How to test console output with Vitest?
+    expect(await lumirelle())
+      .toEqual(defaultConfig)
+    delete process.env.VSCODE_PID
+  })
+
   it('should construct default config correctly', async () => {
     expect(await lumirelle())
       .toEqual(defaultConfig)

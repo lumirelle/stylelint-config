@@ -10,13 +10,18 @@ export function isPackageInScope(name: string): boolean {
   return isPackageExists(name, { paths: [scopeUrl] })
 }
 
-export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
+export async function ensurePackages(packages: (string | undefined)[], isInEditor: boolean): Promise<void> {
   if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
     return
 
   const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[]
   if (nonExistingPackages.length === 0)
     return
+
+  if (isInEditor) {
+    console.warn(`[@lumirelle/stylelint-config] The following packages are required but not installed: ${nonExistingPackages.join(', ')}. Please install them to ensure proper functionality.`)
+    return
+  }
 
   const p = await import('@clack/prompts')
   const result = await p.confirm({
@@ -29,4 +34,26 @@ export async function ensurePackages(packages: (string | undefined)[]): Promise<
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
   const resolved = await m
   return (resolved as any).default || resolved
+}
+
+export function isInEditorEnv(): boolean {
+  if (process.env.CI)
+    return false
+  if (isInGitHooksOrLintStaged())
+    return false
+  return !!(false
+    || process.env.VSCODE_PID
+    || process.env.VSCODE_CWD
+    || process.env.JETBRAINS_IDE
+    || process.env.VIM
+    || process.env.NVIM
+  )
+}
+
+export function isInGitHooksOrLintStaged(): boolean {
+  return !!(false
+    || process.env.GIT_PARAMS
+    || process.env.VSCODE_GIT_COMMAND
+    || process.env.npm_lifecycle_script?.startsWith('lint-staged')
+  )
 }

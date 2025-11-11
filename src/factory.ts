@@ -12,6 +12,7 @@ import { stylistic } from './configs/stylistic'
 import { tailwindcss } from './configs/tailwindcss'
 import { vue } from './configs/vue'
 import { GLOB_EXCLUDE } from './globs'
+import { isInEditorEnv } from './utils'
 
 const ScssPackages = [
   'node-sass',
@@ -55,6 +56,11 @@ export function lumirelle(
     },
   } = options
 
+  const isInEditor = isInEditorEnv()
+  if (isInEditor)
+    // eslint-disable-next-line no-console
+    console.log('[@lumirelle/stylelint-config] Detected running in editor.')
+
   let scssOptions = userScssOptions ?? false
   let lessOptions = userLessOptions ?? false
   if (userScssOptions == null && userLessOptions == null && ScssPackages.some(pkg => isPackageExists(pkg)))
@@ -76,7 +82,7 @@ export function lumirelle(
   configs.push(
     css(lessOpinionatedOptions),
     scss(scssOptions),
-    less(lessOptions),
+    less(lessOptions, isInEditor),
     html(htmlOptions),
     vue(vueOptions, scssOptions, lessOptions),
     tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
