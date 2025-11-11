@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle, resolvePackagePath } from '../src'
-import { mergeConfigs } from '../src/factory'
 import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
 
 function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
@@ -14,37 +13,6 @@ function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
 }
 
 describe('factory config', () => {
-  it('should merge multiple configs correctly', async () => {
-    expect(mergeConfigs([
-      {
-        files: ['**/*.scss'],
-        rules: {
-          test: true,
-        },
-      },
-      {
-        rules: {
-          test: null,
-          test2: true,
-        },
-      },
-    ]))
-      .toEqual({
-        rules: {
-          test: null,
-          test2: true,
-        },
-        overrides: [
-          {
-            files: ['**/*.scss'],
-            rules: {
-              test: true,
-            },
-          },
-        ],
-      })
-  })
-
   it('should construct default config correctly', async () => {
     expect(await lumirelle())
       .toEqual(defaultConfig)

@@ -1,3 +1,4 @@
+import type { Awaitable } from '@antfu/utils'
 import type { OptionsConfig, StylelintConfig, StylelintOverrideConfig } from './types'
 import { toArray } from '@antfu/utils'
 import { isPackageExists } from 'local-pkg'
@@ -10,7 +11,6 @@ import { scss } from './configs/scss'
 import { stylistic } from './configs/stylistic'
 import { tailwindcss } from './configs/tailwindcss'
 import { vue } from './configs/vue'
-import { defu } from './defu'
 import { GLOB_EXCLUDE } from './globs'
 
 const ScssPackages = [
@@ -38,7 +38,7 @@ const VuePackages = [
  */
 export function lumirelle(
   options: OptionsConfig = {},
-  ...userConfigs: (StylelintConfig | StylelintOverrideConfig)[]
+  ...userConfigs: Awaitable<StylelintConfig | StylelintOverrideConfig>[]
 ): ConfigComposer {
   const {
     scss: userScssOptions,
@@ -65,7 +65,7 @@ export function lumirelle(
   }
 
   // Base configuration
-  const configs: (StylelintConfig | StylelintOverrideConfig)[] = [
+  const configs: Awaitable<StylelintConfig | StylelintOverrideConfig>[] = [
     {
       allowEmptyInput: true,
       ignoreFiles: [...GLOB_EXCLUDE, ...toArray(options.ignoreFiles)],
@@ -86,18 +86,5 @@ export function lumirelle(
   )
 
   // Merged user config
-  return new ConfigComposer(mergeConfigs(configs))
-}
-
-export function mergeConfigs(configs: (StylelintConfig | StylelintOverrideConfig)[]): StylelintConfig {
-  let finalConfig: StylelintConfig = {}
-  for (const config of configs) {
-    if ('files' in config) {
-      finalConfig = defu({ overrides: [config] }, finalConfig)
-    }
-    else {
-      finalConfig = defu(config, finalConfig)
-    }
-  }
-  return finalConfig
+  return new ConfigComposer(configs)
 }

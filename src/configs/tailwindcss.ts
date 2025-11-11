@@ -13,11 +13,11 @@ export const tailwindcssIgnoreAtRules = [
   'plugin',
 ]
 
-export function tailwindcss(
+export async function tailwindcss(
   options: boolean,
   scss: boolean,
   vue: boolean,
-): StylelintConfig | StylelintOverrideConfig {
+): Promise<StylelintConfig | StylelintOverrideConfig> {
   if (options === true) {
     const config = {
       rules: {

@@ -1,9 +1,9 @@
 import type { StylelintConfig, StylelintOverrideConfig, StylisticConfig } from '../types'
 import { resolvePackagePath } from '../resolve'
 
-export function stylistic(
+export async function stylistic(
   stylistic: boolean | StylisticConfig,
-): StylelintConfig | StylelintOverrideConfig {
+): Promise<StylelintConfig | StylelintOverrideConfig> {
   const {
     indent = 2,
     quotes = 'single',

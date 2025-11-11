@@ -6,7 +6,7 @@ import { useCSSRules } from '../rules/css'
 import { useLessRules } from '../rules/less'
 import { useSCSSRules } from '../rules/scss'
 
-export function vue(options: boolean, scss: boolean, less: boolean): StylelintConfig | StylelintOverrideConfig {
+export async function vue(options: boolean, scss: boolean, less: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
   const stylelintVersion = getPackageInfoSync('stylelint')?.version || '0.0.0'
 
   if (options === true) {

@@ -3,7 +3,7 @@ import postcssLess from 'postcss-less'
 import { resolvePackagePath } from '../resolve'
 import { useLessRules } from '../rules/less'
 
-export function less(options: boolean): StylelintConfig | StylelintOverrideConfig {
+export async function less(options: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
   if (options === true) {
     return {
       files: ['**/*.less'],

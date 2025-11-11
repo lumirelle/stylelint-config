@@ -9,17 +9,17 @@ const customStylisticConfig = {
 } as const
 
 describe('stylistic config', () => {
-  it('should generate empty config when stylistic is disabled', () => {
-    expect(stylistic(false)).toEqual({})
+  it('should generate empty config when stylistic is disabled', async () => {
+    expect(await stylistic(false)).toEqual({})
   })
 
-  it('should generate stylistic config with default settings', () => {
-    expect(stylistic(true)).toEqual(defaultStylisticConfig)
-    expect(stylistic({})).toEqual(defaultStylisticConfig)
+  it('should generate stylistic config with default settings', async () => {
+    expect(await stylistic(true)).toEqual(defaultStylisticConfig)
+    expect(await stylistic({})).toEqual(defaultStylisticConfig)
   })
 
-  it('should generate stylistic config with custom settings', () => {
-    expect(stylistic(customStylisticConfig))
+  it('should generate stylistic config with custom settings', async () => {
+    expect(await stylistic(customStylisticConfig))
       .toEqual({
         ...defaultStylisticConfig,
         rules: {

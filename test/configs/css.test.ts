@@ -3,12 +3,12 @@ import { css } from '../../src'
 import { defaultCSSConfig } from './default-config'
 
 describe('css config', () => {
-  it('should generate config with default opinionated rules', () => {
-    expect(css(false)).toEqual(defaultCSSConfig)
+  it('should generate config with default opinionated rules', async () => {
+    expect(await css(false)).toEqual(defaultCSSConfig)
   })
 
-  it('should generate config with pattern rules disabled', () => {
-    expect(css({ pattern: true })).toEqual({
+  it('should generate config with pattern rules disabled', async () => {
+    expect(await css({ pattern: true })).toEqual({
       ...defaultCSSConfig,
       rules: {
         ...defaultCSSConfig.rules,
@@ -18,8 +18,8 @@ describe('css config', () => {
     })
   })
 
-  it('should generate config with maintainability rules disabled', () => {
-    expect(css({ maintainability: true })).toEqual({
+  it('should generate config with maintainability rules disabled', async () => {
+    expect(await css({ maintainability: true })).toEqual({
       ...defaultCSSConfig,
       rules: {
         ...defaultCSSConfig.rules,
@@ -28,8 +28,8 @@ describe('css config', () => {
     })
   })
 
-  it('should generate config with all opinionated rules disabled', () => {
-    expect(css(true)).toEqual({
+  it('should generate config with all opinionated rules disabled', async () => {
+    expect(await css(true)).toEqual({
       ...defaultCSSConfig,
       rules: {
         ...defaultCSSConfig.rules,

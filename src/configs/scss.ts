@@ -3,7 +3,7 @@ import postcssSCSS from 'postcss-scss'
 import { resolvePackagePath } from '../resolve'
 import { useSCSSRules } from '../rules/scss'
 
-export function scss(options: boolean): StylelintConfig | StylelintOverrideConfig {
+export async function scss(options: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
   if (options === true) {
     return {
       files: ['**/*.scss'],
