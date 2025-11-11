@@ -1,9 +1,10 @@
-import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+import type { Nullable } from '@antfu/utils'
+import type { StylelintOverrideConfig } from '../types'
 import { resolvePackagePath } from '../resolve'
 import { useLessRules } from '../rules/less'
 import { ensurePackages, interopDefault } from '../utils'
 
-export async function less(options: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
+export async function less(options: boolean): Promise<Nullable<StylelintOverrideConfig>> {
   if (options === true) {
     await ensurePackages(['postcss-less', 'stylelint-less'])
     const postcssLess = await interopDefault(import('postcss-less'))
@@ -14,5 +15,5 @@ export async function less(options: boolean): Promise<StylelintConfig | Stylelin
       rules: useLessRules(),
     }
   }
-  return {}
+  return null
 }

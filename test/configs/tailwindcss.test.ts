@@ -5,7 +5,7 @@ import { defaultTailwindCSSConfig } from './default-config'
 
 describe('tailwindcss config', () => {
   it('should generate empty config when Tailwind CSS is disabled', async () => {
-    expect(await tailwindcss(false, false, false)).toEqual({})
+    expect(await tailwindcss(false, false, false)).toEqual(null)
   })
 
   it('should generate Tailwind CSS config with base rules when enabled', async () => {

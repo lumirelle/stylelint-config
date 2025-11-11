@@ -1,4 +1,5 @@
-import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+import type { Nullable } from '@antfu/utils'
+import type { StylelintConfig } from '../types'
 
 export const tailwindcssIgnoreAtRules = [
   'tailwind',
@@ -17,7 +18,7 @@ export async function tailwindcss(
   options: boolean,
   scss: boolean,
   vue: boolean,
-): Promise<StylelintConfig | StylelintOverrideConfig> {
+): Promise<Nullable<StylelintConfig>> {
   if (options === true) {
     const config = {
       rules: {
@@ -41,6 +42,5 @@ export async function tailwindcss(
       return config
     }
   }
-
-  return {}
+  return null
 }

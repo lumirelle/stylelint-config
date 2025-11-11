@@ -4,7 +4,7 @@ import { defaultLessConfig } from './default-config'
 
 describe('less config', () => {
   it('should generate empty config when Less is disabled', async () => {
-    expect(await less(false)).toEqual({})
+    expect(await less(false)).toEqual(null)
   })
 
   it('should generate Less config with all rules when enabled', async () => {

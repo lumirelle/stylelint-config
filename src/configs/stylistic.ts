@@ -1,9 +1,10 @@
-import type { StylelintConfig, StylelintOverrideConfig, StylisticConfig } from '../types'
+import type { Nullable } from '@antfu/utils'
+import type { StylelintConfig, StylisticConfig } from '../types'
 import { resolvePackagePath } from '../resolve'
 
 export async function stylistic(
   stylistic: boolean | StylisticConfig,
-): Promise<StylelintConfig | StylelintOverrideConfig> {
+): Promise<Nullable<StylelintConfig>> {
   const {
     indent = 2,
     quotes = 'single',
@@ -23,6 +24,5 @@ export async function stylistic(
       },
     }
   }
-
-  return {}
+  return null
 }

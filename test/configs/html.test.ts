@@ -4,7 +4,7 @@ import { defaultHTMLConfig } from './default-config'
 
 describe('html config', () => {
   it('should generate empty config when HTML support is disabled', async () => {
-    expect(await html(false)).toEqual({})
+    expect(await html(false)).toEqual(null)
   })
 
   it('should generate HTML config with all rules when enabled', async () => {

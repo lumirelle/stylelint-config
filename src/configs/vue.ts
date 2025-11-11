@@ -1,4 +1,5 @@
-import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+import type { Nullable } from '@antfu/utils'
+import type { StylelintOverrideConfig } from '../types'
 import { getPackageInfoSync } from 'local-pkg'
 import semver from 'semver'
 import { resolvePackagePath } from '../resolve'
@@ -6,7 +7,11 @@ import { useCSSRules } from '../rules/css'
 import { useLessRules } from '../rules/less'
 import { useSCSSRules } from '../rules/scss'
 
-export async function vue(options: boolean, scss: boolean, less: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
+export async function vue(
+  options: boolean,
+  scss: boolean,
+  less: boolean,
+): Promise<Nullable<StylelintOverrideConfig>> {
   const stylelintVersion = getPackageInfoSync('stylelint')?.version || '0.0.0'
 
   if (options === true) {
@@ -60,5 +65,5 @@ export async function vue(options: boolean, scss: boolean, less: boolean): Promi
     return config
   }
 
-  return {}
+  return null
 }

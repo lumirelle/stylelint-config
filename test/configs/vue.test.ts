@@ -8,7 +8,7 @@ import { defaultVueConfig } from './default-config'
 describe('vue config', () => {
   it('should generate empty config when Vue is disabled', async () => {
     expect(await vue(false, false, false))
-      .toEqual({})
+      .toEqual(null)
   })
 
   it('should generate Vue config with CSS rules when enabled', async () => {

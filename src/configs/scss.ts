@@ -1,9 +1,10 @@
-import type { StylelintConfig, StylelintOverrideConfig } from '../types'
+import type { Nullable } from '@antfu/utils'
+import type { StylelintOverrideConfig } from '../types'
 import postcssSCSS from 'postcss-scss'
 import { resolvePackagePath } from '../resolve'
 import { useSCSSRules } from '../rules/scss'
 
-export async function scss(options: boolean): Promise<StylelintConfig | StylelintOverrideConfig> {
+export async function scss(options: boolean): Promise<Nullable<StylelintOverrideConfig>> {
   if (options === true) {
     return {
       files: ['**/*.scss'],
@@ -12,5 +13,5 @@ export async function scss(options: boolean): Promise<StylelintConfig | Stylelin
       rules: useSCSSRules(),
     }
   }
-  return {}
+  return null
 }
