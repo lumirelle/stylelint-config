@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { lumirelle, resolvePackagePath } from '../src'
-import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultVueConfig } from './configs/default-config'
+import { useCSSRules } from '../src/rules/css'
+import { useSCSSRules } from '../src/rules/scss'
+import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultStylisticConfig, defaultVueConfig } from './configs/default-config'
 
 function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
   const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes]
@@ -237,10 +239,23 @@ describe('factory config', () => {
     })).toEqual({
       ...defaultConfig,
       rules: {
-        ...defaultConfig.rules,
-        'selector-class-pattern': null,
-        'selector-id-pattern': null,
+        ...defaultStylisticConfig.rules,
+        ...useCSSRules({ pattern: true }),
       },
+      overrides: [
+        {
+          ...defaultSCSSConfig,
+          rules: useSCSSRules({ pattern: true }),
+        },
+        {
+          ...defaultVueConfig,
+          plugins: [resolvePackagePath('stylelint-scss')],
+          rules: {
+            ...useSCSSRules({ pattern: true }),
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
     })
   })
 
@@ -252,9 +267,23 @@ describe('factory config', () => {
     })).toEqual({
       ...defaultConfig,
       rules: {
-        ...defaultConfig.rules,
-        'no-descending-specificity': null,
+        ...defaultStylisticConfig.rules,
+        ...useCSSRules({ maintainability: true }),
       },
+      overrides: [
+        {
+          ...defaultSCSSConfig,
+          rules: useSCSSRules({ maintainability: true }),
+        },
+        {
+          ...defaultVueConfig,
+          plugins: [resolvePackagePath('stylelint-scss')],
+          rules: {
+            ...useSCSSRules({ maintainability: true }),
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
     })
   })
 
@@ -264,11 +293,23 @@ describe('factory config', () => {
     })).toEqual({
       ...defaultConfig,
       rules: {
-        ...defaultConfig.rules,
-        'selector-class-pattern': null,
-        'selector-id-pattern': null,
-        'no-descending-specificity': null,
+        ...defaultStylisticConfig.rules,
+        ...useCSSRules(true),
       },
+      overrides: [
+        {
+          ...defaultSCSSConfig,
+          rules: useSCSSRules(true),
+        },
+        {
+          ...defaultVueConfig,
+          plugins: [resolvePackagePath('stylelint-scss')],
+          rules: {
+            ...useSCSSRules(true),
+            ...defaultVueConfig.rules,
+          },
+        },
+      ],
     })
   })
 

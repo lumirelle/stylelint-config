@@ -7,16 +7,73 @@ import { defaultVueConfig } from './default-config'
 
 describe('vue config', () => {
   it('should generate empty config when Vue is disabled', async () => {
-    expect(await vue(false, false, false))
+    expect(await vue(false, false, false, false))
       .toEqual(null)
   })
 
   it('should generate Vue config with CSS rules when enabled', async () => {
-    expect(await vue(true, false, false))
+    expect(await vue(true, false, false, false))
       .toEqual({
         ...defaultVueConfig,
         rules: {
-          ...useCSSRules(),
+          ...useCSSRules(false),
+          ...defaultVueConfig.rules,
+          'declaration-property-value-no-unknown': [
+            true,
+            { ignoreProperties: { '/.*/': '/v-bind\\(.+\\)/' } },
+          ],
+          'function-no-unknown': [
+            true,
+            { ignoreFunctions: ['v-bind'] },
+          ],
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS, with less opinionated pattern rules', async () => {
+    expect(await vue(true, false, false, { pattern: true }))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules({ pattern: true }),
+          ...defaultVueConfig.rules,
+          'declaration-property-value-no-unknown': [
+            true,
+            { ignoreProperties: { '/.*/': '/v-bind\\(.+\\)/' } },
+          ],
+          'function-no-unknown': [
+            true,
+            { ignoreFunctions: ['v-bind'] },
+          ],
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS, with less opinionated maintainability rules', async () => {
+    expect(await vue(true, false, false, { maintainability: true }))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules({ maintainability: true }),
+          ...defaultVueConfig.rules,
+          'declaration-property-value-no-unknown': [
+            true,
+            { ignoreProperties: { '/.*/': '/v-bind\\(.+\\)/' } },
+          ],
+          'function-no-unknown': [
+            true,
+            { ignoreFunctions: ['v-bind'] },
+          ],
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS, with all less opinionated rules', async () => {
+    expect(await vue(true, false, false, true))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules(true),
           ...defaultVueConfig.rules,
           'declaration-property-value-no-unknown': [
             true,
@@ -31,36 +88,72 @@ describe('vue config', () => {
   })
 
   it('should generate Vue config with SCSS rules when both enabled', async () => {
-    expect(await vue(true, true, false))
+    expect(await vue(true, true, false, false))
       .toEqual({
         ...defaultVueConfig,
         plugins: [resolvePackagePath('stylelint-scss')],
         rules: {
-          ...useSCSSRules(),
+          ...useSCSSRules(false),
           ...defaultVueConfig.rules,
         },
       })
   })
 
   it('should generate Vue config with Less rules when both enabled', async () => {
-    expect(await vue(true, false, true))
+    expect(await vue(true, false, true, false))
       .toEqual({
         ...defaultVueConfig,
         plugins: [resolvePackagePath('stylelint-less')],
         rules: {
-          ...useLessRules(),
+          ...useLessRules(false),
           ...defaultVueConfig.rules,
         },
       })
   })
 
   it('should generate Vue config with CSS and SCSS rules when both enabled', async () => {
-    expect(await vue(true, true, false))
+    expect(await vue(true, true, false, false))
       .toEqual({
         ...defaultVueConfig,
         plugins: [resolvePackagePath('stylelint-scss')],
         rules: {
-          ...useSCSSRules(),
+          ...useSCSSRules(false),
+          ...defaultVueConfig.rules,
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS and SCSS rules when both enabled, with less opinionated pattern rules', async () => {
+    expect(await vue(true, true, false, { pattern: true }))
+      .toEqual({
+        ...defaultVueConfig,
+        plugins: [resolvePackagePath('stylelint-scss')],
+        rules: {
+          ...useSCSSRules({ pattern: true }),
+          ...defaultVueConfig.rules,
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS and SCSS rules when both enabled, with less opinionated maintainability rules', async () => {
+    expect(await vue(true, true, false, { maintainability: true }))
+      .toEqual({
+        ...defaultVueConfig,
+        plugins: [resolvePackagePath('stylelint-scss')],
+        rules: {
+          ...useSCSSRules({ maintainability: true }),
+          ...defaultVueConfig.rules,
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS and SCSS rules when both enabled, with all less opinionated rules', async () => {
+    expect(await vue(true, true, false, true))
+      .toEqual({
+        ...defaultVueConfig,
+        plugins: [resolvePackagePath('stylelint-scss')],
+        rules: {
+          ...useSCSSRules(true),
           ...defaultVueConfig.rules,
         },
       })

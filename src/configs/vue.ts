@@ -1,5 +1,5 @@
 import type { Nullable } from '@antfu/utils'
-import type { StylelintOverrideConfig } from '../types'
+import type { OptionsOpinionated, StylelintOverrideConfig } from '../types'
 import { getPackageInfoSync } from 'local-pkg'
 import semver from 'semver'
 import { resolvePackagePath } from '../resolve'
@@ -11,6 +11,7 @@ export async function vue(
   options: boolean,
   scss: boolean,
   less: boolean,
+  lessOpinionated: boolean | OptionsOpinionated,
 ): Promise<Nullable<StylelintOverrideConfig>> {
   const stylelintVersion = getPackageInfoSync('stylelint')?.version || '0.0.0'
 
@@ -22,14 +23,14 @@ export async function vue(
 
     if (scss === true) {
       config.plugins = [resolvePackagePath('stylelint-scss')]
-      config.rules = useSCSSRules()
+      config.rules = useSCSSRules(lessOpinionated)
     }
     else if (less === true) {
       config.plugins = [resolvePackagePath('stylelint-less')]
-      config.rules = useLessRules()
+      config.rules = useLessRules(lessOpinionated)
     }
     else {
-      config.rules = useCSSRules()
+      config.rules = useCSSRules(lessOpinionated)
     }
 
     config.rules['selector-pseudo-class-no-unknown'] = [

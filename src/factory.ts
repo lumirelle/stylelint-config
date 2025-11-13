@@ -81,10 +81,10 @@ export function lumirelle(
   // Additional configurations
   configs.push(
     css(lessOpinionatedOptions),
-    scss(scssOptions),
-    less(lessOptions, isInEditor),
+    scss(scssOptions, lessOpinionatedOptions),
+    less(lessOptions, lessOpinionatedOptions, isInEditor),
     html(htmlOptions),
-    vue(vueOptions, scssOptions, lessOptions),
+    vue(vueOptions, scssOptions, lessOptions, lessOpinionatedOptions),
     tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
     stylistic(stylisticOptions),
     ordered(orderedOptions),

@@ -6,8 +6,8 @@ import { ensurePackages, interopDefault } from '../utils'
 
 export async function less(
   options: boolean,
-  isInEditor: boolean,
   lessOpinionated: boolean | OptionsOpinionated,
+  isInEditor: boolean,
 ): Promise<Nullable<StylelintOverrideConfig>> {
   if (options === true) {
     await ensurePackages(['postcss-less', 'stylelint-less'], isInEditor)
