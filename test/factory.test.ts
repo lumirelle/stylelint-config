@@ -23,6 +23,8 @@ function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
 
 describe('factory config', () => {
   it('should log if in editor', async () => {
+    const originalEnvCI = process.env.CI
+    delete process.env.CI
     process.env.VSCODE_PID = '1234'
     expect(await lumirelle())
       .toEqual(defaultConfig)
@@ -32,6 +34,8 @@ describe('factory config', () => {
     // eslint-disable-next-line no-console
     expect(console.log)
       .toHaveBeenCalledWith('[@lumirelle/stylelint-config] Detected running in editor.')
+    if (originalEnvCI !== undefined)
+      process.env.CI = originalEnvCI
     delete process.env.VSCODE_PID
   })
 
