@@ -1,3 +1,4 @@
+import type { OptionsOpinionated } from '../types'
 import cloneDeep from 'lodash.clonedeep'
 
 const cssRules = {
@@ -184,8 +185,36 @@ const cssRules = {
       ignoreValues: ['box', 'inline-box'],
     },
   ],
-} as const
+}
 
-export function useCSSRules(): typeof cssRules {
-  return cloneDeep(cssRules)
+type CSSRules<LessOpinionated extends boolean | OptionsOpinionated>
+  = LessOpinionated extends true
+    ? Omit<typeof cssRules, 'selector-class-pattern' | 'selector-id-pattern' | 'no-descending-specificity'>
+    : LessOpinionated extends OptionsOpinionated
+      ? Omit<
+          typeof cssRules,
+          (LessOpinionated['pattern'] extends true ? 'selector-class-pattern' | 'selector-id-pattern' : never)
+          | (LessOpinionated['maintainability'] extends true ? 'no-descending-specificity' : never)
+      >
+      : typeof cssRules
+
+export function useCSSRules<LessOpinionated extends boolean | OptionsOpinionated>(
+  lessOpinionated: LessOpinionated,
+): CSSRules<LessOpinionated> & {} {
+  const rules: Partial<typeof cssRules> = cloneDeep(cssRules)
+  if (typeof lessOpinionated === 'object') {
+    if (lessOpinionated.pattern === true) {
+      delete rules['selector-class-pattern']
+      delete rules['selector-id-pattern']
+    }
+    if (lessOpinionated.maintainability === true) {
+      delete rules['no-descending-specificity']
+    }
+  }
+  else if (lessOpinionated === true) {
+    delete rules['selector-class-pattern']
+    delete rules['selector-id-pattern']
+    delete rules['no-descending-specificity']
+  }
+  return rules as CSSRules<LessOpinionated> & {}
 }

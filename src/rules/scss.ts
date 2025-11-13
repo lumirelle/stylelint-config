@@ -1,8 +1,8 @@
+import type { OptionsOpinionated } from '../types'
 import cloneDeep from 'lodash.clonedeep'
 import { useCSSRules } from './css'
 
 const scssRules = {
-  ...useCSSRules(),
   // Recommended
   'annotation-no-unknown': null,
   'at-rule-descriptor-no-unknown': null,
@@ -111,6 +111,11 @@ const scssRules = {
   ],
 } as const
 
-export function useSCSSRules(): typeof scssRules {
-  return cloneDeep(scssRules)
+export function useSCSSRules<LessOpinionated extends boolean | OptionsOpinionated>(
+  lessOpinionated: LessOpinionated,
+): ReturnType<typeof useCSSRules<LessOpinionated>> & { rules: typeof scssRules } {
+  return {
+    ...useCSSRules(lessOpinionated),
+    ...cloneDeep(scssRules),
+  }
 }

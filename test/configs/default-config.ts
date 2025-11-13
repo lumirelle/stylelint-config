@@ -7,7 +7,7 @@ import { useLessRules } from '../../src/rules/less'
 import { useSCSSRules } from '../../src/rules/scss'
 
 export const defaultCSSConfig = {
-  rules: useCSSRules(),
+  rules: useCSSRules(false),
 }
 
 export const defaultStylisticConfig = {
@@ -34,14 +34,14 @@ export const defaultSCSSConfig = {
   files: ['**/*.scss'],
   customSyntax: postcssSCSS,
   plugins: [resolvePackagePath('stylelint-scss')],
-  rules: useSCSSRules(),
+  rules: useSCSSRules(false),
 }
 
 export const defaultLessConfig = {
   files: ['**/*.less'],
   customSyntax: postcssLess,
   plugins: [resolvePackagePath('stylelint-less')],
-  rules: useLessRules(),
+  rules: useLessRules(false),
 }
 
 export const defaultTailwindCSSConfig = {
