@@ -1,9 +1,23 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { resolvePackagePath, vue } from '../../src'
 import { useCSSRules } from '../../src/rules/css'
 import { useLessRules } from '../../src/rules/less'
 import { useSCSSRules } from '../../src/rules/scss'
 import { defaultVueConfig } from './default-config'
+
+const mocks = vi.hoisted(() => {
+  return {
+    getPackageInfoSync: vi.fn().mockReturnValue({ version: '16.13.0' }),
+  }
+})
+
+vi.mock('local-pkg', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('local-pkg')>()
+  return {
+    ...actual,
+    getPackageInfoSync: mocks.getPackageInfoSync,
+  }
+})
 
 describe('vue config', () => {
   it('should generate empty config when Vue is disabled', async () => {
@@ -11,7 +25,48 @@ describe('vue config', () => {
       .toEqual(null)
   })
 
-  it('should generate Vue config with CSS rules when enabled', async () => {
+  it('should generate Vue config with CSS rules correctly when stylelint is not installed', async () => {
+    mocks.getPackageInfoSync.mockReturnValueOnce(undefined)
+    expect(await vue(true, false, false, false))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules(false),
+          ...defaultVueConfig.rules,
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS rules correctly when stylelint version eq 14.4.0', async () => {
+    mocks.getPackageInfoSync.mockReturnValueOnce({ version: '14.4.0' })
+    expect(await vue(true, false, false, false))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules(false),
+          ...defaultVueConfig.rules,
+          'function-no-unknown': null,
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS rules correctly when stylelint version eq 14.5.0', async () => {
+    mocks.getPackageInfoSync.mockReturnValueOnce({ version: '14.5.0' })
+    expect(await vue(true, false, false, false))
+      .toEqual({
+        ...defaultVueConfig,
+        rules: {
+          ...useCSSRules(false),
+          ...defaultVueConfig.rules,
+          'function-no-unknown': [
+            true,
+            { ignoreFunctions: ['v-bind'] },
+          ],
+        },
+      })
+  })
+
+  it('should generate Vue config with CSS rules correctly when stylelint version eq 16.13.0', async () => {
     expect(await vue(true, false, false, false))
       .toEqual({
         ...defaultVueConfig,

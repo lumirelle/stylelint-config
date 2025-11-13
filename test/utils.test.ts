@@ -1,6 +1,25 @@
 import { describe, expect, it, vi } from 'vitest'
 import { ensurePackages, interopDefault, isInEditorEnv, isInGitHooksOrLintStaged, isPackageInScope } from '../src/utils'
 
+const mocks = vi.hoisted(() => {
+  return {
+    mockConfirm: vi.fn().mockResolvedValue(true),
+    mockInstallPackage: vi.fn().mockResolvedValue(undefined),
+  }
+})
+
+vi.mock('@clack/prompts', () => {
+  return {
+    confirm: mocks.mockConfirm,
+  }
+})
+
+vi.mock('@antfu/install-pkg', () => {
+  return {
+    installPackage: mocks.mockInstallPackage,
+  }
+})
+
 describe('utils', () => {
   it('package should in scope', () => {
     expect(isPackageInScope('stylelint'))
@@ -21,34 +40,57 @@ describe('utils', () => {
     process.env.CI = 'true'
     expect(await ensurePackages(['stylelint'], false))
       .toBeUndefined()
+    expect(mocks.mockConfirm).not.toHaveBeenCalled()
+    expect(mocks.mockInstallPackage).not.toHaveBeenCalled()
     delete process.env.CI
   })
 
   it('ensure packages should return nothing for existing packages', async () => {
     expect(await ensurePackages(['stylelint'], false))
       .toBeUndefined()
+    expect(mocks.mockConfirm).not.toHaveBeenCalled()
+    expect(mocks.mockInstallPackage).not.toHaveBeenCalled()
   })
 
   it('ensure packages should throw error if in editor', async () => {
     await expect(ensurePackages(['not-exist-package'], true))
       .rejects
       .toThrow()
+    expect(mocks.mockConfirm).not.toHaveBeenCalled()
+    expect(mocks.mockInstallPackage).not.toHaveBeenCalled()
   })
 
-  it('ensure packages should be stuck', async () => {
-    function isPromisePending(promise: Promise<any>): boolean {
-      let isPending = true
-      promise.then(
-        () => { isPending = false },
-        () => { isPending = false },
-      )
-      return isPending
-    }
+  it('ensure packages should prompt and install pkg', async () => {
+    expect(await ensurePackages(['not-exist-package'], false))
+      .toBeUndefined()
+    expect(mocks.mockConfirm).toHaveBeenCalledOnce()
+    expect(mocks.mockInstallPackage).toHaveBeenCalledOnce()
+  })
 
-    vi.useFakeTimers()
-    const promise = ensurePackages(['not-exist-package'], false)
-    vi.advanceTimersByTime(4000)
-    expect(isPromisePending(promise)).toBe(true)
+  it('ensure packages should prompt but not install pkg', async () => {
+    process.env.TEST_NOT_CONFIRM = 'true'
+    mocks.mockConfirm.mockResolvedValueOnce(false)
+    expect(await ensurePackages(['not-exist-package'], false))
+      .toBeUndefined()
+    expect(mocks.mockConfirm).toHaveBeenCalledTimes(2)
+    expect(mocks.mockInstallPackage).toHaveBeenCalledOnce()
+    delete process.env.TEST_NOT_CONFIRM
+  })
+
+  it('ensure packages should prompt one pkg correctly', async () => {
+    expect(await ensurePackages(['not-exist-package'], false))
+      .toBeUndefined()
+    expect(mocks.mockConfirm).toHaveBeenCalledWith({
+      message: 'Package is required for this config: not-exist-package. Do you want to install them?',
+    })
+  })
+
+  it('ensure packages should prompt more pkg correctly', async () => {
+    expect(await ensurePackages(['not-exist-package', 'another-package'], false))
+      .toBeUndefined()
+    expect(mocks.mockConfirm).toHaveBeenCalledWith({
+      message: 'Packages are required for this config: not-exist-package, another-package. Do you want to install them?',
+    })
   })
 
   it('should not in editor', () => {

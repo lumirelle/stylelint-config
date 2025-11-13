@@ -1,8 +1,15 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { lumirelle, resolvePackagePath } from '../src'
 import { useCSSRules } from '../src/rules/css'
 import { useSCSSRules } from '../src/rules/scss'
 import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultStylisticConfig, defaultVueConfig } from './configs/default-config'
+
+// eslint-disable-next-line no-console
+const originalConsole = console.log.bind(console)
+// eslint-disable-next-line no-console
+console.log = vi.fn((message: string, ...optionalParams: any[]) => {
+  originalConsole(message, ...optionalParams)
+})
 
 function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
   const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes]
@@ -15,11 +22,16 @@ function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
 }
 
 describe('factory config', () => {
-  it('should warn if in editor', async () => {
+  it('should log if in editor', async () => {
     process.env.VSCODE_PID = '1234'
-    // FIXME(Lumirelle): How to test console output with Vitest?
     expect(await lumirelle())
       .toEqual(defaultConfig)
+    // eslint-disable-next-line no-console
+    expect(console.log)
+      .toHaveBeenCalledOnce()
+    // eslint-disable-next-line no-console
+    expect(console.log)
+      .toHaveBeenCalledWith('[@lumirelle/stylelint-config] Detected running in editor.')
     delete process.env.VSCODE_PID
   })
 
