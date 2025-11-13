@@ -84,6 +84,7 @@
     "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
     "@vitest/coverage-v8": "catalog:testing",
+    "@vitest/ui": "catalog:testing",
     "bumpp": "catalog:dev",
     "czg": "catalog:dev",
     "eslint": "catalog:dev",

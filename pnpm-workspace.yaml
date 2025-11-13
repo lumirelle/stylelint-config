@@ -37,6 +37,7 @@ catalogs:
     stylelint-scss: ^6.12.1
   testing:
     '@vitest/coverage-v8': ^4.0.8
+    '@vitest/ui': ^4.0.8
     sass-embedded: ^1.93.3
     tinyexec: ^1.0.2
     tinyglobby: ^0.2.15
