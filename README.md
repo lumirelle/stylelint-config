@@ -196,7 +196,7 @@ export default lumirelle(
 
 ## License
 
-[MIT](./LICENSE) License © [Lumirelle](https://github.com/lumirelle)
+[MIT](./LICENSE.md) License © [Lumirelle](https://github.com/lumirelle)
 
 <!-- Badges -->
 
@@ -211,4 +211,4 @@ export default lumirelle(
 [codecov-src]: https://img.shields.io/codecov/c/gh/lumirelle/stylelint-config/main?style=flat&colorA=18181B&colorB=F0DB4F
 [codecov-href]: https://codecov.io/gh/lumirelle/stylelint-config
 [license-src]: https://img.shields.io/github/license/lumirelle/stylelint-config.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://github.com/lumirelle/stylelint-config/blob/main/LICENSE
+[license-href]: https://github.com/lumirelle/stylelint-config/blob/main/LICENSE.md
