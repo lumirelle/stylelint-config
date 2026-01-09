@@ -1,0 +1,16 @@
+name: Release Commit
+
+on:
+  push:
+    branches: ['**']
+    tags-ignore: ['v*']
+  pull_request: {}
+
+permissions: {}
+
+jobs:
+  release-commit:
+    uses: lumirelle/workflows/.github/workflows/release-commit.yml@v3
+    with:
+      compact: true
+      packages: './packages/*'

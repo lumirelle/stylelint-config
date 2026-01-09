@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'bun:test'
 import { ensurePackages, interopDefault, isInEditorEnv, isInGitHooksOrLintStaged, isPackageInScope } from '../src/utils'
 
 const mocks = vi.hoisted(() => {
@@ -32,7 +32,7 @@ describe('utils', () => {
   })
 
   it('should interop default correctly', () => {
-    expect(interopDefault(import('vitest')))
+    expect(interopDefault(import('stylelint')))
       .toBeDefined()
   })
 

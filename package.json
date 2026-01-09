@@ -2,7 +2,6 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "4.1.5",
-  "packageManager": "pnpm@10.23.0",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -13,9 +12,6 @@
     "url": "git+https://github.com/lumirelle/stylelint-config.git"
   },
   "bugs": "https://github.com/lumirelle/stylelint-config/issues",
-  "publishConfig": {
-    "access": "public"
-  },
   "keywords": [
     "stylelint",
     "stylelint-config",
@@ -24,7 +20,9 @@
     "vue",
     "lumirelle"
   ],
-  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
@@ -36,17 +34,71 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown",
-    "dev": "tsdown --watch",
-    "lint": "eslint",
-    "prepublishOnly": "nr build",
-    "prerelease": "nr test:run && nr typecheck",
-    "release": "nr prerelease && bumpp && na publish",
-    "start": "tsx src/index.ts",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks"
+    "prepare": "bun run simple-git-hooks",
+    "dev": "bun run tsdown --watch",
+    "build": "bun run tsdown",
+    "start": "bun run ./src/index.ts",
+    "lint": "bun run eslint",
+    "typecheck": "bun run tsc --noEmit",
+    "usagecheck": "bun run knip",
+    "check": "bun run lint && bun run typecheck && bun run usagecheck",
+    "test": "bun test",
+    "prerelease": "bun run build --attw.profile esm-only --publint && bun run check && bun run test",
+    "release": "bun run bumpp"
+  },
+  "workspaces": {
+    "packages": [
+      "."
+    ],
+    "catalogs": {
+      "dev": {
+        "@antfu/eslint-config": "^6.7.3",
+        "bumpp": "^10.3.2",
+        "eslint": "^9.39.2",
+        "eslint-plugin-format": "^1.2.0",
+        "knip": "^5.80.0",
+        "lint-staged": "^16.2.7",
+        "postcss-less": "^6.0.0",
+        "simple-git-hooks": "git+https://github.com/toplenboren/simple-git-hooks.git#7625657",
+        "stylelint": "^16.26.1",
+        "stylelint-less": "^4.0.0",
+        "typescript": "^5.9.3"
+      },
+      "build": {
+        "@arethetypeswrong/core": "^0.18.2",
+        "publint": "^0.3.16",
+        "tsdown": "^0.18.4"
+      },
+      "inlined": {
+        "@antfu/utils": "^9.3.0"
+      },
+      "prod": {
+        "@antfu/install-pkg": "^1.1.0",
+        "@clack/prompts": "^0.11.0",
+        "@lumirelle/defu": "^1.1.0",
+        "@stylistic/stylelint-config": "^3.0.1",
+        "local-pkg": "^1.1.2",
+        "lodash.clonedeep": "^4.5.0",
+        "postcss-scss": "^4.0.9",
+        "semver": "^7.7.3",
+        "stylelint-config-html": "^1.1.0",
+        "stylelint-config-recess-order": "^7.4.0",
+        "stylelint-scss": "^6.14.0"
+      },
+      "testing": {
+        "sass-embedded": "^1.97.2",
+        "tinyexec": "^1.0.2",
+        "tinyglobby": "^0.2.15",
+        "vitest-package-exports": "^1.1.2",
+        "vue": "^3.5.26"
+      },
+      "types": {
+        "@types/bun": "^1.3.5",
+        "@types/lodash.clonedeep": "^4.5.9",
+        "@types/postcss-less": "^4.0.7",
+        "@types/semver": "^7.7.1"
+      }
+    }
   },
   "peerDependencies": {
     "postcss-less": ">=6.0.0",
@@ -76,40 +128,34 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
-    "@antfu/ni": "catalog:dev",
     "@antfu/utils": "catalog:inlined",
-    "@lumirelle/stylelint-config": "workspace:*",
+    "@arethetypeswrong/core": "catalog:build",
+    "@types/bun": "catalog:types",
     "@types/lodash.clonedeep": "catalog:types",
-    "@types/node": "catalog:types",
     "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
-    "@vitest/coverage-v8": "catalog:testing",
-    "@vitest/ui": "catalog:testing",
     "bumpp": "catalog:dev",
-    "czg": "catalog:dev",
     "eslint": "catalog:dev",
     "eslint-plugin-format": "catalog:dev",
+    "knip": "catalog:dev",
     "lint-staged": "catalog:dev",
     "postcss-less": "catalog:dev",
+    "publint": "catalog:build",
     "sass-embedded": "catalog:testing",
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
-    "taze": "catalog:dev",
     "tinyexec": "catalog:testing",
     "tinyglobby": "catalog:testing",
-    "tsdown": "catalog:dev",
-    "tsx": "catalog:dev",
+    "tsdown": "catalog:build",
     "typescript": "catalog:dev",
-    "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
-    "vue": "catalog:testing",
-    "yaml": "catalog:testing"
+    "vue": "catalog:testing"
   },
   "simple-git-hooks": {
-    "pre-commit": "na exec lint-staged"
+    "pre-commit": "bun run lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "*": "bun run eslint --fix"
   }
 }

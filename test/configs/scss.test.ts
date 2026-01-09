@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { scss } from '../../src'
 import { useSCSSRules } from '../../src/rules/scss'
 import { defaultSCSSConfig } from './default-config'

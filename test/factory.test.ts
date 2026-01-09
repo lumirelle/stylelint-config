@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'bun:test'
 import { lumirelle, resolvePackagePath } from '../src'
 import { useCSSRules } from '../src/rules/css'
 import { useSCSSRules } from '../src/rules/scss'

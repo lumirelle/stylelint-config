@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { stylistic } from '../../src'
 import { defaultStylisticConfig } from './default-config'
 

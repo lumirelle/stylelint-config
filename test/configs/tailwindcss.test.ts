@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { tailwindcss } from '../../src'
 import { tailwindcssIgnoreAtRules } from '../../src/configs/tailwindcss'
 import { defaultTailwindCSSConfig } from './default-config'

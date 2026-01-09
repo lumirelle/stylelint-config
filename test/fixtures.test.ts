@@ -1,11 +1,11 @@
 import type { OptionsConfig } from '../src/types'
 
+import { afterAll, beforeAll, it } from 'bun:test'
 import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-import { x } from 'tinyexec'
 
+import { x } from 'tinyexec'
 import { glob } from 'tinyglobby'
-import { afterAll, beforeAll, it } from 'vitest'
 
 const isWindows = process.platform === 'win32'
 const timeout = isWindows ? 300_000 : 30_000

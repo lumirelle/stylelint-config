@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'bun:test'
 import { less } from '../../src'
 import { useLessRules } from '../../src/rules/less'
 import { defaultLessConfig } from './default-config'

@@ -1,5 +1,5 @@
+import { describe, expect, it } from 'bun:test'
 import cloneDeep from 'lodash.clonedeep'
-import { describe, expect, it } from 'vitest'
 
 describe('cloneDeep', () => {
   it('should deep clone objects with nested structures', () => {
