@@ -1,9 +1,7 @@
 import type { OptionsConfig } from '../src/types'
-
-import { afterAll, beforeAll, it } from 'bun:test'
+import { afterAll, beforeAll, expect, it } from 'bun:test'
 import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-
 import { x } from 'tinyexec'
 import { glob } from 'tinyglobby'
 
@@ -159,18 +157,18 @@ runWithConfig('should apply all features with Less support', 'all+less', {
 }, '*.{css,less,html,vue,js}')
 
 function runWithConfig(displayName: string, dirName: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
-  it.concurrent(displayName, async ({ expect }) => {
-    const from = resolve('fixtures/input')
+  it.concurrent(displayName, async () => {
+    const input = resolve('fixtures/input')
     const output = resolve('fixtures/output', dirName)
-    const target = resolve('_fixtures', dirName)
+    const processed = resolve('_fixtures', dirName)
 
-    await fs.cp(from, target, {
+    await fs.cp(input, processed, {
       recursive: true,
       filter: (src) => {
         return !src.includes('node_modules')
       },
     })
-    await fs.writeFile(join(target, 'stylelint.config.js'), `
+    await fs.writeFile(join(processed, 'stylelint.config.js'), `
 import lumirelle from '@lumirelle/stylelint-config'
 
 export default lumirelle(
@@ -180,7 +178,7 @@ export default lumirelle(
 
     await x('npx', ['stylelint', filePatterns, '--fix'], {
       nodeOptions: {
-        cwd: target,
+        cwd: processed,
         stdio: 'pipe',
       },
     })
@@ -190,18 +188,20 @@ export default lumirelle(
         'node_modules',
         'stylelint.config.js',
       ],
-      cwd: target,
+      cwd: processed,
     })
 
     await Promise.all(files.map(async (file) => {
-      const content = await fs.readFile(join(target, file), 'utf-8')
-      const source = await fs.readFile(join(from, file), 'utf-8')
+      const content = await fs.readFile(join(processed, file), 'utf-8')
+      const source = await fs.readFile(join(input, file), 'utf-8')
       const outputPath = join(output, file)
       if (content === source) {
         await fs.rm(outputPath, { force: true })
         return
       }
-      await expect.soft(content).toMatchFileSnapshot(join(output, file))
+      await fs.writeFile(outputPath, content)
+      const expected = await fs.readFile(outputPath, 'utf-8')
+      expect(content).toBe(expected)
     }))
   }, timeout)
 }

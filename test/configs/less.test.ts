@@ -1,35 +1,1015 @@
 import { describe, expect, it } from 'bun:test'
 import { less } from '../../src'
-import { useLessRules } from '../../src/rules/less'
-import { defaultLessConfig } from './default-config'
 
 describe('less config', () => {
   it('should generate empty config when Less is disabled', async () => {
-    expect(await less(false, false, false)).toEqual(null)
+    expect(await less(false, false, false))
+      .toBeNull()
   })
 
   it('should generate Less config with all rules when enabled', async () => {
-    expect(await less(true, false, false)).toEqual(defaultLessConfig)
+    expect(await less(true, false, false))
+      .toMatchInlineSnapshot(`
+        {
+          "customSyntax": {
+            "nodeToString": [Function: nodeToString],
+            "parse": [Function: parse],
+            "stringify": [Function: stringify],
+          },
+          "files": [
+            "**/*.less",
+          ],
+          "plugins": [
+            "stylelint-less",
+          ],
+          "rules": {
+            "alpha-value-notation": [
+              "percentage",
+              {
+                "exceptProperties": [
+                  "opacity",
+                  "fill-opacity",
+                  "flood-opacity",
+                  "stop-opacity",
+                  "stroke-opacity",
+                ],
+              },
+            ],
+            "annotation-no-unknown": true,
+            "at-rule-descriptor-no-unknown": true,
+            "at-rule-descriptor-value-no-unknown": true,
+            "at-rule-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "blockless-after-same-name-blockless",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "at-rule-no-deprecated": true,
+            "at-rule-no-unknown": null,
+            "at-rule-no-vendor-prefix": true,
+            "at-rule-prelude-no-invalid": [
+              true,
+              {
+                "ignoreAtRules": [
+                  "media",
+                ],
+              },
+            ],
+            "block-no-empty": true,
+            "block-no-redundant-nested-style-rules": true,
+            "color-function-alias-notation": "without-alpha",
+            "color-function-notation": "modern",
+            "color-hex-length": "short",
+            "comment-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "stylelint-commands",
+                ],
+              },
+            ],
+            "comment-no-empty": true,
+            "comment-whitespace-inside": "always",
+            "container-name-pattern": [
+              "^(--)?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-media-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-property-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-custom-property",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "custom-property-no-missing-var-function": true,
+            "custom-property-pattern": [
+              "^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "declaration-block-no-duplicate-custom-properties": true,
+            "declaration-block-no-duplicate-properties": [
+              true,
+              {
+                "ignore": [
+                  "consecutive-duplicates-with-different-syntaxes",
+                ],
+              },
+            ],
+            "declaration-block-no-redundant-longhand-properties": true,
+            "declaration-block-no-shorthand-property-overrides": true,
+            "declaration-block-single-line-max-declarations": 1,
+            "declaration-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-declaration",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "declaration-property-value-keyword-no-deprecated": true,
+            "declaration-property-value-no-unknown": null,
+            "font-family-name-quotes": "always-where-recommended",
+            "font-family-no-duplicate-names": true,
+            "font-family-no-missing-generic-family-keyword": true,
+            "function-calc-no-unspaced-operator": true,
+            "function-name-case": "lower",
+            "function-no-unknown": null,
+            "function-url-quotes": "always",
+            "hue-degree-notation": "angle",
+            "import-notation": "string",
+            "keyframe-block-no-duplicate-selectors": true,
+            "keyframe-declaration-no-important": true,
+            "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
+            "keyframes-name-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "layer-name-pattern": [
+              "^([a-z][a-z0-9]*)([.-][a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "length-zero-no-unit": [
+              true,
+              {
+                "ignore": [
+                  "custom-properties",
+                ],
+              },
+            ],
+            "less/color-no-invalid-hex": true,
+            "less/no-duplicate-variables": true,
+            "lightness-notation": "percentage",
+            "media-feature-name-no-unknown": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "media-feature-name-value-no-unknown": true,
+            "media-feature-range-notation": "context",
+            "media-query-no-invalid": null,
+            "media-type-no-deprecated": true,
+            "named-grid-areas-no-invalid": true,
+            "nesting-selector-no-missing-scoping-root": true,
+            "no-descending-specificity": true,
+            "no-duplicate-at-import-rules": true,
+            "no-duplicate-selectors": true,
+            "no-empty-source": true,
+            "no-invalid-double-slash-comments": true,
+            "no-invalid-position-at-import-rule": null,
+            "no-invalid-position-declaration": true,
+            "no-irregular-whitespace": true,
+            "number-max-precision": 4,
+            "property-no-deprecated": true,
+            "property-no-unknown": true,
+            "property-no-vendor-prefix": true,
+            "rule-empty-line-before": [
+              "always-multi-line",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "selector-anb-no-unmatchable": true,
+            "selector-attribute-quotes": "always",
+            "selector-class-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "selector-id-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "selector-no-vendor-prefix": true,
+            "selector-not-notation": "complex",
+            "selector-pseudo-class-no-unknown": [
+              true,
+              {
+                "ignorePseudoClasses": [
+                  "global",
+                ],
+              },
+            ],
+            "selector-pseudo-element-colon-notation": "double",
+            "selector-pseudo-element-no-unknown": true,
+            "selector-type-case": "lower",
+            "selector-type-no-unknown": [
+              true,
+              {
+                "ignore": [
+                  "custom-elements",
+                ],
+              },
+            ],
+            "shorthand-property-no-redundant-values": true,
+            "string-no-newline": [
+              true,
+              {
+                "ignore": [
+                  "at-rule-preludes",
+                  "declaration-values",
+                ],
+              },
+            ],
+            "syntax-string-no-invalid": true,
+            "value-keyword-case": "lower",
+            "value-no-vendor-prefix": [
+              true,
+              {
+                "ignoreValues": [
+                  "box",
+                  "inline-box",
+                ],
+              },
+            ],
+          },
+        }
+      `)
   })
 
   it('should generate Less config with less opinionated pattern rules correctly', async () => {
-    expect(await less(true, { pattern: true }, false)).toEqual({
-      ...defaultLessConfig,
-      rules: useLessRules({ pattern: true }),
-    })
+    expect(await less(true, { pattern: true }, false))
+      .toMatchInlineSnapshot(`
+        {
+          "customSyntax": {
+            "nodeToString": [Function: nodeToString],
+            "parse": [Function: parse],
+            "stringify": [Function: stringify],
+          },
+          "files": [
+            "**/*.less",
+          ],
+          "plugins": [
+            "stylelint-less",
+          ],
+          "rules": {
+            "alpha-value-notation": [
+              "percentage",
+              {
+                "exceptProperties": [
+                  "opacity",
+                  "fill-opacity",
+                  "flood-opacity",
+                  "stop-opacity",
+                  "stroke-opacity",
+                ],
+              },
+            ],
+            "annotation-no-unknown": true,
+            "at-rule-descriptor-no-unknown": true,
+            "at-rule-descriptor-value-no-unknown": true,
+            "at-rule-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "blockless-after-same-name-blockless",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "at-rule-no-deprecated": true,
+            "at-rule-no-unknown": null,
+            "at-rule-no-vendor-prefix": true,
+            "at-rule-prelude-no-invalid": [
+              true,
+              {
+                "ignoreAtRules": [
+                  "media",
+                ],
+              },
+            ],
+            "block-no-empty": true,
+            "block-no-redundant-nested-style-rules": true,
+            "color-function-alias-notation": "without-alpha",
+            "color-function-notation": "modern",
+            "color-hex-length": "short",
+            "comment-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "stylelint-commands",
+                ],
+              },
+            ],
+            "comment-no-empty": true,
+            "comment-whitespace-inside": "always",
+            "container-name-pattern": [
+              "^(--)?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-media-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-property-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-custom-property",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "custom-property-no-missing-var-function": true,
+            "custom-property-pattern": [
+              "^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "declaration-block-no-duplicate-custom-properties": true,
+            "declaration-block-no-duplicate-properties": [
+              true,
+              {
+                "ignore": [
+                  "consecutive-duplicates-with-different-syntaxes",
+                ],
+              },
+            ],
+            "declaration-block-no-redundant-longhand-properties": true,
+            "declaration-block-no-shorthand-property-overrides": true,
+            "declaration-block-single-line-max-declarations": 1,
+            "declaration-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-declaration",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "declaration-property-value-keyword-no-deprecated": true,
+            "declaration-property-value-no-unknown": null,
+            "font-family-name-quotes": "always-where-recommended",
+            "font-family-no-duplicate-names": true,
+            "font-family-no-missing-generic-family-keyword": true,
+            "function-calc-no-unspaced-operator": true,
+            "function-name-case": "lower",
+            "function-no-unknown": null,
+            "function-url-quotes": "always",
+            "hue-degree-notation": "angle",
+            "import-notation": "string",
+            "keyframe-block-no-duplicate-selectors": true,
+            "keyframe-declaration-no-important": true,
+            "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
+            "keyframes-name-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "layer-name-pattern": [
+              "^([a-z][a-z0-9]*)([.-][a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "length-zero-no-unit": [
+              true,
+              {
+                "ignore": [
+                  "custom-properties",
+                ],
+              },
+            ],
+            "less/color-no-invalid-hex": true,
+            "less/no-duplicate-variables": true,
+            "lightness-notation": "percentage",
+            "media-feature-name-no-unknown": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "media-feature-name-value-no-unknown": true,
+            "media-feature-range-notation": "context",
+            "media-query-no-invalid": null,
+            "media-type-no-deprecated": true,
+            "named-grid-areas-no-invalid": true,
+            "nesting-selector-no-missing-scoping-root": true,
+            "no-descending-specificity": true,
+            "no-duplicate-at-import-rules": true,
+            "no-duplicate-selectors": true,
+            "no-empty-source": true,
+            "no-invalid-double-slash-comments": true,
+            "no-invalid-position-at-import-rule": null,
+            "no-invalid-position-declaration": true,
+            "no-irregular-whitespace": true,
+            "number-max-precision": 4,
+            "property-no-deprecated": true,
+            "property-no-unknown": true,
+            "property-no-vendor-prefix": true,
+            "rule-empty-line-before": [
+              "always-multi-line",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "selector-anb-no-unmatchable": true,
+            "selector-attribute-quotes": "always",
+            "selector-no-vendor-prefix": true,
+            "selector-not-notation": "complex",
+            "selector-pseudo-class-no-unknown": [
+              true,
+              {
+                "ignorePseudoClasses": [
+                  "global",
+                ],
+              },
+            ],
+            "selector-pseudo-element-colon-notation": "double",
+            "selector-pseudo-element-no-unknown": true,
+            "selector-type-case": "lower",
+            "selector-type-no-unknown": [
+              true,
+              {
+                "ignore": [
+                  "custom-elements",
+                ],
+              },
+            ],
+            "shorthand-property-no-redundant-values": true,
+            "string-no-newline": [
+              true,
+              {
+                "ignore": [
+                  "at-rule-preludes",
+                  "declaration-values",
+                ],
+              },
+            ],
+            "syntax-string-no-invalid": true,
+            "value-keyword-case": "lower",
+            "value-no-vendor-prefix": [
+              true,
+              {
+                "ignoreValues": [
+                  "box",
+                  "inline-box",
+                ],
+              },
+            ],
+          },
+        }
+      `)
   })
 
   it('should generate Less config with less opinionated maintainability rules correctly', async () => {
-    expect(await less(true, { maintainability: true }, false)).toEqual({
-      ...defaultLessConfig,
-      rules: useLessRules({ maintainability: true }),
-    })
+    expect(await less(true, { maintainability: true }, false))
+      .toMatchInlineSnapshot(`
+        {
+          "customSyntax": {
+            "nodeToString": [Function: nodeToString],
+            "parse": [Function: parse],
+            "stringify": [Function: stringify],
+          },
+          "files": [
+            "**/*.less",
+          ],
+          "plugins": [
+            "stylelint-less",
+          ],
+          "rules": {
+            "alpha-value-notation": [
+              "percentage",
+              {
+                "exceptProperties": [
+                  "opacity",
+                  "fill-opacity",
+                  "flood-opacity",
+                  "stop-opacity",
+                  "stroke-opacity",
+                ],
+              },
+            ],
+            "annotation-no-unknown": true,
+            "at-rule-descriptor-no-unknown": true,
+            "at-rule-descriptor-value-no-unknown": true,
+            "at-rule-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "blockless-after-same-name-blockless",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "at-rule-no-deprecated": true,
+            "at-rule-no-unknown": null,
+            "at-rule-no-vendor-prefix": true,
+            "at-rule-prelude-no-invalid": [
+              true,
+              {
+                "ignoreAtRules": [
+                  "media",
+                ],
+              },
+            ],
+            "block-no-empty": true,
+            "block-no-redundant-nested-style-rules": true,
+            "color-function-alias-notation": "without-alpha",
+            "color-function-notation": "modern",
+            "color-hex-length": "short",
+            "comment-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "stylelint-commands",
+                ],
+              },
+            ],
+            "comment-no-empty": true,
+            "comment-whitespace-inside": "always",
+            "container-name-pattern": [
+              "^(--)?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-media-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-property-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-custom-property",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "custom-property-no-missing-var-function": true,
+            "custom-property-pattern": [
+              "^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "declaration-block-no-duplicate-custom-properties": true,
+            "declaration-block-no-duplicate-properties": [
+              true,
+              {
+                "ignore": [
+                  "consecutive-duplicates-with-different-syntaxes",
+                ],
+              },
+            ],
+            "declaration-block-no-redundant-longhand-properties": true,
+            "declaration-block-no-shorthand-property-overrides": true,
+            "declaration-block-single-line-max-declarations": 1,
+            "declaration-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-declaration",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "declaration-property-value-keyword-no-deprecated": true,
+            "declaration-property-value-no-unknown": null,
+            "font-family-name-quotes": "always-where-recommended",
+            "font-family-no-duplicate-names": true,
+            "font-family-no-missing-generic-family-keyword": true,
+            "function-calc-no-unspaced-operator": true,
+            "function-name-case": "lower",
+            "function-no-unknown": null,
+            "function-url-quotes": "always",
+            "hue-degree-notation": "angle",
+            "import-notation": "string",
+            "keyframe-block-no-duplicate-selectors": true,
+            "keyframe-declaration-no-important": true,
+            "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
+            "keyframes-name-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "layer-name-pattern": [
+              "^([a-z][a-z0-9]*)([.-][a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "length-zero-no-unit": [
+              true,
+              {
+                "ignore": [
+                  "custom-properties",
+                ],
+              },
+            ],
+            "less/color-no-invalid-hex": true,
+            "less/no-duplicate-variables": true,
+            "lightness-notation": "percentage",
+            "media-feature-name-no-unknown": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "media-feature-name-value-no-unknown": true,
+            "media-feature-range-notation": "context",
+            "media-query-no-invalid": null,
+            "media-type-no-deprecated": true,
+            "named-grid-areas-no-invalid": true,
+            "nesting-selector-no-missing-scoping-root": true,
+            "no-duplicate-at-import-rules": true,
+            "no-duplicate-selectors": true,
+            "no-empty-source": true,
+            "no-invalid-double-slash-comments": true,
+            "no-invalid-position-at-import-rule": null,
+            "no-invalid-position-declaration": true,
+            "no-irregular-whitespace": true,
+            "number-max-precision": 4,
+            "property-no-deprecated": true,
+            "property-no-unknown": true,
+            "property-no-vendor-prefix": true,
+            "rule-empty-line-before": [
+              "always-multi-line",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "selector-anb-no-unmatchable": true,
+            "selector-attribute-quotes": "always",
+            "selector-class-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "selector-id-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "selector-no-vendor-prefix": true,
+            "selector-not-notation": "complex",
+            "selector-pseudo-class-no-unknown": [
+              true,
+              {
+                "ignorePseudoClasses": [
+                  "global",
+                ],
+              },
+            ],
+            "selector-pseudo-element-colon-notation": "double",
+            "selector-pseudo-element-no-unknown": true,
+            "selector-type-case": "lower",
+            "selector-type-no-unknown": [
+              true,
+              {
+                "ignore": [
+                  "custom-elements",
+                ],
+              },
+            ],
+            "shorthand-property-no-redundant-values": true,
+            "string-no-newline": [
+              true,
+              {
+                "ignore": [
+                  "at-rule-preludes",
+                  "declaration-values",
+                ],
+              },
+            ],
+            "syntax-string-no-invalid": true,
+            "value-keyword-case": "lower",
+            "value-no-vendor-prefix": [
+              true,
+              {
+                "ignoreValues": [
+                  "box",
+                  "inline-box",
+                ],
+              },
+            ],
+          },
+        }
+      `)
   })
 
   it('should generate Less config with all less opinionated rules correctly', async () => {
-    expect(await less(true, true, false)).toEqual({
-      ...defaultLessConfig,
-      rules: useLessRules(true),
-    })
+    expect(await less(true, true, false))
+      .toMatchInlineSnapshot(`
+        {
+          "customSyntax": {
+            "nodeToString": [Function: nodeToString],
+            "parse": [Function: parse],
+            "stringify": [Function: stringify],
+          },
+          "files": [
+            "**/*.less",
+          ],
+          "plugins": [
+            "stylelint-less",
+          ],
+          "rules": {
+            "alpha-value-notation": [
+              "percentage",
+              {
+                "exceptProperties": [
+                  "opacity",
+                  "fill-opacity",
+                  "flood-opacity",
+                  "stop-opacity",
+                  "stroke-opacity",
+                ],
+              },
+            ],
+            "annotation-no-unknown": true,
+            "at-rule-descriptor-no-unknown": true,
+            "at-rule-descriptor-value-no-unknown": true,
+            "at-rule-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "blockless-after-same-name-blockless",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "at-rule-no-deprecated": true,
+            "at-rule-no-unknown": null,
+            "at-rule-no-vendor-prefix": true,
+            "at-rule-prelude-no-invalid": [
+              true,
+              {
+                "ignoreAtRules": [
+                  "media",
+                ],
+              },
+            ],
+            "block-no-empty": true,
+            "block-no-redundant-nested-style-rules": true,
+            "color-function-alias-notation": "without-alpha",
+            "color-function-notation": "modern",
+            "color-hex-length": "short",
+            "comment-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "stylelint-commands",
+                ],
+              },
+            ],
+            "comment-no-empty": true,
+            "comment-whitespace-inside": "always",
+            "container-name-pattern": [
+              "^(--)?([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-media-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "custom-property-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-custom-property",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "custom-property-no-missing-var-function": true,
+            "custom-property-pattern": [
+              "^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "declaration-block-no-duplicate-custom-properties": true,
+            "declaration-block-no-duplicate-properties": [
+              true,
+              {
+                "ignore": [
+                  "consecutive-duplicates-with-different-syntaxes",
+                ],
+              },
+            ],
+            "declaration-block-no-redundant-longhand-properties": true,
+            "declaration-block-no-shorthand-property-overrides": true,
+            "declaration-block-single-line-max-declarations": 1,
+            "declaration-empty-line-before": [
+              "always",
+              {
+                "except": [
+                  "after-declaration",
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                  "inside-single-line-block",
+                ],
+              },
+            ],
+            "declaration-property-value-keyword-no-deprecated": true,
+            "declaration-property-value-no-unknown": null,
+            "font-family-name-quotes": "always-where-recommended",
+            "font-family-no-duplicate-names": true,
+            "font-family-no-missing-generic-family-keyword": true,
+            "function-calc-no-unspaced-operator": true,
+            "function-name-case": "lower",
+            "function-no-unknown": null,
+            "function-url-quotes": "always",
+            "hue-degree-notation": "angle",
+            "import-notation": "string",
+            "keyframe-block-no-duplicate-selectors": true,
+            "keyframe-declaration-no-important": true,
+            "keyframe-selector-notation": "percentage-unless-within-keyword-only-block",
+            "keyframes-name-pattern": [
+              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "layer-name-pattern": [
+              "^([a-z][a-z0-9]*)([.-][a-z0-9]+)*$",
+              {
+                "message": [Function],
+              },
+            ],
+            "length-zero-no-unit": [
+              true,
+              {
+                "ignore": [
+                  "custom-properties",
+                ],
+              },
+            ],
+            "less/color-no-invalid-hex": true,
+            "less/no-duplicate-variables": true,
+            "lightness-notation": "percentage",
+            "media-feature-name-no-unknown": true,
+            "media-feature-name-no-vendor-prefix": true,
+            "media-feature-name-value-no-unknown": true,
+            "media-feature-range-notation": "context",
+            "media-query-no-invalid": null,
+            "media-type-no-deprecated": true,
+            "named-grid-areas-no-invalid": true,
+            "nesting-selector-no-missing-scoping-root": true,
+            "no-duplicate-at-import-rules": true,
+            "no-duplicate-selectors": true,
+            "no-empty-source": true,
+            "no-invalid-double-slash-comments": true,
+            "no-invalid-position-at-import-rule": null,
+            "no-invalid-position-declaration": true,
+            "no-irregular-whitespace": true,
+            "number-max-precision": 4,
+            "property-no-deprecated": true,
+            "property-no-unknown": true,
+            "property-no-vendor-prefix": true,
+            "rule-empty-line-before": [
+              "always-multi-line",
+              {
+                "except": [
+                  "first-nested",
+                ],
+                "ignore": [
+                  "after-comment",
+                ],
+              },
+            ],
+            "selector-anb-no-unmatchable": true,
+            "selector-attribute-quotes": "always",
+            "selector-no-vendor-prefix": true,
+            "selector-not-notation": "complex",
+            "selector-pseudo-class-no-unknown": [
+              true,
+              {
+                "ignorePseudoClasses": [
+                  "global",
+                ],
+              },
+            ],
+            "selector-pseudo-element-colon-notation": "double",
+            "selector-pseudo-element-no-unknown": true,
+            "selector-type-case": "lower",
+            "selector-type-no-unknown": [
+              true,
+              {
+                "ignore": [
+                  "custom-elements",
+                ],
+              },
+            ],
+            "shorthand-property-no-redundant-values": true,
+            "string-no-newline": [
+              true,
+              {
+                "ignore": [
+                  "at-rule-preludes",
+                  "declaration-values",
+                ],
+              },
+            ],
+            "syntax-string-no-invalid": true,
+            "value-keyword-case": "lower",
+            "value-no-vendor-prefix": [
+              true,
+              {
+                "ignoreValues": [
+                  "box",
+                  "inline-box",
+                ],
+              },
+            ],
+          },
+        }
+      `)
   })
 })

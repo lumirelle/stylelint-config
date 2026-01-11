@@ -1,5 +1,6 @@
 import { Glob, YAML } from 'bun'
 import { describe, expect, it } from 'bun:test'
+import fs from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { getPackageExportsManifest } from 'vitest-package-exports'
 import { workspaces } from '../package.json'
@@ -12,7 +13,7 @@ describe('exports-snapshot', async () => {
   for (const pkg of workspaces.packages) {
     const glob = new Glob(`${pkg}/package.json`)
     for await (const pkgJsonPath of glob.scan({ cwd: root, absolute: true })) {
-      const pkgJson = await import(pkgJsonPath).then(m => m.default)
+      const pkgJson = await import(pkgJsonPath).then(m => m.default) as { name?: string, private?: boolean }
       if (!pkgJson.name || pkgJson.private)
         continue
       it(`${pkgJson.name}`, async () => {
@@ -20,10 +21,14 @@ describe('exports-snapshot', async () => {
           importMode: 'src',
           cwd: dirname(pkgJsonPath),
         })
-        expect(YAML.stringify(manifest.exports))
-        // .toMatchFileSnapshot(`./exports/${pkg.name}.yaml`)
         // TODO: Workaround. Bun currently does not support file snapshot like Vitest, see https://github.com/oven-sh/bun/issues/13096
-          .toMatchInlineSnapshot()
+        const exports = YAML.stringify(manifest.exports, null, 2)
+        const pkgPaths = pkgJson.name!.split('/')
+        pkgPaths[pkgPaths.length - 1] += '.yaml'
+        const output = join(root, 'test', 'exports', ...pkgPaths)
+        await fs.mkdir(dirname(output), { recursive: true })
+        await fs.writeFile(output, exports)
+        expect(exports).toEqual(await fs.readFile(output, { encoding: 'utf-8' }))
       })
     }
   }

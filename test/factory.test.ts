@@ -1,374 +1,433 @@
-import { describe, expect, it, vi } from 'bun:test'
-import { lumirelle, resolvePackagePath } from '../src'
-import { useCSSRules } from '../src/rules/css'
-import { useSCSSRules } from '../src/rules/scss'
-import { defaultConfig, defaultCSSConfig, defaultLessConfig, defaultSCSSConfig, defaultStylisticConfig, defaultVueConfig } from './configs/default-config'
+import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
+import * as semver from 'semver'
+import { ConfigComposer, GLOB_EXCLUDE, lumirelle } from '../src'
+import { css, html, less, ordered, scss, stylistic, tailwindcss, vue } from '../src/configs'
+import * as utils from './../src/utils'
 
-// eslint-disable-next-line no-console
-const originalConsole = console.log.bind(console)
-// eslint-disable-next-line no-console
-console.log = vi.fn((message: string, ...optionalParams: any[]) => {
-  originalConsole(message, ...optionalParams)
+let spiedIsInEditorEnv: ReturnType<typeof spyOn<typeof utils, 'isInEditorEnv'>>
+let spiedLog: ReturnType<typeof spyOn<typeof console, 'log'>>
+let spiedGte: ReturnType<typeof spyOn<typeof semver, 'gte'>>
+
+beforeEach(() => {
+  spiedIsInEditorEnv = spyOn(utils, 'isInEditorEnv')
+  spiedLog = spyOn(console, 'log')
+  spiedGte = spyOn(semver, 'gte')
 })
 
-function filterRules(rules: Record<string, any>, prefixes: string | string[]) {
-  const prefixArray = Array.isArray(prefixes) ? prefixes : [prefixes]
-  return Object.entries(rules).reduce((acc, [key, value]) => {
-    if (!prefixArray.some(prefix => key.startsWith(prefix))) {
-      acc[key] = value
-    }
-    return acc
-  }, {} as Record<string, any>)
-}
+afterEach(() => {
+  spiedIsInEditorEnv.mockRestore()
+  spiedLog.mockRestore()
+  spiedGte.mockRestore()
+})
 
 describe('factory config', () => {
   it('should log if in editor', async () => {
-    const originalEnvCI = process.env.CI
-    delete process.env.CI
-    process.env.VSCODE_PID = '1234'
-    expect(await lumirelle())
-      .toEqual(defaultConfig)
-    // eslint-disable-next-line no-console
-    expect(console.log)
-      .toHaveBeenCalledOnce()
-    // eslint-disable-next-line no-console
-    expect(console.log)
-      .toHaveBeenCalledWith('[@lumirelle/stylelint-config] Detected running in editor.')
-    if (originalEnvCI !== undefined)
-      process.env.CI = originalEnvCI
-    delete process.env.VSCODE_PID
+    spiedIsInEditorEnv.mockReturnValue(true)
+    await lumirelle()
+    expect(spiedLog).toBeCalledTimes(1)
+    expect(spiedLog).toHaveBeenCalledWith('[@lumirelle/stylelint-config] Detected running in editor.')
   })
 
   it('should construct default config correctly', async () => {
-    expect(await lumirelle())
-      .toEqual(defaultConfig)
+    expect(await lumirelle()).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
   it('should construct config with user overrides correctly', async () => {
-    expect(await lumirelle(
-      {},
-      {
-        rules: {
-          'color-hex-case': 'upper',
-        },
-      },
-      {
-        rules: {
-          'color-hex-case': null,
-        },
-      },
-      {
-        files: ['**/*.scss'],
-        rules: {
-          'scss/dollar-variable-pattern': '^foo',
-        },
-      },
-    ),
-    ).toEqual({
-      ...defaultConfig,
-      overrides: [
-        ...defaultConfig.overrides,
-        {
-          files: ['**/*.scss'],
-          rules: {
-            'scss/dollar-variable-pattern': '^foo',
-          },
-        },
-      ],
-      rules: {
-        ...defaultConfig.rules,
-        'color-hex-case': null,
-      },
-    })
+    const userConfigs = [
+      { rules: { 'color-hex-case': 'upper' } },
+      { rules: { 'color-hex-case': null } },
+    ]
+    const userOverrideConfigs = [
+      { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^foo' } },
+      { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^bar' } },
+    ]
+    expect(
+      await lumirelle(
+        {},
+        ...userConfigs,
+        ...userOverrideConfigs,
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+        userConfigs[1],
+        // `overrides` are processed by Stylelint itself
+        { overrides: [userOverrideConfigs[0]] },
+        { overrides: [userOverrideConfigs[1]] },
+      ),
+    )
   })
 
   it('should mix configs using .mix() method correctly', async () => {
-    expect(await lumirelle()
-      .mix({
-        rules: {
-          'color-hex-case': 'upper',
-        },
-      })
-      .mix({
-        rules: {
-          'color-hex-case': null,
-        },
-      })
-      .mix({
-        files: ['**/*.scss'],
-        rules: {
-          'scss/dollar-variable-pattern': '^foo',
-        },
-      }),
-    ).toEqual({
-      ...defaultConfig,
-      overrides: [
-        ...defaultConfig.overrides,
-        {
-          files: ['**/*.scss'],
-          rules: {
-            'scss/dollar-variable-pattern': '^foo',
-          },
-        },
-      ],
-      rules: {
-        ...defaultConfig.rules,
-        'color-hex-case': null,
-      },
-    })
+    const userConfigs = [
+      { rules: { 'color-hex-case': 'upper' } },
+      { rules: { 'color-hex-case': null } },
+    ]
+    const userOverrideConfigs = [
+      { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^foo' } },
+      { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^bar' } },
+    ]
+    expect(
+      await lumirelle()
+        .mix(userConfigs[0])
+        .mix(userConfigs[1])
+        .mix(userOverrideConfigs[0])
+        .mix(userOverrideConfigs[1]),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+        userConfigs[1],
+        // `overrides` are processed by Stylelint itself
+        { overrides: [userOverrideConfigs[0]] },
+        { overrides: [userOverrideConfigs[1]] },
+      ),
+    )
   })
 
-  it('should construct config without stylistic rules correctly', async () => {
-    expect(await lumirelle({
-      stylistic: false,
-    })).toEqual({
-      ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('@stylistic/stylelint-config')),
-      rules: filterRules(defaultConfig.rules, '@stylistic/'),
-    })
+  it('should construct config with `stylistic` disabled', async () => {
+    expect(
+      await lumirelle(
+        { stylistic: false },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config without SCSS support correctly', async () => {
-    const factoryConfig = await lumirelle({
-      scss: false,
-    })
-    expect(factoryConfig).toEqual({
-      ...defaultConfig,
-      overrides: [
-        {
-          ...defaultVueConfig, // Vue override
-          plugins: undefined,
-          rules: {
-            ...defaultCSSConfig.rules,
-            ...defaultVueConfig.rules,
-            'declaration-property-value-no-unknown': [
-              true,
-              { ignoreProperties: { '/.*/': '/v-bind\\(.+\\)/' } },
-            ],
-            'function-no-unknown': [
-              true,
-              { ignoreFunctions: ['v-bind'] },
-            ],
-          },
-        },
-      ],
-    })
+  it('should construct config with `css` forcibly enabled', async () => {
+    expect(await lumirelle(
+      { css: false as any },
+    )).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config with LESS but without SCSS correctly', async () => {
-    const factoryConfig = await lumirelle({
-      scss: false,
-      less: true,
-    })
-    expect(factoryConfig).toEqual({
-      ...defaultConfig,
-      overrides: [
-        defaultLessConfig,
-        {
-          ...defaultVueConfig, // Vue override
-          plugins: [resolvePackagePath('stylelint-less')],
-          rules: {
-            ...defaultLessConfig.rules,
-            ...defaultVueConfig.rules,
-          },
-        },
-      ],
-    })
+  it('should construct config `scss` enabled', async () => {
+    expect(
+      await lumirelle(
+        { scss: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config with both LESS and SCSS correctly', async () => {
-    const factoryConfig = await lumirelle({
-      less: true,
-      scss: true,
-    })
-    expect(factoryConfig).toEqual({
-      ...defaultConfig,
-      overrides: [
-        defaultSCSSConfig,
-        {
-          ...defaultVueConfig, // Vue override
-          plugins: [
-            resolvePackagePath('stylelint-scss'),
-          ],
-          rules: {
-            ...defaultSCSSConfig.rules,
-            ...defaultVueConfig.rules,
-          },
-        },
-      ],
-    })
+  it('should construct config with `less` enabled', async () => {
+    expect(
+      await lumirelle(
+        { less: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        less(true, false, false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config without Vue support correctly', async () => {
-    expect(await lumirelle({
-      vue: false,
-    })).toEqual({
-      ...defaultConfig,
-      overrides: [
-        defaultSCSSConfig,
-      ],
-    })
+  it('should construct config with both `scss` and `less` enabled (`less` is ignored)', async () => {
+    expect(
+      await lumirelle(
+        { scss: true, less: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config without Vue but with LESS correctly', async () => {
-    expect(await lumirelle({
-      vue: false,
-      less: true,
-    })).toEqual({
-      ...defaultConfig,
-      overrides: [
-        defaultLessConfig,
-      ],
-    })
+  it('should construct config with `html` disabled', async () => {
+    expect(
+      await lumirelle(
+        { html: false },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config without SCSS and Vue but with LESS correctly', async () => {
-    expect(await lumirelle({
-      scss: false,
-      vue: false,
-      less: true,
-    })).toEqual({
-      ...defaultConfig,
-      // extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-standard-vue/scss')),
-      rules: filterRules(defaultConfig.rules, ['scss/', 'vue/']),
-      overrides: [
-        defaultLessConfig,
-      ],
-    })
+  it('should construct config with `vue` enabled', async () => {
+    expect(
+      await lumirelle(
+        { vue: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        vue(true, false, false, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
-  it('should construct config without property ordering correctly', async () => {
-    expect(await lumirelle({
-      ordered: false,
-    })).toEqual({
-      ...defaultConfig,
-      extends: defaultConfig.extends.filter(ext => ext !== resolvePackagePath('stylelint-config-recess-order')),
-      rules: filterRules(defaultConfig.rules, 'order/'),
-    })
+  it('should construct config  with `vue` and `scss` enabled', async () => {
+    expect(
+      await lumirelle(
+        { vue: true, scss: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        vue(true, true, false, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config  with `vue` and `less` enabled', async () => {
+    expect(
+      await lumirelle(
+        { vue: true, less: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        less(true, false, false),
+        vue(true, false, true, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `tailwindcss` enabled', async () => {
+    expect(
+      await lumirelle(
+        { tailwindcss: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        tailwindcss(true, false, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `scss` and `tailwindcss` enabled', async () => {
+    expect(
+      await lumirelle(
+        { scss: true, tailwindcss: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        tailwindcss(true, true, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `scss`, `vue` and `tailwindcss` enabled', async () => {
+    expect(
+      await lumirelle(
+        { scss: true, vue: true, tailwindcss: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        vue(true, true, false, false),
+        tailwindcss(true, true, true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `stylistic` disabled', async () => {
+    expect(
+      await lumirelle(
+        { stylistic: false },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `ordered` disabled', async () => {
+    expect(
+      await lumirelle(
+        { ordered: false },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+      ),
+    )
   })
 
   it('should construct config with less opinionated pattern rules correctly', async () => {
-    expect(await lumirelle({
-      lessOpinionated: {
-        pattern: true,
-      },
-    })).toEqual({
-      ...defaultConfig,
-      rules: {
-        ...defaultStylisticConfig.rules,
-        ...useCSSRules({ pattern: true }),
-      },
-      overrides: [
-        {
-          ...defaultSCSSConfig,
-          rules: useSCSSRules({ pattern: true }),
-        },
-        {
-          ...defaultVueConfig,
-          plugins: [resolvePackagePath('stylelint-scss')],
-          rules: {
-            ...useSCSSRules({ pattern: true }),
-            ...defaultVueConfig.rules,
-          },
-        },
-      ],
-    })
+    expect(
+      await lumirelle(
+        { lessOpinionated: { pattern: true } },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css({ pattern: true }),
+        scss(false, { pattern: true }),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
   it('should construct config with less opinionated maintainability rules correctly', async () => {
-    expect(await lumirelle({
-      lessOpinionated: {
-        maintainability: true,
-      },
-    })).toEqual({
-      ...defaultConfig,
-      rules: {
-        ...defaultStylisticConfig.rules,
-        ...useCSSRules({ maintainability: true }),
-      },
-      overrides: [
-        {
-          ...defaultSCSSConfig,
-          rules: useSCSSRules({ maintainability: true }),
-        },
-        {
-          ...defaultVueConfig,
-          plugins: [resolvePackagePath('stylelint-scss')],
-          rules: {
-            ...useSCSSRules({ maintainability: true }),
-            ...defaultVueConfig.rules,
-          },
-        },
-      ],
-    })
+    expect(
+      await lumirelle(
+        { lessOpinionated: { maintainability: true } },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css({ maintainability: true }),
+        scss(false, { maintainability: true }),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
   it('should construct config with all less opinionated rules correctly', async () => {
-    expect(await lumirelle({
-      lessOpinionated: true,
-    })).toEqual({
-      ...defaultConfig,
-      rules: {
-        ...defaultStylisticConfig.rules,
-        ...useCSSRules(true),
-      },
-      overrides: [
-        {
-          ...defaultSCSSConfig,
-          rules: useSCSSRules(true),
-        },
-        {
-          ...defaultVueConfig,
-          plugins: [resolvePackagePath('stylelint-scss')],
-          rules: {
-            ...useSCSSRules(true),
-            ...defaultVueConfig.rules,
-          },
-        },
-      ],
-    })
+    expect(
+      await lumirelle(
+        { lessOpinionated: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(true),
+        scss(false, true),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
   it('should construct config with all features enabled correctly', async () => {
-    expect(await lumirelle({
-      stylistic: true,
-      scss: true,
-      less: true,
-      vue: true,
-      ordered: true,
-    })).toEqual({
-      ...defaultConfig,
-      overrides: [
-        defaultSCSSConfig,
+    expect(
+      await lumirelle(
         {
-          ...defaultVueConfig, // Vue override
-          plugins: [
-            resolvePackagePath('stylelint-scss'),
-          ],
-          rules: {
-            ...defaultSCSSConfig.rules,
-            ...defaultVueConfig.rules,
-          },
+          scss: true,
+          less: true,
+          html: true,
+          vue: true,
+          tailwindcss: true,
+          stylistic: true,
+          ordered: true,
         },
-      ],
-    })
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        vue(true, true, true, false),
+        tailwindcss(true, true, true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
   })
 
   it('should construct config with all features disabled correctly', async () => {
-    expect(await lumirelle({
-      stylistic: false,
-      scss: false,
-      vue: false,
-      less: false,
-      ordered: false,
-    })).toEqual({
-      ...defaultConfig,
-      extends: [
-        // resolvePackagePath('stylelint-config-standard'),
-        resolvePackagePath('stylelint-config-html'),
-      ],
-      rules: filterRules(defaultConfig.rules, ['scss/', 'vue/', '@stylistic/', 'order/']),
-      overrides: undefined,
-    })
+    expect(
+      await lumirelle(
+        {
+          stylistic: false,
+          scss: false,
+          html: false,
+          vue: false,
+          less: false,
+          tailwindcss: false,
+          ordered: false,
+        },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+      ),
+    )
   })
 })

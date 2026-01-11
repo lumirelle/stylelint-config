@@ -1,6 +1,6 @@
 import type { Awaitable, Nullable } from '@antfu/utils'
 import type { StylelintConfig, StylelintOverrideConfig } from './types'
-import { defu } from './defu'
+import { configDefu } from './defu'
 
 /**
  * Using the magic promise to implement a chainable config composer, when accessing this composer, user will get the final config.
@@ -25,9 +25,9 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
       let result: StylelintConfig = config
       for (const toMerge of resolved) {
         if ('files' in toMerge)
-          result = defu({ overrides: [toMerge] }, result)
+          result = configDefu({ overrides: [toMerge] }, result)
         else
-          result = defu(toMerge, result)
+          result = configDefu(toMerge, result)
       }
       return result
     })
