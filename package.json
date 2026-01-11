@@ -27,8 +27,6 @@
     ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "files": [
     "dist"
@@ -38,7 +36,7 @@
     "dev": "bun run tsdown --watch",
     "build": "bun run tsdown",
     "start": "bun run ./src/index.ts",
-    "lint": "bun run eslint",
+    "lint": "bun run eslint .",
     "typecheck": "bun run tsc --noEmit",
     "usagecheck": "bun run knip",
     "check": "bun run lint && bun run typecheck && bun run usagecheck",
@@ -67,7 +65,7 @@
       "build": {
         "@arethetypeswrong/core": "^0.18.2",
         "publint": "^0.3.16",
-        "tsdown": "^0.18.4"
+        "tsdown": "^0.19.0"
       },
       "inlined": {
         "@antfu/utils": "^9.3.0"
@@ -86,11 +84,9 @@
         "stylelint-scss": "^6.14.0"
       },
       "testing": {
-        "sass-embedded": "^1.97.2",
         "tinyexec": "^1.0.2",
         "tinyglobby": "^0.2.15",
-        "vitest-package-exports": "^1.1.2",
-        "vue": "^3.5.26"
+        "vitest-package-exports": "^1.1.2"
       },
       "types": {
         "@types/bun": "^1.3.5",
@@ -141,7 +137,6 @@
     "lint-staged": "catalog:dev",
     "postcss-less": "catalog:dev",
     "publint": "catalog:build",
-    "sass-embedded": "catalog:testing",
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
@@ -149,8 +144,7 @@
     "tinyglobby": "catalog:testing",
     "tsdown": "catalog:build",
     "typescript": "catalog:dev",
-    "vitest-package-exports": "catalog:testing",
-    "vue": "catalog:testing"
+    "vitest-package-exports": "catalog:testing"
   },
   "simple-git-hooks": {
     "pre-commit": "bun run lint-staged"
