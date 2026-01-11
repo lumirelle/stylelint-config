@@ -3,3 +3,6 @@ linker = "isolated"
 
 [run]
 bun = true
+
+[test]
+coveragePathIgnorePatterns = [ "**/dist/**" ]
