@@ -8,13 +8,12 @@ export async function scss(
   options: boolean,
   lessOpinionated: boolean | OptionsOpinionated,
 ): Promise<Nullable<StylelintOverrideConfig>> {
-  if (options === true) {
-    return {
-      files: ['**/*.scss'],
-      customSyntax: postcssSCSS,
-      plugins: [resolvePackagePath('stylelint-scss')],
-      rules: useSCSSRules(lessOpinionated),
-    }
+  if (options !== true)
+    return null
+  return {
+    files: ['**/*.scss'],
+    customSyntax: postcssSCSS,
+    plugins: [resolvePackagePath('stylelint-scss')],
+    rules: useSCSSRules(lessOpinionated),
   }
-  return null
 }

@@ -19,28 +19,25 @@ export async function tailwindcss(
   scss: boolean,
   vue: boolean,
 ): Promise<Nullable<StylelintConfig>> {
-  if (options === true) {
-    const config = {
-      rules: {
-        'at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
-      },
-    }
-    if (scss === true) {
-      return {
-        ...config,
-        overrides: [
-          {
-            files: vue ? ['**/*.vue', '**/*.scss'] : ['**/*.scss'],
-            rules: {
-              'scss/at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
-            },
-          },
-        ],
-      }
-    }
-    else {
-      return config
+  if (options !== true)
+    return null
+  const config = {
+    rules: {
+      'at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
+    },
+  }
+  if (scss === true) {
+    return {
+      ...config,
+      overrides: [
+        {
+          files: vue ? ['**/*.vue', '**/*.scss'] : ['**/*.scss'],
+          rules: { 'scss/at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }] },
+        },
+      ],
     }
   }
-  return null
+  else {
+    return config
+  }
 }
