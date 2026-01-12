@@ -73,6 +73,7 @@
       "prod": {
         "@antfu/install-pkg": "^1.1.0",
         "@clack/prompts": "^0.11.0",
+        "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
         "@lumirelle/defu": "^1.1.0",
         "@stylistic/stylelint-config": "^3.0.1",
         "local-pkg": "^1.1.2",
@@ -112,6 +113,7 @@
   "dependencies": {
     "@antfu/install-pkg": "catalog:prod",
     "@clack/prompts": "catalog:prod",
+    "@dreamsicle.io/stylelint-config-tailwindcss": "catalog:prod",
     "@lumirelle/defu": "catalog:prod",
     "@stylistic/stylelint-config": "catalog:prod",
     "local-pkg": "catalog:prod",

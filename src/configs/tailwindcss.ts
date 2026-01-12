@@ -1,43 +1,13 @@
 import type { Nullable } from '@antfu/utils'
 import type { StylelintConfig } from '../types'
-
-export const tailwindcssIgnoreAtRules = [
-  'tailwind',
-  'theme',
-  'source',
-  'utility', // Tailwind CSS 4
-  'layer', // Tailwind CSS 3
-  'variant',
-  'custom-variant',
-  'reference',
-  'config',
-  'plugin',
-]
+import { resolvePackagePath } from '../resolve'
 
 export async function tailwindcss(
   options: boolean,
-  scss: boolean,
-  vue: boolean,
 ): Promise<Nullable<StylelintConfig>> {
   if (options !== true)
     return null
-  const config = {
-    rules: {
-      'at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }],
-    },
-  }
-  if (scss === true) {
-    return {
-      ...config,
-      overrides: [
-        {
-          files: vue ? ['**/*.vue', '**/*.scss'] : ['**/*.scss'],
-          rules: { 'scss/at-rule-no-unknown': [true, { ignoreAtRules: tailwindcssIgnoreAtRules }] },
-        },
-      ],
-    }
-  }
-  else {
-    return config
+  return {
+    extends: [resolvePackagePath('@dreamsicle.io/stylelint-config-tailwindcss')],
   }
 }

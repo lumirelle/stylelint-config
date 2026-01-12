@@ -7,6 +7,7 @@
       "dependencies": {
         "@antfu/install-pkg": "catalog:prod",
         "@clack/prompts": "catalog:prod",
+        "@dreamsicle.io/stylelint-config-tailwindcss": "catalog:prod",
         "@lumirelle/defu": "catalog:prod",
         "@stylistic/stylelint-config": "catalog:prod",
         "local-pkg": "catalog:prod",
@@ -77,6 +78,7 @@
     "prod": {
       "@antfu/install-pkg": "^1.1.0",
       "@clack/prompts": "^0.11.0",
+      "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
       "@lumirelle/defu": "^1.1.0",
       "@stylistic/stylelint-config": "^3.0.1",
       "local-pkg": "^1.1.2",
@@ -147,6 +149,8 @@
     "@dprint/markdown": ["@dprint/markdown@0.20.0", "", {}, "sha512-qvynFdQZwul4Y+hoMP02QerEhM5VItb4cO8/qpQrSuQuYvDU+bIseiheVAetSpWlNPBU1JK8bQKloiCSp9lXnA=="],
 
     "@dprint/toml": ["@dprint/toml@0.7.0", "", {}, "sha512-eFaQTcfxKHB+YyTh83x7GEv+gDPuj9q5NFOTaoj5rZmQTbj6OgjjMxUicmS1R8zYcx8YAq5oA9J3YFa5U6x2gA=="],
+
+    "@dreamsicle.io/stylelint-config-tailwindcss": ["@dreamsicle.io/stylelint-config-tailwindcss@1.1.2", "", { "peerDependencies": { "stylelint": "^16.17.0" } }, "sha512-g5nPxKyZKh139CT67tTFT3WD7kB4y4WoHLGqlmLfTjs52cvWGwFUBSiUpPnB2sSBh5efXPtw4VYv8zwPt6C19A=="],
 
     "@dual-bundle/import-meta-resolve": ["@dual-bundle/import-meta-resolve@4.2.1", "", {}, "sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg=="],
 

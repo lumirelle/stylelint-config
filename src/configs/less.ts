@@ -14,7 +14,7 @@ export async function less(
   await ensurePackages(['postcss-less', 'stylelint-less'], isInEditor)
   const postcssLess = await interopDefault(import('postcss-less'))
   return {
-    files: ['**/*.less'],
+    files: ['*.less', '**/*.less'],
     customSyntax: postcssLess,
     plugins: [resolvePackagePath('stylelint-less')],
     rules: useLessRules(lessOpinionated),

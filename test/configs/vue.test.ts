@@ -28,7 +28,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -297,7 +297,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -567,7 +567,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -843,7 +843,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -1126,7 +1126,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -1397,7 +1397,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -1679,7 +1679,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -1949,7 +1949,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -2304,7 +2304,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -2578,7 +2578,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -2933,7 +2933,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -3276,7 +3276,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/vue",
           ],
           "files": [
             "**/*.vue",
@@ -3631,7 +3631,7 @@ it('should generate Vue config with CSS and SCSS rules when both enabled, with a
     .toMatchInlineSnapshot(`
       {
         "extends": [
-          "path/to/stylelint-config-html",
+          "path/to/stylelint-config-html/vue",
         ],
         "files": [
           "**/*.vue",

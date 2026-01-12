@@ -15,7 +15,35 @@ describe('html config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "path/to/stylelint-config-html",
+            "path/to/stylelint-config-html/html",
+          ],
+          "files": [
+            "*.html",
+            "**/*.html",
+            "*.htm",
+            "**/*.htm",
+            "*.shtml",
+            "**/*.shtml",
+            "*.xhtml",
+            "**/*.xhtml",
+            "*.xht",
+            "**/*.xht",
+            "*.mdoc",
+            "**/*.mdoc",
+            "*.jsp",
+            "**/*.jsp",
+            "*.asp",
+            "**/*.asp",
+            "*.aspx",
+            "**/*.aspx",
+            "*.jshtm",
+            "**/*.jshtm",
+            "*.volt",
+            "**/*.volt",
+            "*.ejs",
+            "**/*.ejs",
+            "*.rhtml",
+            "**/*.rhtml",
           ],
         }
       `)

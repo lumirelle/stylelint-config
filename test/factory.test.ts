@@ -302,44 +302,7 @@ describe('factory config', () => {
         { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
         css(false),
         html(true),
-        tailwindcss(true, false, false),
-        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
-        ordered(true),
-      ),
-    )
-  })
-
-  it('should construct config with `scss` and `tailwindcss` enabled', async () => {
-    expect(
-      await lumirelle(
-        { scss: true, tailwindcss: true },
-      ),
-    ).toEqual(
-      await new ConfigComposer(
-        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
-        css(false),
-        scss(true, false),
-        html(true),
-        tailwindcss(true, true, false),
-        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
-        ordered(true),
-      ),
-    )
-  })
-
-  it('should construct config with `scss`, `vue` and `tailwindcss` enabled', async () => {
-    expect(
-      await lumirelle(
-        { scss: true, vue: true, tailwindcss: true },
-      ),
-    ).toEqual(
-      await new ConfigComposer(
-        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
-        css(false),
-        scss(true, false),
-        html(true),
-        vue(true, true, false, false),
-        tailwindcss(true, true, true),
+        tailwindcss(true),
         stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
         ordered(true),
       ),
@@ -447,7 +410,7 @@ describe('factory config', () => {
         scss(true, false),
         html(true),
         vue(true, true, true, false),
-        tailwindcss(true, true, true),
+        tailwindcss(true),
         stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
         ordered(true),
       ),

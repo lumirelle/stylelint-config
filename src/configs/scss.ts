@@ -11,7 +11,7 @@ export async function scss(
   if (options !== true)
     return null
   return {
-    files: ['**/*.scss'],
+    files: ['*.scss', '**/*.scss'],
     customSyntax: postcssSCSS,
     plugins: [resolvePackagePath('stylelint-scss')],
     rules: useSCSSRules(lessOpinionated),

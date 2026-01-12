@@ -20,6 +20,7 @@ describe('less config', () => {
             "stringify": [Function: stringify],
           },
           "files": [
+            "*.less",
             "**/*.less",
           ],
           "plugins": [
@@ -278,6 +279,7 @@ describe('less config', () => {
             "stringify": [Function: stringify],
           },
           "files": [
+            "*.less",
             "**/*.less",
           ],
           "plugins": [
@@ -524,6 +526,7 @@ describe('less config', () => {
             "stringify": [Function: stringify],
           },
           "files": [
+            "*.less",
             "**/*.less",
           ],
           "plugins": [
@@ -781,6 +784,7 @@ describe('less config', () => {
             "stringify": [Function: stringify],
           },
           "files": [
+            "*.less",
             "**/*.less",
           ],
           "plugins": [

@@ -85,7 +85,7 @@ export function lumirelle(
     less(lessOptions, lessOpinionatedOptions, isInEditor),
     html(htmlOptions),
     vue(vueOptions, scssOptions, lessOptions, lessOpinionatedOptions),
-    tailwindcss(tailwindcssOptions, scssOptions, vueOptions),
+    tailwindcss(tailwindcssOptions),
     stylistic(stylisticOptions),
     ordered(orderedOptions),
     ...userConfigs,

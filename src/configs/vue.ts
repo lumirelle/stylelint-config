@@ -21,7 +21,7 @@ export async function vue(
   const config: StylelintOverrideConfig = {
     files: ['**/*.vue'],
   }
-  config.extends = [resolvePackagePath('stylelint-config-html')]
+  config.extends = [resolvePackagePath('stylelint-config-html/vue')]
 
   if (scss === true) {
     config.plugins = [resolvePackagePath('stylelint-scss')]

@@ -19,6 +19,7 @@ describe('scss config', () => {
             "stringify": [Function: scssStringify],
           },
           "files": [
+            "*.scss",
             "**/*.scss",
           ],
           "plugins": [
@@ -350,6 +351,7 @@ describe('scss config', () => {
             "stringify": [Function: scssStringify],
           },
           "files": [
+            "*.scss",
             "**/*.scss",
           ],
           "plugins": [
@@ -669,6 +671,7 @@ describe('scss config', () => {
             "stringify": [Function: scssStringify],
           },
           "files": [
+            "*.scss",
             "**/*.scss",
           ],
           "plugins": [
@@ -999,6 +1002,7 @@ describe('scss config', () => {
             "stringify": [Function: scssStringify],
           },
           "files": [
+            "*.scss",
             "**/*.scss",
           ],
           "plugins": [

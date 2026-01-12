@@ -1,145 +1,33 @@
-import { describe, expect, it } from 'bun:test'
+import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
+import * as localPkg from 'local-pkg'
 import { tailwindcss } from '../../src'
 import { setup } from './setup'
 
 setup()
 
+let spiedGetPackageInfoSync: ReturnType<typeof spyOn<typeof localPkg, 'getPackageInfoSync'>>
+
+beforeEach(() => {
+  spiedGetPackageInfoSync = spyOn(localPkg, 'getPackageInfoSync')
+})
+
+afterEach(() => {
+  spiedGetPackageInfoSync.mockRestore()
+})
+
 describe('tailwindcss config', () => {
   it('should generate empty config when Tailwind CSS is disabled', async () => {
-    expect(await tailwindcss(false, false, false))
+    expect(await tailwindcss(false))
       .toBeNull()
   })
 
-  it('should generate Tailwind CSS config with base rules when enabled', async () => {
-    expect(await tailwindcss(true, false, false))
+  it('should generate Tailwind CSS config when enabled', async () => {
+    expect(await tailwindcss(true))
       .toMatchInlineSnapshot(`
         {
-          "rules": {
-            "at-rule-no-unknown": [
-              true,
-              {
-                "ignoreAtRules": [
-                  "tailwind",
-                  "theme",
-                  "source",
-                  "utility",
-                  "layer",
-                  "variant",
-                  "custom-variant",
-                  "reference",
-                  "config",
-                  "plugin",
-                ],
-              },
-            ],
-          },
-        }
-      `)
-  })
-
-  it('should generate Tailwind CSS config with SCSS overrides when SCSS is enabled', async () => {
-    expect(await tailwindcss(true, true, false))
-      .toMatchInlineSnapshot(`
-        {
-          "overrides": [
-            {
-              "files": [
-                "**/*.scss",
-              ],
-              "rules": {
-                "scss/at-rule-no-unknown": [
-                  true,
-                  {
-                    "ignoreAtRules": [
-                      "tailwind",
-                      "theme",
-                      "source",
-                      "utility",
-                      "layer",
-                      "variant",
-                      "custom-variant",
-                      "reference",
-                      "config",
-                      "plugin",
-                    ],
-                  },
-                ],
-              },
-            },
+          "extends": [
+            "path/to/@dreamsicle.io/stylelint-config-tailwindcss",
           ],
-          "rules": {
-            "at-rule-no-unknown": [
-              true,
-              {
-                "ignoreAtRules": [
-                  "tailwind",
-                  "theme",
-                  "source",
-                  "utility",
-                  "layer",
-                  "variant",
-                  "custom-variant",
-                  "reference",
-                  "config",
-                  "plugin",
-                ],
-              },
-            ],
-          },
-        }
-      `)
-  })
-
-  it('should generate Tailwind CSS config with SCSS overrides for both SCSS and Vue files', async () => {
-    expect(await tailwindcss(true, true, true))
-      .toMatchInlineSnapshot(`
-        {
-          "overrides": [
-            {
-              "files": [
-                "**/*.vue",
-                "**/*.scss",
-              ],
-              "rules": {
-                "scss/at-rule-no-unknown": [
-                  true,
-                  {
-                    "ignoreAtRules": [
-                      "tailwind",
-                      "theme",
-                      "source",
-                      "utility",
-                      "layer",
-                      "variant",
-                      "custom-variant",
-                      "reference",
-                      "config",
-                      "plugin",
-                    ],
-                  },
-                ],
-              },
-            },
-          ],
-          "rules": {
-            "at-rule-no-unknown": [
-              true,
-              {
-                "ignoreAtRules": [
-                  "tailwind",
-                  "theme",
-                  "source",
-                  "utility",
-                  "layer",
-                  "variant",
-                  "custom-variant",
-                  "reference",
-                  "config",
-                  "plugin",
-                ],
-              },
-            ],
-          },
         }
       `)
   })
