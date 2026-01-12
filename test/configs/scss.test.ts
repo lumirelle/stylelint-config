@@ -298,13 +298,13 @@ describe('scss config', () => {
             "selector-anb-no-unmatchable": true,
             "selector-attribute-quotes": "always",
             "selector-class-pattern": [
-              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$",
               {
                 "message": [Function],
               },
             ],
             "selector-id-pattern": [
-              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$",
               {
                 "message": [Function],
               },
@@ -949,13 +949,13 @@ describe('scss config', () => {
             "selector-anb-no-unmatchable": true,
             "selector-attribute-quotes": "always",
             "selector-class-pattern": [
-              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$",
               {
                 "message": [Function],
               },
             ],
             "selector-id-pattern": [
-              "^([a-z][a-z0-9]*)(-[a-z0-9]+)*$",
+              "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$",
               {
                 "message": [Function],
               },
