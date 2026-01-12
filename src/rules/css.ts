@@ -158,18 +158,16 @@ const cssRules = {
     },
   ],
   'selector-attribute-quotes': 'always',
-  // FIXME(Lumirelle): Suppport BEM style
   'selector-class-pattern': [
-    '^([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
+    '^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$',
     {
-      message: (selector: string) => `Expected class selector "${selector}" to be kebab-case`,
+      message: (selector: string) => `Expected class selector "${selector}" to be valid BEM style`,
     },
   ],
-  // FIXME(Lumirelle): Suppport BEM style
   'selector-id-pattern': [
-    '^([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
+    '^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$',
     {
-      message: (selector: string) => `Expected id selector "${selector}" to be kebab-case`,
+      message: (selector: string) => `Expected id selector "${selector}" to be valid BEM style`,
     },
   ],
   'selector-no-vendor-prefix': true,
