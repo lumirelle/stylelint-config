@@ -6,7 +6,7 @@
 		"body": [
 			"import type { StylelintConfig, StylelintOverrideConfig } from '../types'",
 			"",
-			"export function config(): StylelintConfig | StylelintOverrideConfig {",
+			"export function ${TM_FILENAME_BASE}(): Promise<StylelintConfig | StylelintOverrideConfig> {",
 			"  $0",
 			"",
 			"  return {}",
