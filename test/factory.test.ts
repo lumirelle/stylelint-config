@@ -283,8 +283,8 @@ describe('factory config', () => {
       await new ConfigComposer(
         { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
         css(false),
-        html(true),
         less(true, false, false),
+        html(true),
         vue(true, false, true, false),
         stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
         ordered(true),

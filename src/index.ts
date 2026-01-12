@@ -1,6 +1,7 @@
 export * from './composer'
 export * from './configs'
 export * from './factory'
+export { lumirelle as default } from './factory'
 export * from './globs'
 export * from './resolve'
 export * from './types'

@@ -1,13 +1,13 @@
+/**
+ * @file Stylelint configuration for verifying fixture outputs
+ */
+
 import lumirelle from '@lumirelle/stylelint-config'
 
 export default lumirelle({
-  less: true,
-  tailwindcss: true,
-  stylistic: {
-    indent: 2,
-    quotes: 'single',
-    maxLineLength: 120,
-  },
+  // scss: true,
+  // less: true,
+  vue: true,
   ignoreFiles: [
     '!output/**',
   ],

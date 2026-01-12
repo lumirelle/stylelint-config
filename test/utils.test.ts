@@ -9,6 +9,8 @@ let spiedIsPackageExists: ReturnType<typeof spyOn<typeof localPkg, 'isPackageExi
 let spiedConfirm: ReturnType<typeof spyOn<typeof clackPrompts, 'confirm'>>
 let spiedInstallPackage: ReturnType<typeof spyOn<typeof antfuInstallPkg, 'installPackage'>>
 
+let CI: string | undefined
+
 beforeEach(() => {
   spiedFilter = spyOn(Array.prototype, 'filter')
   spiedIsPackageExists = spyOn(localPkg, 'isPackageExists')
@@ -16,6 +18,10 @@ beforeEach(() => {
   spiedConfirm.mockImplementation(async () => true)
   spiedInstallPackage = spyOn(antfuInstallPkg, 'installPackage')
   spiedInstallPackage.mockImplementation(async () => undefined as any)
+
+  // Avoid CI environment interference
+  CI = process.env.CI
+  delete process.env.CI
 })
 
 afterEach(() => {
@@ -23,6 +29,11 @@ afterEach(() => {
   spiedIsPackageExists.mockRestore()
   spiedConfirm.mockRestore()
   spiedInstallPackage.mockRestore()
+
+  if (CI !== undefined)
+    process.env.CI = CI
+  else
+    delete process.env.CI
 })
 
 describe('utils', () => {

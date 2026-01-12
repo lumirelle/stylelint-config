@@ -1,6 +1,7 @@
 ".": 
   ConfigComposer: function
   css: function
+  default: function
   GLOB_EXCLUDE: object
   html: function
   less: function

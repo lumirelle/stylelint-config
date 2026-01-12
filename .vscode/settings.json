@@ -40,6 +40,7 @@
     { "rule": "*quotes", "severity": "off" },
     { "rule": "*semi", "severity": "off" }
   ],
+  // Used for verifying fixture outputs
   "stylelint.validate": [
     "css",
     "postcss",

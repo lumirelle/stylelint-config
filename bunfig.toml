@@ -5,4 +5,7 @@ linker = "isolated"
 bun = true
 
 [test]
-coveragePathIgnorePatterns = [ "**/dist/**" ]
+coveragePathIgnorePatterns = [
+  "dist/**",
+  "test/**"
+]
