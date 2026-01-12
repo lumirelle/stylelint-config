@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { html } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('html config', () => {
   it('should generate empty config when HTML support is disabled', async () => {
@@ -12,7 +15,7 @@ describe('html config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
         }
       `)

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { css } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('css config', () => {
   it('should generate config with default opinionated rules', async () => {

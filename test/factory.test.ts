@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
+import * as localPkg from 'local-pkg'
 import * as semver from 'semver'
 import { ConfigComposer, GLOB_EXCLUDE, lumirelle } from '../src'
 import { css, html, less, ordered, scss, stylistic, tailwindcss, vue } from '../src/configs'
@@ -6,17 +7,23 @@ import * as utils from './../src/utils'
 
 let spiedIsInEditorEnv: ReturnType<typeof spyOn<typeof utils, 'isInEditorEnv'>>
 let spiedLog: ReturnType<typeof spyOn<typeof console, 'log'>>
+let spiedWarn: ReturnType<typeof spyOn<typeof console, 'warn'>>
+let spiedIsPackageExists: ReturnType<typeof spyOn<typeof localPkg, 'isPackageExists'>>
 let spiedGte: ReturnType<typeof spyOn<typeof semver, 'gte'>>
 
 beforeEach(() => {
   spiedIsInEditorEnv = spyOn(utils, 'isInEditorEnv')
   spiedLog = spyOn(console, 'log')
+  spiedWarn = spyOn(console, 'warn')
+  spiedIsPackageExists = spyOn(localPkg, 'isPackageExists')
   spiedGte = spyOn(semver, 'gte')
 })
 
 afterEach(() => {
   spiedIsInEditorEnv.mockRestore()
   spiedLog.mockRestore()
+  spiedWarn.mockRestore()
+  spiedIsPackageExists.mockRestore()
   spiedGte.mockRestore()
 })
 
@@ -100,21 +107,6 @@ describe('factory config', () => {
     )
   })
 
-  it('should construct config with `stylistic` disabled', async () => {
-    expect(
-      await lumirelle(
-        { stylistic: false },
-      ),
-    ).toEqual(
-      await new ConfigComposer(
-        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
-        css(false),
-        html(true),
-        ordered(true),
-      ),
-    )
-  })
-
   it('should construct config with `css` forcibly enabled', async () => {
     expect(await lumirelle(
       { css: false as any },
@@ -129,7 +121,7 @@ describe('factory config', () => {
     )
   })
 
-  it('should construct config `scss` enabled', async () => {
+  it('should construct config with `scss` enabled', async () => {
     expect(
       await lumirelle(
         { scss: true },
@@ -146,7 +138,41 @@ describe('factory config', () => {
     )
   })
 
+  it('should construct config with `scss` dependency', async () => {
+    spiedIsPackageExists.mockImplementation(pkg => pkg === 'sass')
+    expect(
+      await lumirelle(),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        scss(true, false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
   it('should construct config with `less` enabled', async () => {
+    expect(
+      await lumirelle(
+        { less: true },
+      ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        less(true, false, false),
+        html(true),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `less` enabled and `scss` dependency (`scss` is ignored)', async () => {
+    spiedIsPackageExists.mockImplementation(pkg => pkg === 'sass' || pkg === 'postcss-less' || pkg === 'stylelint-less')
     expect(
       await lumirelle(
         { less: true },
@@ -178,6 +204,8 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
+    expect(spiedWarn).toBeCalledTimes(1)
+    expect(spiedWarn).toHaveBeenCalledWith('[@lumirelle/stylelint-config] You should not enable both SCSS and LESS support at the same time, LESS support is disabled.')
   })
 
   it('should construct config with `html` disabled', async () => {
@@ -200,6 +228,22 @@ describe('factory config', () => {
       await lumirelle(
         { vue: true },
       ),
+    ).toEqual(
+      await new ConfigComposer(
+        { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },
+        css(false),
+        html(true),
+        vue(true, false, false, false),
+        stylistic({ indent: 2, quotes: 'single', maxLineLength: 120 }),
+        ordered(true),
+      ),
+    )
+  })
+
+  it('should construct config with `vue` dependency', async () => {
+    spiedIsPackageExists.mockImplementation(pkg => pkg === 'vue')
+    expect(
+      await lumirelle(),
     ).toEqual(
       await new ConfigComposer(
         { allowEmptyInput: true, ignoreFiles: GLOB_EXCLUDE },

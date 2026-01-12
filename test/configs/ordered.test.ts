@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { ordered } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('ordered config', () => {
   it('should generate empty config when property ordering is disabled', async () => {
@@ -12,7 +15,7 @@ describe('ordered config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-recess-order@7.4.0+fb9ec13bd4890b1c\\node_modules\\stylelint-config-recess-order\\index.js",
+            "path/to/stylelint-config-recess-order",
           ],
         }
       `)

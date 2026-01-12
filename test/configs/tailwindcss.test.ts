@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { tailwindcss } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('tailwindcss config', () => {
   it('should generate empty config when Tailwind CSS is disabled', async () => {

@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { scss } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('scss config', () => {
   it('should generate empty config when SCSS is disabled', async () => {
@@ -19,7 +22,7 @@ describe('scss config', () => {
             "**/*.scss",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -350,7 +353,7 @@ describe('scss config', () => {
             "**/*.scss",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -669,7 +672,7 @@ describe('scss config', () => {
             "**/*.scss",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -999,7 +1002,7 @@ describe('scss config', () => {
             "**/*.scss",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [

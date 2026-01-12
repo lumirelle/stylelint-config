@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { less } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('less config', () => {
   it('should generate empty config when Less is disabled', async () => {
@@ -20,7 +23,7 @@ describe('less config', () => {
             "**/*.less",
           ],
           "plugins": [
-            "stylelint-less",
+            "path/to/stylelint-less",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -278,7 +281,7 @@ describe('less config', () => {
             "**/*.less",
           ],
           "plugins": [
-            "stylelint-less",
+            "path/to/stylelint-less",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -524,7 +527,7 @@ describe('less config', () => {
             "**/*.less",
           ],
           "plugins": [
-            "stylelint-less",
+            "path/to/stylelint-less",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -781,7 +784,7 @@ describe('less config', () => {
             "**/*.less",
           ],
           "plugins": [
-            "stylelint-less",
+            "path/to/stylelint-less",
           ],
           "rules": {
             "alpha-value-notation": [

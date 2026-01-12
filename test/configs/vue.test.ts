@@ -1,6 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test'
 import * as localPkg from 'local-pkg'
 import { vue } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 let spiedGetPackageInfoSync: ReturnType<typeof spyOn<typeof localPkg, 'getPackageInfoSync'>>
 
@@ -25,7 +28,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -294,7 +297,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -564,7 +567,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -840,7 +843,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -1123,7 +1126,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -1394,7 +1397,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -1676,7 +1679,7 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
@@ -1946,13 +1949,13 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -2301,13 +2304,13 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
           ],
           "plugins": [
-            "stylelint-less",
+            "path/to/stylelint-less",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -2575,13 +2578,13 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -2930,13 +2933,13 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -3273,13 +3276,13 @@ describe('vue config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+            "path/to/stylelint-config-html",
           ],
           "files": [
             "**/*.vue",
           ],
           "plugins": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+            "path/to/stylelint-scss",
           ],
           "rules": {
             "alpha-value-notation": [
@@ -3628,13 +3631,13 @@ it('should generate Vue config with CSS and SCSS rules when both enabled, with a
     .toMatchInlineSnapshot(`
       {
         "extends": [
-          "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-config-html@1.1.0+03b7fe24d9de6d69\\node_modules\\stylelint-config-html\\index.js",
+          "path/to/stylelint-config-html",
         ],
         "files": [
           "**/*.vue",
         ],
         "plugins": [
-          "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\stylelint-scss@6.14.0+a6183ed6e7f65258\\node_modules\\stylelint-scss\\src\\index.js",
+          "path/to/stylelint-scss",
         ],
         "rules": {
           "alpha-value-notation": [

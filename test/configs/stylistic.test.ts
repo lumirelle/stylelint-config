@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'bun:test'
 import { stylistic } from '../../src'
+import { setup } from './setup'
+
+setup()
 
 describe('stylistic config', () => {
   it('should generate empty config when stylistic is disabled', async () => {
@@ -12,7 +15,7 @@ describe('stylistic config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\@stylistic+stylelint-config@3.0.1+a6183ed6e7f65258\\node_modules\\@stylistic\\stylelint-config\\stylelint.config.js",
+            "path/to/@stylistic/stylelint-config",
           ],
           "rules": {
             "@stylistic/block-closing-brace-newline-after": [
@@ -34,7 +37,7 @@ describe('stylistic config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\@stylistic+stylelint-config@3.0.1+a6183ed6e7f65258\\node_modules\\@stylistic\\stylelint-config\\stylelint.config.js",
+            "path/to/@stylistic/stylelint-config",
           ],
           "rules": {
             "@stylistic/block-closing-brace-newline-after": [
@@ -59,7 +62,7 @@ describe('stylistic config', () => {
       .toMatchInlineSnapshot(`
         {
           "extends": [
-            "C:\\Users\\Lumirelle\\i\\stylelint-config\\node_modules\\.bun\\@stylistic+stylelint-config@3.0.1+a6183ed6e7f65258\\node_modules\\@stylistic\\stylelint-config\\stylelint.config.js",
+            "path/to/@stylistic/stylelint-config",
           ],
           "rules": {
             "@stylistic/block-closing-brace-newline-after": [
