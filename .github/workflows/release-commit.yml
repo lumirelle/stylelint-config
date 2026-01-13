@@ -13,4 +13,3 @@ jobs:
     uses: lumirelle/workflows/.github/workflows/release-commit.yml@v3
     with:
       compact: true
-      packages: './packages/*'
