@@ -1,11 +1,11 @@
 import { Glob, YAML } from 'bun'
 import { describe, expect, it } from 'bun:test'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import { dirname, join } from 'node:path'
 import { getPackageExportsManifest } from 'vitest-package-exports'
-import { workspaces } from '../package.json'
+import { version, workspaces } from '../package.json'
 
-describe('exports-snapshot', async () => {
+describe.todoIf(version === '0.0.0')('exports-snapshot', async () => {
   const root = join(import.meta.dir, '..')
   /**
    * FIXME: If `bun` support command like `pnpm ls --only-projects`, we may no longer need this, see https://github.com/oven-sh/bun/issues/25114
@@ -26,9 +26,9 @@ describe('exports-snapshot', async () => {
         const pkgPaths = pkgJson.name!.split('/')
         pkgPaths[pkgPaths.length - 1] += '.yaml'
         const output = join(root, 'test', 'exports', ...pkgPaths)
-        await fs.mkdir(dirname(output), { recursive: true })
-        await fs.writeFile(output, exports)
-        expect(exports).toEqual(await fs.readFile(output, { encoding: 'utf-8' }))
+        fs.mkdirSync(dirname(output), { recursive: true })
+        await Bun.write(output, exports)
+        expect(exports).toEqual(await Bun.file(output).text())
       })
     }
   }

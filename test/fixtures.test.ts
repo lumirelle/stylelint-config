@@ -1,18 +1,16 @@
 import type { OptionsConfig } from '../src/types'
 import { afterAll, beforeAll, expect, it } from 'bun:test'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
-import { x } from 'tinyexec'
-import { glob } from 'tinyglobby'
 
 const isWindows = process.platform === 'win32'
 const timeout = isWindows ? 300_000 : 30_000
 
-beforeAll(async () => {
-  await fs.rm('_fixtures', { recursive: true, force: true })
+beforeAll(() => {
+  fs.rmSync('_fixtures', { recursive: true, force: true })
 })
-afterAll(async () => {
-  await fs.rm('_fixtures', { recursive: true, force: true })
+afterAll(() => {
+  fs.rmSync('_fixtures', { recursive: true, force: true })
 })
 
 runWithConfig(
@@ -312,13 +310,13 @@ function runWithConfig(displayName: string, dirName: string, configs: OptionsCon
     const output = resolve('fixtures/output', dirName)
     const processed = resolve('_fixtures', dirName)
 
-    await fs.cp(input, processed, {
+    fs.cpSync(input, processed, {
       recursive: true,
       filter: (src) => {
         return !src.includes('node_modules')
       },
     })
-    await fs.writeFile(join(processed, 'stylelint.config.js'), `
+    await Bun.write(join(processed, 'stylelint.config.js'), `
 import lumirelle from '@lumirelle/stylelint-config'
 
 export default lumirelle(
@@ -326,15 +324,13 @@ export default lumirelle(
 )
 `)
 
-    await x('npx', ['stylelint', filePatterns, '--fix'], {
-      nodeOptions: {
-        cwd: processed,
-        stdio: 'pipe',
-      },
-    })
+    await Bun.spawn(['bun', 'stylelint', filePatterns, '--fix'], {
+      cwd: processed,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).stdout.text()
 
-    const files = await glob('**/*', {
-      ignore: [
+    const files = fs.globSync('**/*', {
+      exclude: [
         'node_modules',
         'stylelint.config.js',
       ],
@@ -342,16 +338,16 @@ export default lumirelle(
     })
 
     await Promise.all(files.map(async (file) => {
-      const content = await fs.readFile(join(processed, file), 'utf-8')
-      const source = await fs.readFile(join(input, file), 'utf-8')
+      const content = await Bun.file(join(processed, file)).text()
+      const source = await Bun.file(join(input, file)).text()
       const outputPath = join(output, file)
       if (content === source) {
-        await fs.rm(outputPath, { force: true })
+        fs.rmSync(outputPath, { force: true })
         return
       }
-      await fs.mkdir(join(dirname(outputPath)), { recursive: true })
-      await fs.writeFile(outputPath, content)
-      const expected = await fs.readFile(outputPath, 'utf-8')
+      fs.mkdirSync(join(dirname(outputPath)), { recursive: true })
+      await Bun.write(outputPath, content)
+      const expected = await Bun.file(outputPath).text()
       expect(content).toBe(expected)
     }))
   }, timeout)
