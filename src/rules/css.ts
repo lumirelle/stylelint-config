@@ -8,7 +8,7 @@ const cssRules = {
   'at-rule-descriptor-value-no-unknown': true,
   'at-rule-no-deprecated': true,
   'at-rule-no-unknown': true,
-  'at-rule-prelude-no-invalid': [true, { ignoreAtRules: ['media'] }],
+  'at-rule-prelude-no-invalid': [true, { ignoreAtRules: ['media'] }] as const,
   'block-no-empty': true,
   'comment-no-empty': true,
   'custom-property-no-missing-var-function': true,
@@ -18,7 +18,7 @@ const cssRules = {
     {
       ignore: ['consecutive-duplicates-with-different-syntaxes'],
     },
-  ],
+  ] as const,
   'declaration-block-no-shorthand-property-overrides': true,
   'declaration-property-value-keyword-no-deprecated': true,
   'declaration-property-value-no-unknown': true,
@@ -51,8 +51,8 @@ const cssRules = {
     {
       ignore: ['custom-elements'],
     },
-  ],
-  'string-no-newline': [true, { ignore: ['at-rule-preludes', 'declaration-values'] }],
+  ] as const,
+  'string-no-newline': [true, { ignore: ['at-rule-preludes', 'declaration-values'] }] as const,
   'syntax-string-no-invalid': true,
   // Standard
   'alpha-value-notation': [
@@ -66,14 +66,14 @@ const cssRules = {
         'stroke-opacity',
       ],
     },
-  ],
+  ] as const,
   'at-rule-empty-line-before': [
     'always',
     {
       except: ['blockless-after-same-name-blockless', 'first-nested'],
       ignore: ['after-comment'],
     },
-  ],
+  ] as const,
   'at-rule-no-vendor-prefix': true,
   'block-no-redundant-nested-style-rules': true,
   'color-function-alias-notation': 'without-alpha',
@@ -85,33 +85,33 @@ const cssRules = {
       except: ['first-nested'],
       ignore: ['stylelint-commands'],
     },
-  ],
+  ] as const,
   'comment-whitespace-inside': 'always',
   'container-name-pattern': [
     '^(--)?([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
     {
-      message: (name: string) => `Expected container name "${name}" to be kebab-case`,
+      message: (name: string): string => `Expected container name "${name}" to be kebab-case`,
     },
-  ],
+  ] as const,
   'custom-property-empty-line-before': [
     'always',
     {
       except: ['after-custom-property', 'first-nested'],
       ignore: ['after-comment', 'inside-single-line-block'],
     },
-  ],
+  ] as const,
   'custom-media-pattern': [
     '^([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
     {
-      message: (name: string) => `Expected custom media query name "${name}" to be kebab-case`,
+      message: (name: string): string => `Expected custom media query name "${name}" to be kebab-case`,
     },
-  ],
+  ] as const,
   'custom-property-pattern': [
     '^(?:--)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$',
     {
-      message: (name: string) => `Expected custom property name "${name}" to be kebab-case, start with "--" or nothing.`,
+      message: (name: string): string => `Expected custom property name "${name}" to be kebab-case, start with "--" or nothing.`,
     },
-  ],
+  ] as const,
   'declaration-block-no-redundant-longhand-properties': true,
   'declaration-block-single-line-max-declarations': 1,
   'declaration-empty-line-before': [
@@ -120,7 +120,7 @@ const cssRules = {
       except: ['after-declaration', 'first-nested'],
       ignore: ['after-comment', 'inside-single-line-block'],
     },
-  ],
+  ] as const,
   'font-family-name-quotes': 'always-where-recommended',
   'function-name-case': 'lower',
   'function-url-quotes': 'always',
@@ -130,21 +130,21 @@ const cssRules = {
   'keyframes-name-pattern': [
     '^([a-z][a-z0-9]*)(-[a-z0-9]+)*$',
     {
-      message: (name: string) => `Expected keyframe name "${name}" to be kebab-case`,
+      message: (name: string): string => `Expected keyframe name "${name}" to be kebab-case`,
     },
-  ],
+  ] as const,
   'layer-name-pattern': [
     '^([a-z][a-z0-9]*)([.-][a-z0-9]+)*$',
     {
-      message: (name: string) => `Expected layer name "${name}" to be kebab-case`,
+      message: (name: string): string => `Expected layer name "${name}" to be kebab-case`,
     },
-  ],
+  ] as const,
   'length-zero-no-unit': [
     true,
     {
       ignore: ['custom-properties'],
     },
-  ],
+  ] as const,
   'lightness-notation': 'percentage',
   'media-feature-name-no-vendor-prefix': true,
   'media-feature-range-notation': 'context',
@@ -156,20 +156,20 @@ const cssRules = {
       except: ['first-nested'],
       ignore: ['after-comment'],
     },
-  ],
+  ] as const,
   'selector-attribute-quotes': 'always',
   'selector-class-pattern': [
     '^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$',
     {
-      message: (selector: string) => `Expected class selector "${selector}" to be valid BEM style`,
+      message: (selector: string): string => `Expected class selector "${selector}" to be valid BEM style`,
     },
-  ],
+  ] as const,
   'selector-id-pattern': [
     '^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$',
     {
-      message: (selector: string) => `Expected id selector "${selector}" to be valid BEM style`,
+      message: (selector: string): string => `Expected id selector "${selector}" to be valid BEM style`,
     },
-  ],
+  ] as const,
   'selector-no-vendor-prefix': true,
   'selector-not-notation': 'complex',
   'selector-pseudo-element-colon-notation': 'double',
@@ -182,7 +182,7 @@ const cssRules = {
       // `-webkit-box` is allowed as standard. See https://www.w3.org/TR/css-overflow-3/#webkit-line-clamp
       ignoreValues: ['box', 'inline-box'],
     },
-  ],
+  ] as const,
 }
 
 type CSSRules<LessOpinionated extends boolean | OptionsOpinionated>

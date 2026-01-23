@@ -21,4 +21,4 @@ export default {
   ignoreFiles: [
     'fixtures/**',
   ],
-} satisfies KnipConfig
+} as KnipConfig

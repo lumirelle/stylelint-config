@@ -3,7 +3,7 @@
  *
  * @see https://github.com/micromatch/micromatch
  */
-export const GLOB_EXCLUDE = [
+export const GLOB_EXCLUDE: string[] = [
   '**/node_modules/**',
   '**/dist/**',
 

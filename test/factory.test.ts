@@ -1,3 +1,4 @@
+import type { StylelintConfig, StylelintOverrideConfig } from '../src/types'
 import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
 import * as localPkg from 'local-pkg'
 import * as semver from 'semver'
@@ -48,11 +49,11 @@ describe('factory config', () => {
   })
 
   it('should construct config with user overrides correctly', async () => {
-    const userConfigs = [
+    const userConfigs: StylelintConfig[] = [
       { rules: { 'color-hex-case': 'upper' } },
       { rules: { 'color-hex-case': null } },
     ]
-    const userOverrideConfigs = [
+    const userOverrideConfigs: StylelintOverrideConfig[] = [
       { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^foo' } },
       { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^bar' } },
     ]
@@ -71,18 +72,18 @@ describe('factory config', () => {
         ordered(true),
         userConfigs[1],
         // `overrides` are processed by Stylelint itself
-        { overrides: [userOverrideConfigs[0]] },
-        { overrides: [userOverrideConfigs[1]] },
+        { overrides: [userOverrideConfigs[0]!] },
+        { overrides: [userOverrideConfigs[1]!] },
       ),
     )
   })
 
   it('should mix configs using .mix() method correctly', async () => {
-    const userConfigs = [
+    const userConfigs: StylelintConfig[] = [
       { rules: { 'color-hex-case': 'upper' } },
       { rules: { 'color-hex-case': null } },
     ]
-    const userOverrideConfigs = [
+    const userOverrideConfigs: StylelintOverrideConfig[] = [
       { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^foo' } },
       { files: ['**/*.scss'], rules: { 'scss/dollar-variable-pattern': '^bar' } },
     ]
@@ -101,8 +102,8 @@ describe('factory config', () => {
         ordered(true),
         userConfigs[1],
         // `overrides` are processed by Stylelint itself
-        { overrides: [userOverrideConfigs[0]] },
-        { overrides: [userOverrideConfigs[1]] },
+        { overrides: [userOverrideConfigs[0]!] },
+        { overrides: [userOverrideConfigs[1]!] },
       ),
     )
   })
