@@ -95,9 +95,7 @@
         "lint-staged": "^16.2.7",
         "publint": "^0.3.17"
       },
-      "testing": {
-        "tinyexec": "^1.0.2",
-        "tinyglobby": "^0.2.15",
+      "test": {
         "vitest-package-exports": "^1.1.2"
       }
     }
@@ -148,10 +146,8 @@
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
-    "tinyexec": "catalog:testing",
-    "tinyglobby": "catalog:testing",
     "typescript": "catalog:dev",
-    "vitest-package-exports": "catalog:testing"
+    "vitest-package-exports": "catalog:test"
   },
   "simple-git-hooks": {
     "pre-commit": "bun lint-staged"

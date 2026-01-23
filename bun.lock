@@ -37,10 +37,8 @@
         "simple-git-hooks": "catalog:dev",
         "stylelint": "catalog:dev",
         "stylelint-less": "catalog:dev",
-        "tinyexec": "catalog:testing",
-        "tinyglobby": "catalog:testing",
         "typescript": "catalog:dev",
-        "vitest-package-exports": "catalog:testing",
+        "vitest-package-exports": "catalog:test",
       },
       "peerDependencies": {
         "postcss-less": ">=6.0.0",
@@ -89,9 +87,7 @@
       "stylelint-config-recess-order": "^7.6.0",
       "stylelint-scss": "^7.0.0",
     },
-    "testing": {
-      "tinyexec": "^1.0.2",
-      "tinyglobby": "^0.2.15",
+    "test": {
       "vitest-package-exports": "^1.1.2",
     },
     "types": {
