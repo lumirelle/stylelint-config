@@ -76,7 +76,7 @@
       "@antfu/install-pkg": "^1.1.0",
       "@antfu/utils": "^9.3.0",
       "@clack/prompts": "^0.11.0",
-      "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
+      "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
       "@lumirelle/defu": "^1.1.0",
       "@stylistic/stylelint-config": "^4.0.0",
       "local-pkg": "^1.1.2",
@@ -154,7 +154,7 @@
 
     "@dprint/toml": ["@dprint/toml@0.7.0", "", {}, "sha512-eFaQTcfxKHB+YyTh83x7GEv+gDPuj9q5NFOTaoj5rZmQTbj6OgjjMxUicmS1R8zYcx8YAq5oA9J3YFa5U6x2gA=="],
 
-    "@dreamsicle.io/stylelint-config-tailwindcss": ["@dreamsicle.io/stylelint-config-tailwindcss@1.1.2", "", { "peerDependencies": { "stylelint": "^16.17.0" } }, "sha512-g5nPxKyZKh139CT67tTFT3WD7kB4y4WoHLGqlmLfTjs52cvWGwFUBSiUpPnB2sSBh5efXPtw4VYv8zwPt6C19A=="],
+    "@dreamsicle.io/stylelint-config-tailwindcss": ["@dreamsicle.io/stylelint-config-tailwindcss@1.2.2", "", { "peerDependencies": { "stylelint": "^16.17.0 || ^17.0.0" } }, "sha512-MFwpR3adGHftLjFVYNd6NXepiJMXcVLhY00znLZN7rv/zhbYyOLSPzfotNOvBw647Zb9Wm/lMsMk08i4VkZI/g=="],
 
     "@emnapi/core": ["@emnapi/core@1.8.1", "", { "dependencies": { "@emnapi/wasi-threads": "1.1.0", "tslib": "^2.4.0" } }, "sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg=="],
 

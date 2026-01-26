@@ -58,7 +58,7 @@
         "@antfu/install-pkg": "^1.1.0",
         "@antfu/utils": "^9.3.0",
         "@clack/prompts": "^0.11.0",
-        "@dreamsicle.io/stylelint-config-tailwindcss": "^1.1.2",
+        "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
         "@lumirelle/defu": "^1.1.0",
         "@stylistic/stylelint-config": "^4.0.0",
         "local-pkg": "^1.1.2",
