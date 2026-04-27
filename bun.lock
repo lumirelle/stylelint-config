@@ -85,7 +85,7 @@
       "@clack/prompts": "^1.2.0",
       "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
       "@lumirelle/defu": "^1.1.0",
-      "@stylistic/stylelint-config": "^4.0.0",
+      "@stylistic/stylelint-config": "^5.0.0",
       "local-pkg": "^1.1.2",
       "lodash.clonedeep": "^4.5.0",
       "postcss-scss": "^4.0.9",
@@ -434,7 +434,7 @@
 
     "@stylistic/eslint-plugin": ["@stylistic/eslint-plugin@5.10.0", "", { "dependencies": { "@eslint-community/eslint-utils": "^4.9.1", "@typescript-eslint/types": "^8.56.0", "eslint-visitor-keys": "^4.2.1", "espree": "^10.4.0", "estraverse": "^5.3.0", "picomatch": "^4.0.3" }, "peerDependencies": { "eslint": "^9.0.0 || ^10.0.0" } }, "sha512-nPK52ZHvot8Ju/0A4ucSX1dcPV2/1clx0kLcH5wDmrE4naKso7TUC/voUyU1O9OTKTrR6MYip6LP0ogEMQ9jPQ=="],
 
-    "@stylistic/stylelint-config": ["@stylistic/stylelint-config@4.0.0", "", { "dependencies": { "@stylistic/stylelint-plugin": "^5.0.0" }, "peerDependencies": { "stylelint": "^17.0.0" } }, "sha512-04H8xfsIR/pWpAPQI5aGxwgjeikb8vy4OSNvzRdRcAITYSfX1UUTgGL5jm8iZxN8MSWfN77hMlV1LknE0Ho6tg=="],
+    "@stylistic/stylelint-config": ["@stylistic/stylelint-config@5.0.0", "", { "dependencies": { "@stylistic/stylelint-plugin": "^5.1.0" }, "peerDependencies": { "stylelint": "^17.6.0" } }, "sha512-AW6S27wEm4DzB+uOZMvRkONIu0ba50VRbFte7qYJgGP4dacS8kAuj8HZJ+s+8kE4GK3XXBcSKLb75a+NfJlbiQ=="],
 
     "@stylistic/stylelint-plugin": ["@stylistic/stylelint-plugin@5.1.0", "", { "dependencies": { "@csstools/css-parser-algorithms": "^4.0.0", "@csstools/css-tokenizer": "^4.0.0", "@csstools/media-query-list-parser": "^5.0.0", "postcss": "^8.5.8", "postcss-selector-parser": "^7.1.1", "postcss-value-parser": "^4.2.0", "style-search": "^0.1.0" }, "peerDependencies": { "stylelint": "^17.6.0" } }, "sha512-TFvKCbJUEWUYCD+rDv45qhnStO6nRtbBngaCblS2JGh8c95S3jJi3fIotfF6EDo4IVM15UPa65WP+kp6GNvXRA=="],
 

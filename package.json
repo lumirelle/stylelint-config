@@ -62,7 +62,7 @@
         "@clack/prompts": "^1.2.0",
         "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
         "@lumirelle/defu": "^1.1.0",
-        "@stylistic/stylelint-config": "^4.0.0",
+        "@stylistic/stylelint-config": "^5.0.0",
         "local-pkg": "^1.1.2",
         "lodash.clonedeep": "^4.5.0",
         "postcss-scss": "^4.0.9",
