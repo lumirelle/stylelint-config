@@ -1,18 +1,19 @@
 import type { KnipConfig } from 'knip'
 
-// @keep-sorted
 export default {
-  // @keep-sorted
+  /// keep-sorted
   ignoreDependencies: [
+    '@arethetypeswrong/cli',
     '@dreamsicle.io/stylelint-config-tailwindcss',
+    '@lumirelle/oxlint-config',
     '@stylistic/stylelint-config',
-    'postcss-less',
+    'publint',
     'stylelint-config-html',
     'stylelint-config-recess-order',
     'stylelint-less',
     'stylelint-scss',
   ],
-  // @keep-sorted
+  /// keep-sorted
   ignoreFiles: [
     'fixtures/**',
   ],

@@ -40,6 +40,7 @@ export function isInEditorEnv(): boolean {
     return false
   if (isInGitHooksOrLintStaged())
     return false
+  // oxlint-disable-next-line no-constant-binary-expression
   return !!(false
     || process.env.VSCODE_PID
     || process.env.VSCODE_CWD
@@ -50,6 +51,7 @@ export function isInEditorEnv(): boolean {
 }
 
 export function isInGitHooksOrLintStaged(): boolean {
+  // oxlint-disable-next-line no-constant-binary-expression
   return !!(false
     || process.env.GIT_PARAMS
     || process.env.VSCODE_GIT_COMMAND

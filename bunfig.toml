@@ -1,11 +1,12 @@
 [install]
 linker = "isolated"
 
-[run]
-bun = true
-
 [test]
 coveragePathIgnorePatterns = [
-  "dist/**",
-  "test/**"
+  "**/dist/**",
+  "**/*.{test,spec,bench,benchmark}.ts"
+]
+coverageReporter = [
+  "text",
+  "lcov"
 ]

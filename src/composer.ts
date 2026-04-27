@@ -12,13 +12,14 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
     super(() => {})
 
     if (configs.length > 0)
-      this.mix(...configs)
+      void this.mix(...configs)
   }
 
   /**
    * Mix the provided config, which will merge into the existing config.
    */
   public mix(...configs: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]): ConfigComposer {
+    // oxlint-disable-next-line typescript/await-thenable
     const promises = Promise.all(configs)
     this._operations.push(async (config) => {
       const resolved = (await promises).flat().filter(Boolean) as (StylelintConfig | StylelintOverrideConfig)[]
@@ -46,6 +47,7 @@ export class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideC
     return config
   }
 
+  // oxlint-disable-next-line unicorn/no-thenable
   override then(onFulfilled: (value: StylelintConfig) => any, onRejected?: (reason: any) => any): Promise<any> {
     return this.toConfig()
       .then(onFulfilled, onRejected)

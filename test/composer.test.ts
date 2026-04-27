@@ -44,8 +44,8 @@ describe('config composer', () => {
       },
     }
     const composer = new ConfigComposer(config)
-    composer.mix(config1)
-    composer.mix(config2)
+    await composer.mix(config1)
+    await composer.mix(config2)
     expect(await composer)
       .toEqual({
         rules: {
@@ -61,13 +61,14 @@ describe('config composer', () => {
         test: true,
       },
     }
-    new ConfigComposer(config).then((finalConfig) => {
+    // oxlint-disable-next-line promise/always-return
+    await new ConfigComposer(config).then((finalConfig) => {
       expect(finalConfig).toEqual(config)
     })
-    new ConfigComposer(config).catch((reason) => {
+    await new ConfigComposer(config).catch((reason) => {
       expect(reason).toBeDefined()
     })
-    new ConfigComposer(config).finally(() => {
+    await new ConfigComposer(config).finally(() => {
       expect(true).toBe(true)
     })
   })

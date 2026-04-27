@@ -58,7 +58,7 @@ export function lumirelle(
 
   const isInEditor = isInEditorEnv()
   if (isInEditor)
-    // eslint-disable-next-line no-console
+    // oxlint-disable-next-line no-console
     console.log('[@lumirelle/stylelint-config] Detected running in editor.')
 
   let scssOptions = userScssOptions ?? false
