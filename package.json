@@ -96,7 +96,7 @@
         "publint": "^0.3.18"
       },
       "test": {
-        "vitest-package-exports": "^1.2.0"
+        "tsnapi": "^0.3.2"
       }
     }
   },
@@ -146,8 +146,8 @@
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
-    "typescript": "catalog:dev",
-    "vitest-package-exports": "catalog:test"
+    "tsnapi": "catalog:test",
+    "typescript": "catalog:dev"
   },
   "simple-git-hooks": {
     "pre-commit": "bun lint-staged"

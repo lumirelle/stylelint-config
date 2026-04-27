@@ -1,35 +1,24 @@
-import { Glob, YAML } from 'bun'
 import { describe, expect, it } from 'bun:test'
-import fs from 'node:fs'
-import { dirname, join } from 'node:path'
-import { getPackageExportsManifest } from 'vitest-package-exports'
-import { version, workspaces } from '../package.json'
+import { existsSync } from 'node:fs'
+import { generateApiSnapshot } from 'tsnapi'
+import { exports, name as pkgName } from '../package.json'
 
-describe.todoIf(version === '0.0.0')('exports-snapshot', async () => {
-  const root = join(import.meta.dir, '..')
-  /**
-   * FIXME: If `bun` support command like `pnpm ls --only-projects`, we may no longer need this, see https://github.com/oven-sh/bun/issues/25114
-   */
-  for (const pkg of workspaces.packages) {
-    const glob = new Glob(`${pkg}/package.json`)
-    for await (const pkgJsonPath of glob.scan({ cwd: root, absolute: true })) {
-      const pkgJson = await import(pkgJsonPath).then(m => m.default) as { name?: string, private?: boolean }
-      if (!pkgJson.name || pkgJson.private)
-        continue
-      it(`${pkgJson.name}`, async () => {
-        const manifest = await getPackageExportsManifest({
-          importMode: 'src',
-          cwd: dirname(pkgJsonPath),
-        })
-        // TODO: Workaround. Bun currently does not support file snapshot like Vitest, see https://github.com/oven-sh/bun/issues/13096
-        const exports = YAML.stringify(manifest.exports, null, 2)
-        const pkgPaths = pkgJson.name!.split('/')
-        pkgPaths[pkgPaths.length - 1] += '.yaml'
-        const output = join(root, 'test', 'exports', ...pkgPaths)
-        fs.mkdirSync(dirname(output), { recursive: true })
-        await Bun.write(output, exports)
-        expect(exports).toEqual(await Bun.file(output).text())
-      })
-    }
-  }
+const testCases = Object.keys(exports).filter(key => !key.endsWith('.json'))
+
+describe.each(testCases)(`exports-snapshot/${pkgName}`, (pkgEntry) => {
+  const isDistExists = existsSync('dist')
+
+  it('dist should exist', () => {
+    expect(isDistExists, 'dist directory does not exist, please run `bun run build` first').toBe(true)
+  })
+
+  it.if(isDistExists)(`${pkgName}/${pkgEntry}/runtime`, async () => {
+    const api = await generateApiSnapshot(process.cwd())
+    expect(api[pkgEntry]?.runtime).toMatchSnapshot()
+  })
+
+  it.if(isDistExists)(`${pkgName}/${pkgEntry}/dts`, async () => {
+    const api = await generateApiSnapshot(process.cwd())
+    expect(api[pkgEntry]?.dts).toMatchSnapshot()
+  })
 })
