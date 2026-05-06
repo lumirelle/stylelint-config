@@ -77,7 +77,7 @@
         "bumpp": "^11.0.1",
         "postcss-less": "^6.0.0",
         "simple-git-hooks": "git+https://github.com/toplenboren/simple-git-hooks.git#7625657",
-        "stylelint": "^17.9.1",
+        "stylelint": "^17.11.0",
         "stylelint-less": "^4.2.1"
       },
       "types": {
@@ -95,14 +95,14 @@
       "check": {
         "@antfu/eslint-config": "^8.2.0",
         "@arethetypeswrong/cli": "^0.18.2",
-        "@lumirelle/oxlint-config": "^0.2.2",
+        "@lumirelle/oxlint-config": "^0.3.0",
         "eslint": "^10.3.0",
-        "eslint-plugin-oxlint": "^1.62.0",
-        "knip": "^6.11.0",
+        "eslint-plugin-oxlint": "^1.63.0",
+        "knip": "^6.12.0",
         "nano-staged": "^1.0.2",
-        "oxlint": "^1.62.0",
+        "oxlint": "^1.63.0",
         "oxlint-tsgolint": "^0.22.1",
-        "publint": "^0.3.18"
+        "publint": "^0.3.19"
       },
       "test": {
         "tsnapi": "^0.3.2"
