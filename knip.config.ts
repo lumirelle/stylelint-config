@@ -1,7 +1,6 @@
 import type { KnipConfig } from 'knip'
 
 export default {
-  /// keep-sorted
   ignoreDependencies: [
     '@arethetypeswrong/cli',
     '@dreamsicle.io/stylelint-config-tailwindcss',
@@ -13,7 +12,6 @@ export default {
     'stylelint-less',
     'stylelint-scss',
   ],
-  /// keep-sorted
   ignoreFiles: [
     'fixtures/**',
   ],
