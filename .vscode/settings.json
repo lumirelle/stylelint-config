@@ -31,8 +31,8 @@
     "vue",
     "html",
     "vue"
-  ]
+  ],
 
-    // JavaScript / TypeScript
+  // JavaScript / TypeScript
   "js/ts.tsdk.path": "node_modules\\typescript\\lib",
 }
