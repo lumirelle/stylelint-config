@@ -1,6 +1,5 @@
 [install]
 linker = "isolated"
-globalStore = true
 
 [test]
 coveragePathIgnorePatterns = [
