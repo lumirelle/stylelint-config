@@ -31,7 +31,7 @@ export async function vue(_, _, _, _) {}
 // #endregion
 
 // #region Variables
-export var GLOB_EXCLUDE
+export var GLOB_EXCLUDE /* const */
 // #endregion
 
 // #region Default Export
@@ -46,25 +46,25 @@ exports[`exports-snapshot/@lumirelle/stylelint-config @lumirelle/stylelint-confi
  */
 // #region Interfaces
 export interface OptionsConfig {
-	ignoreFiles?: string | string[];
-	stylistic?: boolean | StylisticConfig;
-	css?: true;
-	scss?: boolean;
-	less?: boolean;
-	tailwindcss?: boolean;
-	html?: boolean;
-	vue?: boolean;
-	ordered?: boolean;
-	lessOpinionated?: boolean | OptionsOpinionated;
+  ignoreFiles?: string | string[];
+  stylistic?: boolean | StylisticConfig;
+  css?: true;
+  scss?: boolean;
+  less?: boolean;
+  tailwindcss?: boolean;
+  html?: boolean;
+  vue?: boolean;
+  ordered?: boolean;
+  lessOpinionated?: boolean | OptionsOpinionated;
 }
 export interface OptionsOpinionated {
-	pattern?: boolean;
-	maintainability?: boolean;
+  pattern?: boolean;
+  maintainability?: boolean;
 }
 export interface StylisticConfig {
-	indent?: number | "tab";
-	quotes?: "single" | "double";
-	maxLineLength?: number;
+  indent?: number | "tab";
+  quotes?: "single" | "double";
+  maxLineLength?: number;
 }
 // #endregion
 
@@ -75,28 +75,28 @@ export type StylelintOverrideConfig = ElementOf<NonNullable<StylelintConfig["ove
 
 // #region Classes
 export declare class ConfigComposer extends Promise<StylelintConfig | StylelintOverrideConfig> {
-	private _operations;
-	constructor(..._: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]);
-	mix(..._: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]): ConfigComposer;
-	toConfig(): Promise<StylelintConfig>;
-	then(_: (_: StylelintConfig) => any, _?: (_: any) => any): Promise<any>;
-	catch(_: (_: any) => any): Promise<any>;
-	finally(_: () => any): Promise<any>;
+  private _operations;
+  constructor(..._: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]);
+  mix(..._: Awaitable<Nullable<StylelintConfig | StylelintOverrideConfig>>[]): ConfigComposer;
+  toConfig(): Promise<StylelintConfig>;
+  override then(_: (_: StylelintConfig) => any, _?: (_: any) => any): Promise<any>;
+  override catch(_: (_: any) => any): Promise<any>;
+  override finally(_: () => any): Promise<any>;
 }
 // #endregion
 
 // #region Functions
 export declare function css(_: boolean | OptionsOpinionated): Promise<StylelintConfig>;
-export declare function html(_: boolean): Promise<Nullable2<StylelintOverrideConfig>>;
-export declare function less(_: boolean, _: boolean | OptionsOpinionated, _: boolean): Promise<Nullable3<StylelintOverrideConfig>>;
-export declare function lumirelle(_?: OptionsConfig, ..._: Awaitable2<StylelintConfig | StylelintOverrideConfig>[]): ConfigComposer;
-export declare function ordered(_: boolean): Promise<Nullable4<StylelintConfig>>;
+export declare function html(_: boolean): Promise<Nullable<StylelintOverrideConfig>>;
+export declare function less(_: boolean, _: boolean | OptionsOpinionated, _: boolean): Promise<Nullable<StylelintOverrideConfig>>;
+export declare function lumirelle(_?: OptionsConfig, ..._: Awaitable<StylelintConfig | StylelintOverrideConfig>[]): ConfigComposer;
+export declare function ordered(_: boolean): Promise<Nullable<StylelintConfig>>;
 export declare function resolvePackagePath(_: string): string;
 export declare function resolvePackagePaths(_: string[]): string[];
-export declare function scss(_: boolean, _: boolean | OptionsOpinionated): Promise<Nullable5<StylelintOverrideConfig>>;
-export declare function stylistic(_: boolean | StylisticConfig): Promise<Nullable6<StylelintConfig>>;
-export declare function tailwindcss(_: boolean): Promise<Nullable7<StylelintConfig>>;
-export declare function vue(_: boolean, _: boolean, _: boolean, _: boolean | OptionsOpinionated): Promise<Nullable8<StylelintOverrideConfig>>;
+export declare function scss(_: boolean, _: boolean | OptionsOpinionated): Promise<Nullable<StylelintOverrideConfig>>;
+export declare function stylistic(_: boolean | StylisticConfig): Promise<Nullable<StylelintConfig>>;
+export declare function tailwindcss(_: boolean): Promise<Nullable<StylelintConfig>>;
+export declare function vue(_: boolean, _: boolean, _: boolean, _: boolean | OptionsOpinionated): Promise<Nullable<StylelintOverrideConfig>>;
 // #endregion
 
 // #region Variables
@@ -104,7 +104,7 @@ export declare const GLOB_EXCLUDE: string[];
 // #endregion
 
 // #region Default Export
-declare function _default(_?: OptionsConfig, ..._: Awaitable2<StylelintConfig | StylelintOverrideConfig>[]): ConfigComposer;
+declare function _default(_?: OptionsConfig, ..._: Awaitable<StylelintConfig | StylelintOverrideConfig>[]): ConfigComposer;
 export default _default
 // #endregion"
 `;
