@@ -21,6 +21,7 @@
     "vue",
     "lumirelle"
   ],
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
