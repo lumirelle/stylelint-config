@@ -148,9 +148,6 @@
     "tsnapi": "catalog:test",
     "typescript": "catalog:types"
   },
-  "overrides": {
-    "fflate": "0.8.2"
-  },
   "nano-staged": {
     "*": [
       "oxlint --no-error-on-unmatched-pattern",
