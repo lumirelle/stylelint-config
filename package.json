@@ -40,19 +40,7 @@
     "access": "public"
   },
   "scripts": {
-    "prepare": "simple-git-hooks",
-    "dev": "tsdown --tsconfig tsconfig.lib.json --watch",
-    "build": "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only",
-    "start": "bun run ./src/index.ts",
-    "lint": "bun run --parallel oxlint eslint",
-    "lint:fix": "oxlint --fix && eslint --fix",
-    "typecheck": "tsc --build --noEmit",
-    "unused": "knip-bun",
-    "check": "bun run --parallel lint typecheck unused",
-    "pretest": "bun run build",
-    "test": "bun test",
-    "prerelease": "bun run --parallel check test",
-    "release": "bumpp"
+    "prepare": "mise run prepare"
   },
   "workspaces": {
     "packages": [],
@@ -100,8 +88,7 @@
         "nano-staged": "^1.0.2",
         "oxlint": "^1.66.0",
         "oxlint-tsgolint": "^0.23.0",
-        "publint": "^0.3.21",
-        "simple-git-hooks": "git+https://github.com/toplenboren/simple-git-hooks.git#7625657"
+        "publint": "^0.3.21"
       },
       "test": {
         "tsnapi": "^0.3.3"
@@ -155,7 +142,6 @@
     "oxlint-tsgolint": "catalog:check",
     "postcss-less": "catalog:dev",
     "publint": "catalog:check",
-    "simple-git-hooks": "catalog:check",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
     "tsdown": "catalog:build",
@@ -164,9 +150,6 @@
   },
   "overrides": {
     "fflate": "0.8.2"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "bun nano-staged"
   },
   "nano-staged": {
     "*": [
