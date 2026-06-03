@@ -20,7 +20,7 @@ run = "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only"
 depends = "bun run ./src/index.ts"
 
 [tasks."lint:oxlint"]
-run = "oxlint --config .oxlintrc.json"
+run = "oxlint"
 
 [tasks."lint:eslint"]
 wait_for = "lint:oxlint"
@@ -33,7 +33,7 @@ depends = [
 ]
 
 [tasks."lint:fix:oxlint"]
-run = "oxlint --config .oxlintrc.json --fix"
+run = "oxlint --fix"
 
 [tasks."lint:fix:eslint"]
 wait_for = "lint:fix:oxlint"

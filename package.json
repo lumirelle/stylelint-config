@@ -80,7 +80,7 @@
       },
       "check": {
         "@antfu/eslint-config": "^9.0.0",
-        "@arethetypeswrong/cli": "^0.18.2",
+        "@arethetypeswrong/core": "^0.18.3",
         "@lumirelle/oxlint-config": "^0.6.0",
         "eslint": "^10.4.0",
         "eslint-plugin-oxlint": "^1.66.0",
@@ -125,7 +125,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:check",
-    "@arethetypeswrong/cli": "catalog:check",
+    "@arethetypeswrong/core": "catalog:check",
     "@lumirelle/oxlint-config": "catalog:check",
     "@lumirelle/tsconfig": "catalog:types",
     "@types/lodash.clonedeep": "catalog:types",
