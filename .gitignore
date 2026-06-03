@@ -141,3 +141,6 @@ vite.config.ts.timestamp-*
 .vite/
 
 _fixtures
+
+# Mise Local Config
+mise.local.toml
