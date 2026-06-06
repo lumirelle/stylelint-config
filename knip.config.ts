@@ -2,7 +2,7 @@ import type { KnipConfig } from 'knip'
 
 export default {
   entry: ['test/**/*.{ts,js}', 'fixtures/**/*.{ts,js}'],
-  ignoreBinaries: ['mise'],
+  ignoreBinaries: ['mise', 'aubx'],
   ignoreDependencies: [
     '@dreamsicle.io/stylelint-config-tailwindcss',
     '@lumirelle/oxlint-config',

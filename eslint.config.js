@@ -5,7 +5,6 @@ import oxlint from 'eslint-plugin-oxlint'
 export default antfu(
   {
     type: 'app',
-    vue: true,
     perfectionist: {
       overrides: {
         'perfectionist/sort-imports': [
