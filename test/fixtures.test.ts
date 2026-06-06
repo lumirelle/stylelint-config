@@ -1,7 +1,9 @@
 import type { OptionsConfig } from '../src/types'
-import { afterAll, beforeAll, expect, it } from 'bun:test'
+import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
+import { toArray } from '@antfu/utils'
+import { afterAll, beforeAll, expect, it } from 'vitest'
 
 const isWindows = process.platform === 'win32'
 const timeout = isWindows ? 300_000 : 30_000
@@ -41,7 +43,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|scss.scss)',
+  ['css.css', 'scss.scss'],
 )
 runWithConfig(
   'should fix CSS and Less',
@@ -56,7 +58,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|less.less)',
+  ['css.css', 'less.less'],
 )
 
 runWithConfig(
@@ -72,7 +74,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|css.html)',
+  ['css.css', 'css.html'],
 )
 runWithConfig(
   'should fix CSS and CSS in Vue',
@@ -87,7 +89,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|css.vue)',
+  ['css.css', 'css.vue'],
 )
 runWithConfig(
   'should fix CSS, SCSS, CSS in HTML',
@@ -102,7 +104,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|scss.scss|css.html)',
+  ['css.css', 'scss.scss', 'css.html'],
 )
 runWithConfig(
   'should fix CSS, SCSS, CSS in Vue and SCSS in Vue',
@@ -117,7 +119,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|scss.scss|css.vue|scss.vue)',
+  ['css.css', 'scss.scss', 'css.vue', 'scss.vue'],
 )
 runWithConfig(
   'should fix CSS, Less, CSS in HTML',
@@ -132,7 +134,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|less.less|css.html)',
+  ['css.css', 'less.less', 'css.html'],
 )
 runWithConfig(
   'should fix CSS, Less, CSS in Vue and Less in Vue',
@@ -147,7 +149,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(css.css|less.less|css.vue|less.vue)',
+  ['css.css', 'less.less', 'css.vue', 'less.vue'],
 )
 
 runWithConfig(
@@ -163,7 +165,7 @@ runWithConfig(
     stylistic: true,
     ordered: false,
   },
-  '(css.css|css.html|css.vue)',
+  ['css.css', 'css.html', 'css.vue'],
 )
 runWithConfig(
   'should fix CSS, SCSS with stylistic enabled',
@@ -178,7 +180,7 @@ runWithConfig(
     stylistic: true,
     ordered: false,
   },
-  '(css.css|css.html|css.vue|scss.scss|scss.vue)',
+  ['css.css', 'css.html', 'css.vue', 'scss.scss', 'scss.vue'],
 )
 runWithConfig(
   'should fix CSS, Less with stylistic enabled',
@@ -193,7 +195,7 @@ runWithConfig(
     stylistic: true,
     ordered: false,
   },
-  '(css.css|css.html|css.vue|less.less|less.vue)',
+  ['css.css', 'css.html', 'css.vue', 'less.less', 'less.vue'],
 )
 
 runWithConfig(
@@ -209,7 +211,7 @@ runWithConfig(
     stylistic: false,
     ordered: true,
   },
-  '(css.css|css.html|css.vue|scss.scss|scss.vue)',
+  ['css.css', 'css.html', 'css.vue', 'scss.scss', 'scss.vue'],
 )
 runWithConfig(
   'should fix CSS, Less with ordering enabled',
@@ -224,7 +226,7 @@ runWithConfig(
     stylistic: false,
     ordered: true,
   },
-  '(css.css|css.html|css.vue|less.less|less.vue)',
+  ['css.css', 'css.html', 'css.vue', 'less.less', 'less.vue'],
 )
 
 runWithConfig(
@@ -240,7 +242,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(tailwind.css|tailwind-css.html|tailwind-css.vue)',
+  ['tailwind.css', 'tailwind-css.html', 'tailwind-css.vue'],
 )
 runWithConfig(
   'should fix CSS, SCSS, in HTML and Vue with Tailwind CSS enabled',
@@ -255,7 +257,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(tailwind.css|tailwind-css.html|tailwind-css.vue|tailwind.scss|tailwind-scss.vue)',
+  ['tailwind.css', 'tailwind-css.html', 'tailwind-css.vue', 'tailwind.scss', 'tailwind-scss.vue'],
 )
 runWithConfig(
   'should fix CSS, Less, in HTML and Vue with Tailwind CSS enabled',
@@ -270,7 +272,7 @@ runWithConfig(
     stylistic: false,
     ordered: false,
   },
-  '(tailwind.css|tailwind-css.html|tailwind-css.vue|tailwind.less|tailwind-less.vue)',
+  ['tailwind.css', 'tailwind-css.html', 'tailwind-css.vue', 'tailwind.less', 'tailwind-less.vue'],
 )
 
 runWithConfig(
@@ -286,7 +288,7 @@ runWithConfig(
     stylistic: true,
     ordered: true,
   },
-  '(css.css|css.html|css.vue|scss.scss|scss.vue|tailwind.css|tailwind-css.html|tailwind-css.vue|tailwind.scss|tailwind-scss.vue|js.js)',
+  ['css.css', 'css.html', 'css.vue', 'scss.scss', 'scss.vue', 'tailwind.css', 'tailwind-css.html', 'tailwind-css.vue', 'tailwind.scss', 'tailwind-scss.vue', 'js.js'],
 )
 runWithConfig(
   'should apply all features with Less enabled',
@@ -301,10 +303,10 @@ runWithConfig(
     stylistic: true,
     ordered: true,
   },
-  '(css.css|css.html|css.vue|less.less|less.vue|tailwind.css|tailwind-css.html|tailwind-css.vue|tailwind.less|tailwind-less.vue|js.js)',
+  ['css.css', 'css.html', 'css.vue', 'less.less', 'less.vue', 'tailwind.css', 'tailwind-css.html', 'tailwind-css.vue', 'tailwind.less', 'tailwind-less.vue', 'js.js'],
 )
 
-function runWithConfig(displayName: string, dirName: string, configs: OptionsConfig, filePatterns: string = './*.{css,scss,vue}') {
+function runWithConfig(displayName: string, dirName: string, configs: OptionsConfig, filePatterns: string | string[] = './*.{css,scss,vue}') {
   it.concurrent(displayName, async () => {
     const input = resolve('fixtures/input')
     const output = resolve('fixtures/output', dirName)
@@ -316,7 +318,7 @@ function runWithConfig(displayName: string, dirName: string, configs: OptionsCon
         return !src.includes('node_modules')
       },
     })
-    await Bun.write(join(processed, 'stylelint.config.js'), `
+    fs.writeFileSync(join(processed, 'stylelint.config.js'), `
 import lumirelle from '@lumirelle/stylelint-config'
 
 export default lumirelle(
@@ -324,10 +326,10 @@ export default lumirelle(
 )
 `)
 
-    await Bun.spawn(['bun', 'stylelint', filePatterns, '--fix'], {
+    spawnSync('aubx', ['stylelint', ...toArray(filePatterns), '--fix'], {
       cwd: processed,
-      stdio: ['ignore', 'pipe', 'pipe'],
-    }).stdout.text()
+      shell: true,
+    })
 
     const files = fs.globSync('**/*', {
       exclude: [
@@ -338,16 +340,16 @@ export default lumirelle(
     })
 
     await Promise.all(files.map(async (file) => {
-      const content = await Bun.file(join(processed, file)).text()
-      const source = await Bun.file(join(input, file)).text()
+      const content = fs.readFileSync(join(processed, file), 'utf8')
+      const source = fs.readFileSync(join(input, file), 'utf8')
       const outputPath = join(output, file)
       if (content === source) {
         fs.rmSync(outputPath, { force: true })
         return
       }
-      fs.mkdirSync(join(dirname(outputPath)), { recursive: true })
-      await Bun.write(outputPath, content)
-      const expected = await Bun.file(outputPath).text()
+      fs.mkdirSync(dirname(outputPath), { recursive: true })
+      fs.writeFileSync(outputPath, content)
+      const expected = fs.readFileSync(outputPath, 'utf8')
       expect(content).toBe(expected)
     }))
   }, timeout)

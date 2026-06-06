@@ -1,8 +1,19 @@
-import { describe, expect, it } from 'bun:test'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { scss } from '../../src'
-import { setup } from './setup'
 
-setup()
+beforeAll(() => {
+  vi.mock(import('../../src/resolve'), async (importOriginal) => {
+    const original = await importOriginal()
+    return {
+      ...original,
+      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+    }
+  })
+})
+
+afterAll(() => {
+  vi.restoreAllMocks()
+})
 
 describe('scss config', () => {
   it('should generate empty config when SCSS is disabled', async () => {
@@ -15,8 +26,8 @@ describe('scss config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "parse": [Function: scssParse],
-            "stringify": [Function: scssStringify],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.scss",
@@ -347,8 +358,8 @@ describe('scss config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "parse": [Function: scssParse],
-            "stringify": [Function: scssStringify],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.scss",
@@ -667,8 +678,8 @@ describe('scss config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "parse": [Function: scssParse],
-            "stringify": [Function: scssStringify],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.scss",
@@ -998,8 +1009,8 @@ describe('scss config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "parse": [Function: scssParse],
-            "stringify": [Function: scssStringify],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.scss",

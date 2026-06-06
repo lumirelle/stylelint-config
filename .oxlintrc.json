@@ -9,5 +9,6 @@
     "es2026": true,
     "browser": true,
     "node": true
-  }
+  },
+  "ignorePatterns": ["test/__snapshots__/**"]
 }

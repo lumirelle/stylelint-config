@@ -1,18 +1,18 @@
-import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
-import * as localPkg from 'local-pkg'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { tailwindcss } from '../../src'
-import { setup } from './setup'
 
-setup()
-
-let spiedGetPackageInfoSync: ReturnType<typeof spyOn<typeof localPkg, 'getPackageInfoSync'>>
-
-beforeEach(() => {
-  spiedGetPackageInfoSync = spyOn(localPkg, 'getPackageInfoSync')
+beforeAll(() => {
+  vi.mock(import('../../src/resolve'), async (importOriginal) => {
+    const original = await importOriginal()
+    return {
+      ...original,
+      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+    }
+  })
 })
 
-afterEach(() => {
-  spiedGetPackageInfoSync.mockRestore()
+afterAll(() => {
+  vi.restoreAllMocks()
 })
 
 describe('tailwindcss config', () => {

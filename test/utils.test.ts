@@ -1,39 +1,27 @@
-import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
 import * as antfuInstallPkg from '@antfu/install-pkg'
 import * as clackPrompts from '@clack/prompts'
-import * as localPkg from 'local-pkg'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ensurePackages, interopDefault, isInEditorEnv, isInGitHooksOrLintStaged, isPackageInScope } from '../src/utils'
 
-let spiedFilter: ReturnType<typeof spyOn<typeof Array.prototype, 'filter'>>
-let spiedIsPackageExists: ReturnType<typeof spyOn<typeof localPkg, 'isPackageExists'>>
-let spiedConfirm: ReturnType<typeof spyOn<typeof clackPrompts, 'confirm'>>
-let spiedInstallPackage: ReturnType<typeof spyOn<typeof antfuInstallPkg, 'installPackage'>>
+vi.mock('@clack/prompts', { spy: true })
+vi.mock('@antfu/install-pkg', { spy: true })
 
-let CI: string | undefined
+const spiedFilter = vi.spyOn(Array.prototype, 'filter')
+const spiedConfirm = vi.spyOn(clackPrompts, 'confirm')
+const spiedInstallPackage = vi.spyOn(antfuInstallPkg, 'installPackage')
 
 beforeEach(() => {
-  spiedFilter = spyOn(Array.prototype, 'filter')
-  spiedIsPackageExists = spyOn(localPkg, 'isPackageExists')
-  spiedConfirm = spyOn(clackPrompts, 'confirm')
   spiedConfirm.mockImplementation(async () => true)
-  spiedInstallPackage = spyOn(antfuInstallPkg, 'installPackage')
   spiedInstallPackage.mockImplementation(async () => undefined as any)
-
   // Avoid CI environment interference
-  CI = process.env.CI
-  delete process.env.CI
+  vi.stubEnv('CI', undefined)
+  // Why global config does not work?
+  spiedFilter.mockClear()
 })
 
 afterEach(() => {
-  spiedFilter.mockRestore()
-  spiedIsPackageExists.mockRestore()
-  spiedConfirm.mockRestore()
-  spiedInstallPackage.mockRestore()
-
-  if (CI !== undefined)
-    process.env.CI = CI
-  else
-    delete process.env.CI
+  spiedConfirm.mockReset()
+  spiedInstallPackage.mockReset()
 })
 
 describe('utils', () => {
@@ -51,23 +39,21 @@ describe('utils', () => {
 
   describe('ensurePackages', () => {
     it('should `Array.filter` not be called in CI environment', async () => {
-      const CI = process.env.CI
-      process.env.CI = 'true'
+      vi.stubEnv('CI', 'true')
+      expect(process.env.CI).toBe('true')
+      expect(spiedFilter).not.toHaveBeenCalled()
       expect(await ensurePackages(['stylelint'], false))
         .toBeUndefined()
       expect(spiedFilter).not.toHaveBeenCalled()
-      if (CI !== undefined)
-        process.env.CI = CI
-      else
-        delete process.env.CI
     })
 
     it('should `Array.filter` not be called if `isTTY` false', async () => {
+      const originalIsTTY = process.stdout.isTTY
       process.stdout.isTTY = false
       expect(await ensurePackages(['stylelint'], false))
         .toBeUndefined()
       expect(spiedFilter).not.toHaveBeenCalled()
-      process.stdout.isTTY = true
+      process.stdout.isTTY = originalIsTTY
     })
 
     it('should not prompt and install for `stylelint`', async () => {
@@ -79,7 +65,7 @@ describe('utils', () => {
     })
 
     it('should throw error for `not-exist-package` if in editor', async () => {
-      expect(ensurePackages(['not-exist-package'], true))
+      await expect(ensurePackages(['not-exist-package'], true))
         .rejects
         .toThrow()
       expect(spiedFilter).toHaveBeenCalled()
@@ -96,17 +82,12 @@ describe('utils', () => {
     })
 
     it('should prompt but not install for `not-exist-package` if user cancels', async () => {
-      const TEST_NOT_CONFIRM = process.env.TEST_NOT_CONFIRM
-      process.env.TEST_NOT_CONFIRM = 'true'
-      spiedConfirm.mockResolvedValueOnce(false)
+      spiedConfirm.mockImplementation(async () => false)
       expect(await ensurePackages(['not-exist-package'], false))
         .toBeUndefined()
       expect(spiedConfirm).toHaveBeenCalledTimes(1)
       expect(spiedInstallPackage).toHaveBeenCalledTimes(0)
-      if (TEST_NOT_CONFIRM !== undefined)
-        process.env.TEST_NOT_CONFIRM = TEST_NOT_CONFIRM
-      else
-        delete process.env.TEST_NOT_CONFIRM
+      spiedConfirm.mockReset()
     })
 
     it('should prompt one package not exists correctly', async () => {
@@ -127,11 +108,11 @@ describe('utils', () => {
   })
 
   describe('interopDefault', () => {
-    it('should interop default correctly', () => {
-      expect(interopDefault(Promise.resolve({ default: 42 })))
+    it('should interop default correctly', async () => {
+      await expect(interopDefault(Promise.resolve({ default: 42 })))
         .resolves
         .toBe(42)
-      expect(interopDefault(Promise.resolve(42)))
+      await expect(interopDefault(Promise.resolve(42)))
         .resolves
         .toBe(42)
     })

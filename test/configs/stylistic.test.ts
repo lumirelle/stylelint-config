@@ -1,8 +1,19 @@
-import { describe, expect, it } from 'bun:test'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { stylistic } from '../../src'
-import { setup } from './setup'
 
-setup()
+beforeAll(() => {
+  vi.mock(import('../../src/resolve'), async (importOriginal) => {
+    const original = await importOriginal()
+    return {
+      ...original,
+      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+    }
+  })
+})
+
+afterAll(() => {
+  vi.restoreAllMocks()
+})
 
 describe('stylistic config', () => {
   it('should generate empty config when stylistic is disabled', async () => {

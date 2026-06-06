@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.7",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "aube@1.17.1",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -40,7 +40,17 @@
     "access": "public"
   },
   "scripts": {
-    "prepare": "mise run prepare"
+    "prepare": "mise run prepare",
+    "dev": "tsdown --tsconfig tsconfig.lib.json --watch",
+    "build": "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only",
+    "start": "bun run ./src/index.ts",
+    "oxlint": "oxlint --config .oxlintrc.json",
+    "eslint": "eslint",
+    "typecheck": "tsc --build --noEmit",
+    "unused": "knip-bun",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "release": "bumpp"
   },
   "workspaces": {
     "packages": [],
@@ -53,11 +63,11 @@
       },
       "types": {
         "@lumirelle/tsconfig": "^0.1.4",
+        "@types/bun": "^1.3.14",
         "@types/lodash.clonedeep": "^4.5.9",
         "@types/node": "^25.9.1",
         "@types/postcss-less": "^4.0.7",
         "@types/semver": "^7.7.1",
-        "bun-types": "^1.3.14",
         "typescript": "^6.0.3"
       },
       "build": {
@@ -91,7 +101,9 @@
         "publint": "^0.3.21"
       },
       "test": {
-        "tsnapi": "^0.3.3"
+        "@vitest/coverage-v8": "^4.1.8",
+        "tsnapi": "^0.3.3",
+        "vitest": "^4.1.8"
       }
     }
   },
@@ -128,12 +140,13 @@
     "@arethetypeswrong/core": "catalog:check",
     "@lumirelle/oxlint-config": "catalog:check",
     "@lumirelle/tsconfig": "catalog:types",
+    "@types/bun": "catalog:types",
     "@types/lodash.clonedeep": "catalog:types",
     "@types/node": "catalog:types",
     "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
+    "@vitest/coverage-v8": "catalog:test",
     "bumpp": "catalog:dev",
-    "bun-types": "catalog:types",
     "eslint": "catalog:check",
     "eslint-plugin-oxlint": "catalog:check",
     "knip": "catalog:check",
@@ -146,7 +159,8 @@
     "stylelint-less": "catalog:dev",
     "tsdown": "catalog:build",
     "tsnapi": "catalog:test",
-    "typescript": "catalog:types"
+    "typescript": "catalog:types",
+    "vitest": "catalog:test"
   },
   "nano-staged": {
     "*": [

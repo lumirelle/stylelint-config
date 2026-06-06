@@ -1,19 +1,27 @@
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test'
 import * as localPkg from 'local-pkg'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { vue } from '../../src'
-import { setup } from './setup'
 
-setup()
-
-let spiedGetPackageInfoSync: ReturnType<typeof spyOn<typeof localPkg, 'getPackageInfoSync'>>
-
-beforeEach(() => {
-  spiedGetPackageInfoSync = spyOn(localPkg, 'getPackageInfoSync')
-  spiedGetPackageInfoSync.mockImplementation(() => ({ version: '16.13.0' } as any))
+beforeAll(() => {
+  vi.mock(import('../../src/resolve'), async (importOriginal) => {
+    const original = await importOriginal()
+    return {
+      ...original,
+      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+    }
+  })
 })
 
-afterEach(() => {
-  mock.clearAllMocks()
+afterAll(() => {
+  vi.restoreAllMocks()
+})
+
+vi.mock('local-pkg', { spy: true })
+
+const spiedGetPackageInfoSync = vi.spyOn(localPkg, 'getPackageInfoSync')
+
+beforeEach(() => {
+  spiedGetPackageInfoSync.mockImplementation(() => ({ version: '16.13.0' } as any))
 })
 
 describe('vue config', () => {
@@ -3624,11 +3632,10 @@ describe('vue config', () => {
         }
       `)
   })
-})
 
-it('should generate Vue config with CSS and SCSS rules when both enabled, with all less opinionated rules', async () => {
-  expect(await vue(true, true, false, true))
-    .toMatchInlineSnapshot(`
+  it('should generate Vue config with CSS and SCSS rules when both enabled, with all less opinionated rules', async () => {
+    expect(await vue(true, true, false, true))
+      .toMatchInlineSnapshot(`
       {
         "extends": [
           "path/to/stylelint-config-html/vue",
@@ -3966,4 +3973,5 @@ it('should generate Vue config with CSS and SCSS rules when both enabled, with a
         },
       }
     `)
+  })
 })

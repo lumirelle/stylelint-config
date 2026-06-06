@@ -1,38 +1,22 @@
 import type { StylelintConfig, StylelintOverrideConfig } from '../src/types'
-import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test'
 import * as localPkg from 'local-pkg'
-import * as semver from 'semver'
+import { describe, expect, it, vi } from 'vitest'
 import { ConfigComposer, GLOB_EXCLUDE, lumirelle } from '../src'
 import { css, html, less, ordered, scss, stylistic, tailwindcss, vue } from '../src/configs'
 import * as utils from './../src/utils'
 
-let spiedIsInEditorEnv: ReturnType<typeof spyOn<typeof utils, 'isInEditorEnv'>>
-let spiedLog: ReturnType<typeof spyOn<typeof console, 'log'>>
-let spiedWarn: ReturnType<typeof spyOn<typeof console, 'warn'>>
-let spiedIsPackageExists: ReturnType<typeof spyOn<typeof localPkg, 'isPackageExists'>>
-let spiedGte: ReturnType<typeof spyOn<typeof semver, 'gte'>>
+vi.mock('local-pkg', { spy: true })
 
-beforeEach(() => {
-  spiedIsInEditorEnv = spyOn(utils, 'isInEditorEnv')
-  spiedLog = spyOn(console, 'log')
-  spiedWarn = spyOn(console, 'warn')
-  spiedIsPackageExists = spyOn(localPkg, 'isPackageExists')
-  spiedGte = spyOn(semver, 'gte')
-})
-
-afterEach(() => {
-  spiedIsInEditorEnv.mockRestore()
-  spiedLog.mockRestore()
-  spiedWarn.mockRestore()
-  spiedIsPackageExists.mockRestore()
-  spiedGte.mockRestore()
-})
+const spiedIsInEditorEnv = vi.spyOn(utils, 'isInEditorEnv')
+const spiedLog = vi.spyOn(console, 'log')
+const spiedWarn = vi.spyOn(console, 'warn')
+const spiedIsPackageExists = vi.spyOn(localPkg, 'isPackageExists')
 
 describe('factory config', () => {
   it('should log if in editor', async () => {
     spiedIsInEditorEnv.mockReturnValue(true)
     await lumirelle()
-    expect(spiedLog).toBeCalledTimes(1)
+    expect(spiedLog).toHaveBeenCalledTimes(1)
     expect(spiedLog).toHaveBeenCalledWith('[@lumirelle/stylelint-config] Detected running in editor.')
   })
 
@@ -153,6 +137,7 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
+    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config with `less` enabled', async () => {
@@ -188,6 +173,7 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
+    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config with both `scss` and `less` enabled (`less` is ignored)', async () => {
@@ -205,7 +191,7 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
-    expect(spiedWarn).toBeCalledTimes(1)
+    expect(spiedWarn).toHaveBeenCalledTimes(1)
     expect(spiedWarn).toHaveBeenCalledWith('[@lumirelle/stylelint-config] You should not enable both SCSS and LESS support at the same time, LESS support is disabled.')
   })
 
@@ -255,6 +241,7 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
+    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config  with `vue` and `scss` enabled', async () => {

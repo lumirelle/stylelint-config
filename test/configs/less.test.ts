@@ -1,8 +1,19 @@
-import { describe, expect, it } from 'bun:test'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { less } from '../../src'
-import { setup } from './setup'
 
-setup()
+beforeAll(() => {
+  vi.mock(import('../../src/resolve'), async (importOriginal) => {
+    const original = await importOriginal()
+    return {
+      ...original,
+      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+    }
+  })
+})
+
+afterAll(() => {
+  vi.restoreAllMocks()
+})
 
 describe('less config', () => {
   it('should generate empty config when Less is disabled', async () => {
@@ -15,9 +26,9 @@ describe('less config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "nodeToString": [Function: nodeToString],
-            "parse": [Function: parse],
-            "stringify": [Function: stringify],
+            "nodeToString": [Function],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.less",
@@ -274,9 +285,9 @@ describe('less config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "nodeToString": [Function: nodeToString],
-            "parse": [Function: parse],
-            "stringify": [Function: stringify],
+            "nodeToString": [Function],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.less",
@@ -521,9 +532,9 @@ describe('less config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "nodeToString": [Function: nodeToString],
-            "parse": [Function: parse],
-            "stringify": [Function: stringify],
+            "nodeToString": [Function],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.less",
@@ -779,9 +790,9 @@ describe('less config', () => {
       .toMatchInlineSnapshot(`
         {
           "customSyntax": {
-            "nodeToString": [Function: nodeToString],
-            "parse": [Function: parse],
-            "stringify": [Function: stringify],
+            "nodeToString": [Function],
+            "parse": [Function],
+            "stringify": [Function],
           },
           "files": [
             "*.less",

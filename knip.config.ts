@@ -8,7 +8,6 @@ export default {
     '@lumirelle/oxlint-config',
     '@stylistic/stylelint-config',
     'nano-staged',
-    'bumpp',
     'stylelint-config-html',
     'stylelint-config-recess-order',
     'stylelint-less',
