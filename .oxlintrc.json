@@ -10,5 +10,5 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": ["test/__snapshots__/**"]
+  "ignorePatterns": ["test/__snapshots__/**", "fixtures/input/**", "fixtures/output/**"]
 }
