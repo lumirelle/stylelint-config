@@ -39,24 +39,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "prepare": "mise run prepare",
-    "dev": "tsdown --tsconfig tsconfig.lib.json --watch",
-    "build": "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only",
-    "start": "bun run ./src/index.ts",
-    "oxlint": "oxlint --config .oxlintrc.json",
-    "eslint": "eslint",
-    "typecheck": "tsc --build --noEmit",
-    "unused": "knip-bun",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "release": "bumpp"
-  },
   "workspaces": {
     "packages": [],
     "catalogs": {
       "dev": {
-        "bumpp": "^11.1.0",
         "postcss-less": "^6.0.0",
         "stylelint": "^17.12.0",
         "stylelint-less": "^4.2.1"
@@ -90,15 +76,12 @@
       },
       "check": {
         "@antfu/eslint-config": "^9.0.0",
-        "@arethetypeswrong/core": "^0.18.3",
         "@lumirelle/oxlint-config": "^0.7.0",
         "eslint": "^10.4.1",
         "eslint-plugin-oxlint": "^1.68.0",
         "knip": "^6.15.0",
-        "nano-staged": "^1.0.2",
         "oxlint": "^1.68.0",
-        "oxlint-tsgolint": "^0.23.0",
-        "publint": "^0.3.21"
+        "oxlint-tsgolint": "^0.23.0"
       },
       "test": {
         "@vitest/coverage-v8": "^4.1.8",
@@ -137,7 +120,6 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:check",
-    "@arethetypeswrong/core": "catalog:check",
     "@lumirelle/oxlint-config": "catalog:check",
     "@lumirelle/tsconfig": "catalog:types",
     "@types/bun": "catalog:types",
@@ -146,26 +128,17 @@
     "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
     "@vitest/coverage-v8": "catalog:test",
-    "bumpp": "catalog:dev",
     "eslint": "catalog:check",
     "eslint-plugin-oxlint": "catalog:check",
     "knip": "catalog:check",
-    "nano-staged": "catalog:check",
     "oxlint": "catalog:check",
     "oxlint-tsgolint": "catalog:check",
     "postcss-less": "catalog:dev",
-    "publint": "catalog:check",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
     "tsdown": "catalog:build",
     "tsnapi": "catalog:test",
     "typescript": "catalog:types",
     "vitest": "catalog:test"
-  },
-  "nano-staged": {
-    "*": [
-      "oxlint --no-error-on-unmatched-pattern",
-      "eslint"
-    ]
   }
 }

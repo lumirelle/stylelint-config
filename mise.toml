@@ -4,53 +4,49 @@ _.path = [ "./node_modules/.bin" ]
 [tools]
 bun = "latest"
 aube = "latest"
+pkl = "latest"
+hk = "latest"
+"npm:@arethetypeswrong/cli" = "latest"
+"npm:publint" = "latest"
 
-[tasks.prepare]
-run = "mise generate git-pre-commit --write"
+[hooks]
+enter = "hk install"
+
+[deps.auto-aube]
+sources = [
+  "package.json",
+  "bun.lock"
+]
+outputs = [ "node_modules/" ]
+# Because aube's output lockfile has bugs,
+# we use `bun install --lockfile-only` to generate a lockfile
+run = "bun install --lockfile-only && aube install"
+auto = true
 
 [tasks.pre-commit]
-run = "nano-staged"
+run = "hk run pre-commit"
 
 [tasks.dev]
-run = "aubr dev"
+run = "tsdown --tsconfig tsconfig.lib.json --watch"
 
 [tasks.build]
-run = "aubr build"
+run = "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only"
 
 [tasks.start]
-run = "aubr start"
-
-[tasks.lint]
-run = [
-  "aubr oxlint",
-  "aubr eslint"
-]
-
-[tasks."lint:fix"]
-run = [
-  "aubr oxlint --fix",
-  "aubr eslint --fix"
-]
-
-[tasks.typecheck]
-run = "aubr typecheck"
-
-[tasks.unused]
-run = "aubr unused"
+run = "bun run ./src/index.ts"
 
 [tasks.check]
-run = { tasks = [
-  "lint",
-  "typecheck",
-  "unused",
-] }
+run = "hk check --all"
+
+[tasks.fix]
+run = "hk fix --all"
 
 [tasks.test]
 depends = "build"
-run = "aubr test"
+run = "vitest run"
 
 [tasks."test:watch"]
-run = "aubr test:watch"
+run = "vitest"
 
 [tasks.prerelease]
 run = { tasks = [
@@ -60,5 +56,11 @@ run = { tasks = [
 
 [tasks.release]
 depends = "prerelease"
-run = "aubr release"
+run = "aubx bumpp"
 raw = true
+
+[tasks.publish]
+run = "aube publish --access public --tag latest"
+
+[tasks."publish:commit"]
+run = "aubx pkg-pr-new publish --bun"
