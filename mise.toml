@@ -36,9 +36,11 @@ run = "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only"
 run = "bun run ./src/index.ts"
 
 [tasks.check]
+depends = "build"
 run = "hk check --all"
 
 [tasks.fix]
+depends = "build"
 run = "hk fix --all"
 
 [tasks.test]
