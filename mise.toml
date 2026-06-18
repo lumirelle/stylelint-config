@@ -2,18 +2,22 @@
 _.path = [ "./node_modules/.bin" ]
 
 [tools]
+# Environments
 bun = "latest"
-"github:jdx/aube" = "latest"
-npm = "latest"
+npm = "latest" # Used to release package (trust publisher)
+aube = "latest"
+# Linters & Formatters
 pkl = "latest"
 hk = "latest"
 "npm:@arethetypeswrong/cli" = "latest"
 "npm:publint" = "latest"
+# Release
+"npm:pkg-pr-new" = "latest"
+"npm:bumpp" = "latest"
+"npm:changelogithub" = "latest"
 
-[hooks]
-enter = "hk install"
-
-[deps.auto-aube]
+[deps.bun-aube]
+description = "Automatically install dependencies via aube & bun's lockfile."
 sources = [
   "package.json",
   "bun.lock"
@@ -23,9 +27,6 @@ outputs = [ "node_modules/" ]
 # we use `bun install --lockfile-only` to generate a lockfile
 run = "bun install --lockfile-only && aube install"
 auto = true
-
-[tasks.pre-commit]
-run = "hk run pre-commit"
 
 [tasks.dev]
 run = "tsdown --tsconfig tsconfig.lib.json --watch"
@@ -59,11 +60,17 @@ run = { tasks = [
 
 [tasks.release]
 depends = "prerelease"
-run = "aubx bumpp"
+run = "bumpp"
 raw = true
 
+[tasks.changelog]
+run = "changelogithub"
+
 [tasks.publish]
-run = "bun pm pack --filename release.tgz && npm publish ./release.tgz --access public --tag latest"
+run = [
+  "bun pm pack --filename release.tgz",
+  "npm publish ./release.tgz --access public --tag latest"
+]
 
 [tasks."publish:commit"]
-run = "aubx pkg-pr-new publish --bun"
+run = "pkg-pr-new publish --bun"

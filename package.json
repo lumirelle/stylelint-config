@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.8",
-  "packageManager": "aube@1.17.1",
+  "packageManager": "aube@1.21.0",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -45,19 +45,20 @@
       "dev": {
         "postcss-less": "^6.0.0",
         "stylelint": "^17.13.0",
-        "stylelint-less": "^4.2.1"
+        "stylelint-less": "^4.2.1",
+        "taze": "^19.14.1"
       },
       "types": {
         "@lumirelle/tsconfig": "^0.1.4",
         "@types/bun": "^1.3.14",
         "@types/lodash.clonedeep": "^4.5.9",
-        "@types/node": "^25.9.2",
+        "@types/node": "^25.9.3",
         "@types/postcss-less": "^4.0.7",
         "@types/semver": "^7.7.1",
         "typescript": "^6.0.3"
       },
       "build": {
-        "tsdown": "^0.22.2"
+        "tsdown": "^0.22.3"
       },
       "prod": {
         "@antfu/install-pkg": "^1.1.0",
@@ -76,17 +77,17 @@
       },
       "check": {
         "@antfu/eslint-config": "^9.0.0",
-        "@lumirelle/oxlint-config": "^0.8.2",
-        "eslint": "^10.4.1",
-        "eslint-plugin-oxlint": "^1.69.0",
-        "knip": "^6.16.1",
-        "oxlint": "^1.69.0",
+        "@lumirelle/oxlint-config": "^0.9.1",
+        "eslint": "^10.5.0",
+        "eslint-plugin-oxlint": "^1.70.0",
+        "knip": "^6.17.1",
+        "oxlint": "^1.70.0",
         "oxlint-tsgolint": "^0.23.0"
       },
       "test": {
-        "@vitest/coverage-v8": "^4.1.8",
+        "@vitest/coverage-v8": "^4.1.9",
         "tsnapi": "^0.3.3",
-        "vitest": "^4.1.8"
+        "vitest": "^4.1.9"
       }
     }
   },
@@ -136,6 +137,7 @@
     "postcss-less": "catalog:dev",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
+    "taze": "catalog:dev",
     "tsdown": "catalog:build",
     "tsnapi": "catalog:test",
     "typescript": "catalog:types",

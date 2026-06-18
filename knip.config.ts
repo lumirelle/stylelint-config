@@ -2,7 +2,9 @@ import type { KnipConfig } from 'knip'
 
 export default {
   entry: ['test/**/*.{ts,js}', 'fixtures/**/*.{ts,js}'],
+  ignoreFiles: ['taze.config.ts'],
   ignoreDependencies: [
+    'taze',
     '@dreamsicle.io/stylelint-config-tailwindcss',
     '@lumirelle/oxlint-config',
     '@stylistic/stylelint-config',
