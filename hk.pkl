@@ -3,10 +3,7 @@ import "package://github.com/jdx/hk/releases/download/v1.48.0/hk@1.48.0#/Builtin
 
 local linters = new Mapping<String, Step> {
   // JS & TS & ...
-  ["oxlint"] = (Builtins.ox_lint) {
-    check = "oxlint --no-error-on-unmatched-pattern --deny-warnings {{ files }}"
-    fix = "oxlint --no-error-on-unmatched-pattern --deny-warnings --fix {{ files }}"
-  }
+  ["oxlint"] = Builtins.ox_lint
   ["eslint"] = (Builtins.eslint) {
     batch = false
     glob =
@@ -34,13 +31,9 @@ local linters = new Mapping<String, Step> {
         "*.toml",
       )
 
-    check = "eslint --no-warn-ignored {{ files }}"
-    fix = "eslint --no-warn-ignored --fix {{ files }}"
     depends = List("oxlint")
   }
-  ["tsc"] = (Builtins.tsc) {
-    check = "tsc --build --noEmit"
-  }
+  ["tsc"] = Builtins.tsc
 
   // Configurations
   ["pkl"] = (Builtins.pkl) {
