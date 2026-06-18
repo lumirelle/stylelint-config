@@ -32,7 +32,7 @@ auto = true
 run = "tsdown --tsconfig tsconfig.lib.json --watch"
 
 [tasks.build]
-run = "tsdown --tsconfig tsconfig.lib.json --publint --attw.profile esm-only"
+run = "tsdown --tsconfig tsconfig.lib.json"
 
 [tasks.start]
 run = "bun run ./src/index.ts"
