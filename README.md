@@ -12,13 +12,12 @@ Lumirelle's StyleLint config. Easy to use, customizable, and works with CSS, SCS
 ## Install
 
 ```sh
-npm install -D @lumirelle/stylelint-config
-```
-
-or
-
-```sh
+# aube, https://aube.en.dev/
+aube add -D @lumirelle/stylelint-config
+# PNPM
 pnpm add -D @lumirelle/stylelint-config
+# NPM
+npm install -D @lumirelle/stylelint-config
 ```
 
 ## Usage
