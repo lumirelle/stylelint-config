@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.8",
-  "packageManager": "aube@1.21.0",
+  "packageManager": "aube@1.22.0",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -77,17 +77,25 @@
       },
       "check": {
         "@antfu/eslint-config": "^9.0.0",
+        "@arethetypeswrong/cli": "^0.18.4",
         "@lumirelle/oxlint-config": "^0.9.1",
         "eslint": "^10.5.0",
         "eslint-plugin-oxlint": "^1.70.0",
         "knip": "^6.17.1",
         "oxlint": "^1.70.0",
-        "oxlint-tsgolint": "^0.23.0"
+        "oxlint-tsgolint": "^0.23.0",
+        "publint": "^0.3.21"
       },
       "test": {
         "@vitest/coverage-v8": "^4.1.9",
         "tsnapi": "^0.3.3",
         "vitest": "^4.1.9"
+      },
+      "release": {
+        "bumpp": "^11.1.0",
+        "changelogithub": "^14.0.0",
+        "npm": "^11.17.0",
+        "pkg-pr-new": "^0.0.75"
       }
     }
   },
@@ -121,6 +129,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:check",
+    "@arethetypeswrong/cli": "catalog:check",
     "@lumirelle/oxlint-config": "catalog:check",
     "@lumirelle/tsconfig": "catalog:types",
     "@types/bun": "catalog:types",
@@ -129,12 +138,17 @@
     "@types/postcss-less": "catalog:types",
     "@types/semver": "catalog:types",
     "@vitest/coverage-v8": "catalog:test",
+    "bumpp": "catalog:release",
+    "changelogithub": "catalog:release",
     "eslint": "catalog:check",
     "eslint-plugin-oxlint": "catalog:check",
     "knip": "catalog:check",
+    "npm": "catalog:release",
     "oxlint": "catalog:check",
     "oxlint-tsgolint": "catalog:check",
+    "pkg-pr-new": "catalog:release",
     "postcss-less": "catalog:dev",
+    "publint": "catalog:check",
     "stylelint": "catalog:dev",
     "stylelint-less": "catalog:dev",
     "taze": "catalog:dev",
