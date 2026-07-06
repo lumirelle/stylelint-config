@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.9",
-  "packageManager": "aube@1.25.2",
+  "packageManager": "bun@1.3.14",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -36,6 +36,10 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">22",
+    "bun": ">1"
+  },
   "publishConfig": {
     "access": "public"
   },
