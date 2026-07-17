@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.9",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "nub@0.4.12",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -36,72 +36,19 @@
   "files": [
     "dist"
   ],
+  "devEngines": {
+    "packageManager": {
+      "name": "nub",
+      "version": "^0.4.12",
+      "onFail": "warn"
+    }
+  },
   "engines": {
     "node": ">22",
     "bun": ">1"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "workspaces": {
-    "packages": [],
-    "catalogs": {
-      "dev": {
-        "postcss-less": "^6.0.0",
-        "stylelint": "^17.14.0",
-        "stylelint-less": "^4.2.1",
-        "taze": "^19.14.1"
-      },
-      "types": {
-        "@lumirelle/tsconfig": "^0.1.5",
-        "@types/bun": "^1.3.14",
-        "@types/lodash.clonedeep": "^4.5.9",
-        "@types/node": "^26.1.1",
-        "@types/postcss-less": "^4.0.7",
-        "@types/semver": "^7.7.1",
-        "typescript": "^6.0.3"
-      },
-      "build": {
-        "tsdown": "^0.22.5"
-      },
-      "prod": {
-        "@antfu/install-pkg": "^1.1.0",
-        "@antfu/utils": "^9.3.0",
-        "@clack/prompts": "^1.7.0",
-        "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
-        "@lumirelle/defu": "^1.1.0",
-        "@stylistic/stylelint-config": "^5.0.0",
-        "local-pkg": "^1.2.1",
-        "lodash.clonedeep": "^4.5.0",
-        "postcss-scss": "^4.0.9",
-        "semver": "^7.8.5",
-        "stylelint-config-html": "^1.1.0",
-        "stylelint-config-recess-order": "^7.7.0",
-        "stylelint-scss": "^7.2.0"
-      },
-      "check": {
-        "@antfu/eslint-config": "^9.1.0",
-        "@arethetypeswrong/cli": "^0.18.5",
-        "@lumirelle/oxlint-config": "^0.12.0",
-        "eslint": "^10.7.0",
-        "eslint-plugin-oxlint": "^1.73.0",
-        "knip": "^6.26.0",
-        "oxlint": "^1.73.0",
-        "oxlint-tsgolint": "^0.24.0",
-        "publint": "^0.3.21"
-      },
-      "test": {
-        "@vitest/coverage-v8": "^4.1.10",
-        "tsnapi": "^1.0.0",
-        "vitest": "^4.1.10"
-      },
-      "release": {
-        "bumpp": "^11.1.0",
-        "changelogithub": "^14.0.0",
-        "npm": "^12.0.1",
-        "pkg-pr-new": "^0.0.75"
-      }
-    }
   },
   "peerDependencies": {
     "postcss-less": ">=6.0.0",
@@ -117,48 +64,48 @@
     }
   },
   "dependencies": {
-    "@antfu/install-pkg": "catalog:prod",
-    "@antfu/utils": "catalog:prod",
-    "@clack/prompts": "catalog:prod",
-    "@dreamsicle.io/stylelint-config-tailwindcss": "catalog:prod",
-    "@lumirelle/defu": "catalog:prod",
-    "@stylistic/stylelint-config": "catalog:prod",
-    "local-pkg": "catalog:prod",
-    "lodash.clonedeep": "catalog:prod",
-    "postcss-scss": "catalog:prod",
-    "semver": "catalog:prod",
-    "stylelint-config-html": "catalog:prod",
-    "stylelint-config-recess-order": "catalog:prod",
-    "stylelint-scss": "catalog:prod"
+    "@antfu/install-pkg": "^1.1.0",
+    "@antfu/utils": "^9.3.0",
+    "@clack/prompts": "^1.7.0",
+    "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
+    "@lumirelle/defu": "^1.1.0",
+    "@stylistic/stylelint-config": "^5.0.0",
+    "local-pkg": "^1.2.1",
+    "lodash.clonedeep": "^4.5.0",
+    "postcss-scss": "^4.0.9",
+    "semver": "^7.8.5",
+    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-recess-order": "^7.7.0",
+    "stylelint-scss": "^7.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:check",
-    "@arethetypeswrong/cli": "catalog:check",
-    "@lumirelle/oxlint-config": "catalog:check",
-    "@lumirelle/tsconfig": "catalog:types",
-    "@types/bun": "catalog:types",
-    "@types/lodash.clonedeep": "catalog:types",
-    "@types/node": "catalog:types",
-    "@types/postcss-less": "catalog:types",
-    "@types/semver": "catalog:types",
-    "@vitest/coverage-v8": "catalog:test",
-    "bumpp": "catalog:release",
-    "changelogithub": "catalog:release",
-    "eslint": "catalog:check",
-    "eslint-plugin-oxlint": "catalog:check",
-    "knip": "catalog:check",
-    "npm": "catalog:release",
-    "oxlint": "catalog:check",
-    "oxlint-tsgolint": "catalog:check",
-    "pkg-pr-new": "catalog:release",
-    "postcss-less": "catalog:dev",
-    "publint": "catalog:check",
-    "stylelint": "catalog:dev",
-    "stylelint-less": "catalog:dev",
-    "taze": "catalog:dev",
-    "tsdown": "catalog:build",
-    "tsnapi": "catalog:test",
-    "typescript": "catalog:types",
-    "vitest": "catalog:test"
+    "@antfu/eslint-config": "^9.1.0",
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@lumirelle/oxlint-config": "^0.12.0",
+    "@lumirelle/tsconfig": "^0.1.5",
+    "@types/bun": "^1.3.14",
+    "@types/lodash.clonedeep": "^4.5.9",
+    "@types/node": "^26.1.1",
+    "@types/postcss-less": "^4.0.7",
+    "@types/semver": "^7.7.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "bumpp": "^11.1.0",
+    "changelogithub": "^14.0.0",
+    "eslint": "^10.7.0",
+    "eslint-plugin-oxlint": "^1.73.0",
+    "knip": "^6.26.0",
+    "npm": "^12.0.1",
+    "oxlint": "^1.73.0",
+    "oxlint-tsgolint": "^0.24.0",
+    "pkg-pr-new": "^0.0.75",
+    "postcss-less": "^6.0.0",
+    "publint": "^0.3.21",
+    "stylelint": "^17.14.0",
+    "stylelint-less": "^4.2.1",
+    "taze": "^19.14.1",
+    "tsdown": "^0.22.5",
+    "tsnapi": "^1.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10"
   }
 }

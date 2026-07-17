@@ -1,9 +1,17 @@
 {
-  // cspell:disable
   "recommendations": [
+    // Environment
+    "hverlin.mise-vscode",
     "editorconfig.editorconfig",
-    "oven.bun-vscode",
+
+    // Language Support
+    "redhat.vscode-yaml",
+    "remcohaszing.schemastore",
+    "tamasfe.even-better-toml",
+    "vue.volar",
+
+    // Quality
     "dbaeumer.vscode-eslint",
-    "antfu.pnpm-catalog-lens"
+    "stylelint.vscode-stylelint"
   ]
 }

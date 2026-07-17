@@ -1,34 +1,35 @@
 {
+  // Code Quality
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "always",
     "source.fixAll.eslint": "always",
+    // Used for verifying fixture outputs
+    "source.fixAll.stylelint": "never",
     "source.organizeImports": "never"
   },
-  "oxc.typeAware": true,
-  "eslint.runtime": "bun",
-  "eslint.execArgv": ["-b"],
   "eslint.validate": [
+    // Code
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact",
     "vue",
-    "html",
-    "markdown",
+    // Configurations
     "json",
     "jsonc",
     "yaml",
     "toml",
-    "xml"
+    // Documentations
+    "markdown"
   ],
   // Used for verifying fixture outputs
   "stylelint.validate": [
+    // Code
     "css",
     "postcss",
     "scss",
     "less",
-    "vue",
     "html",
     "vue"
   ]

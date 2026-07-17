@@ -9,6 +9,6 @@ permissions: {}
 
 jobs:
   autofix:
-    uses: lumirelle/workflows/.github/workflows/ci-autofix.yml@v9
+    uses: lumirelle/workflows/.github/workflows/ci-autofix.yml@v10
     permissions:
       contents: read

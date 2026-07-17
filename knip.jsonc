@@ -1,0 +1,30 @@
+{
+  "ignoreFiles": [
+    // Fixtures
+    "fixtures/**",
+    // Snapshots
+    "test/__snapshots__/**"
+  ],
+  "ignoreDependencies": [
+    // Build tools
+    "tsdown",
+    // Check tools
+    "@lumirelle/oxlint-config",
+    "@arethetypeswrong/cli",
+    "publint",
+    // Node.js dependencies manager
+    "taze",
+    // Node.js releasing tools
+    "bumpp",
+    "changelogithub",
+    "pkg-pr-new",
+    "npm",
+    // Bundled StyleLint configurations
+    "@dreamsicle.io/stylelint-config-tailwindcss",
+    "@stylistic/stylelint-config",
+    "stylelint-config-html",
+    "stylelint-config-recess-order",
+    "stylelint-less",
+    "stylelint-scss"
+  ]
+}
