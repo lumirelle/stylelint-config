@@ -33,8 +33,8 @@ description = "Run the source code."
 run = "nub ./src/index.ts"
 
 [tasks.check]
-depends = "build"
 description = 'Run all checks.'
+depends = "build"
 usage = '''
 flag "-s --staged" help="Run on staged files only without stashing unstaged changes"
 arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
@@ -44,8 +44,8 @@ hk check {{ "--staged" if usage.staged else "--all" }} {{ usage.rest | join(sep=
 '''
 
 [tasks.fix]
-depends = "build"
 description = 'Fix all check issues.'
+depends = "build"
 usage = '''
 flag "-s --staged" help="Run on staged files only without stashing unstaged changes"
 arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
@@ -56,6 +56,7 @@ hk fix {{ "--staged" if usage.staged else "--all" }} {{ usage.rest | join(sep=' 
 
 [tasks.test]
 description = "Run tests."
+depends = "build"
 usage = '''
 flag "-w --watch" help="Watch files for changes and rerun tests"
 arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
