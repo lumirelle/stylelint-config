@@ -1,6 +1,7 @@
 import type { Nullable } from '@antfu/utils'
 import type { OptionsOpinionated, StylelintOverrideConfig } from '../types'
 import { getPackageInfoSync } from 'local-pkg'
+import postcssHtml from 'postcss-html'
 import semver from 'semver'
 import { resolvePackagePath } from '../resolve'
 import { useCSSRules } from '../rules/css'
@@ -20,8 +21,8 @@ export async function vue(
 
   const config: StylelintOverrideConfig = {
     files: ['**/*.vue'],
+    customSyntax: postcssHtml,
   }
-  config.extends = [resolvePackagePath('stylelint-config-html/vue')]
 
   if (scss === true) {
     config.plugins = [resolvePackagePath('stylelint-scss')]

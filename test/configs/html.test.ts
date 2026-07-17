@@ -1,14 +1,12 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 import { html } from '../../src'
 
-beforeAll(() => {
-  vi.mock(import('../../src/resolve'), async (importOriginal) => {
-    const original = await importOriginal()
-    return {
-      ...original,
-      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
-    }
-  })
+vi.mock(import('../../src/resolve'), async (importOriginal) => {
+  const original = await importOriginal()
+  return {
+    ...original,
+    resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
+  }
 })
 
 afterAll(() => {
@@ -25,9 +23,7 @@ describe('html config', () => {
     expect(await html(true))
       .toMatchInlineSnapshot(`
         {
-          "extends": [
-            "path/to/stylelint-config-html/html",
-          ],
+          "customSyntax": [Function],
           "files": [
             "*.html",
             "**/*.html",

@@ -1,6 +1,6 @@
 import type { Nullable } from '@antfu/utils'
 import type { StylelintOverrideConfig } from '../types'
-import { resolvePackagePath } from '../resolve'
+import postcssHtml from 'postcss-html'
 
 /**
  * @see https://github.com/Microsoft/vscode/blob/master/extensions/html/package.json
@@ -28,6 +28,6 @@ export async function html(
     return null
   return {
     files: extensions.flatMap(ext => [`*${ext}`, `**/*${ext}`]),
-    extends: [resolvePackagePath('stylelint-config-html/html')],
+    customSyntax: postcssHtml,
   }
 }

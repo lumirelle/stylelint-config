@@ -32,15 +32,15 @@ importers:
       lodash.clonedeep:
         specifier: ^4.5.0
         version: 4.5.0
+      postcss-html:
+        specifier: ^1.8.1
+        version: 1.8.1
       postcss-scss:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.5.19)
       semver:
         specifier: ^7.8.5
         version: 7.8.5
-      stylelint-config-html:
-        specifier: ^1.1.0
-        version: 1.1.0(postcss-html@1.8.1)(stylelint@17.14.0)(typescript@6.0.3)
       stylelint-config-recess-order:
         specifier: ^7.7.0
         version: 7.7.0(stylelint@17.14.0)(stylelint-order@8.1.1(stylelint@17.14.0))(typescript@6.0.3)
@@ -3268,13 +3268,6 @@ packages:
 
   style-search@0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
-
-  stylelint-config-html@1.1.0:
-    resolution: {integrity: sha512-IZv4IVESjKLumUGi+HWeb7skgO6/g4VMuAYrJdlqQFndgbj6WJAXPhaysvBiXefX79upBdQVumgYcdd17gCpjQ==}
-    engines: {node: ^12 || >=14}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
 
   stylelint-config-recess-order@7.7.0:
     resolution: {integrity: sha512-TWRkg+BrwHOki4pi9y1emWgx6pFwZXOYZhNsbEObke/mzYUJVJvDEzJJQXhH7ajslQJGcrExy8ZvJqDiUbhFpA==}
@@ -6796,11 +6789,6 @@ snapshots:
   strip-json-comments@5.0.3: {}
 
   style-search@0.1.0: {}
-
-  stylelint-config-html@1.1.0(postcss-html@1.8.1)(stylelint@17.14.0)(typescript@6.0.3):
-    dependencies:
-      postcss-html: 1.8.1
-      stylelint: 17.14.0(typescript@6.0.3)
 
   stylelint-config-recess-order@7.7.0(stylelint@17.14.0)(stylelint-order@8.1.1(stylelint@17.14.0))(typescript@6.0.3):
     dependencies:

@@ -326,7 +326,7 @@ export default lumirelle(
 )
 `)
 
-    spawnSync('bunx', ['stylelint', ...toArray(filePatterns), '--fix'], {
+    spawnSync('stylelint', [...toArray(filePatterns), '--fix'], {
       cwd: processed,
       shell: true,
     })
