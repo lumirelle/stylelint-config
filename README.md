@@ -12,8 +12,8 @@ Lumirelle's StyleLint config. Easy to use, customizable, and works with CSS, SCS
 ## Install
 
 ```sh
-# aube, https://aube.en.dev/
-aube add -D @lumirelle/stylelint-config
+# Nub, https://nubjs.com/
+nub add -D @lumirelle/stylelint-config
 # PNPM
 pnpm add -D @lumirelle/stylelint-config
 # NPM
