@@ -22,7 +22,6 @@
     // Bundled StyleLint configurations
     "@dreamsicle.io/stylelint-config-tailwindcss",
     "@stylistic/stylelint-config",
-    "stylelint-config-html",
     "stylelint-config-recess-order",
     "stylelint-less",
     "stylelint-scss"
