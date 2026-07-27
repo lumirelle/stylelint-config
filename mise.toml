@@ -11,7 +11,7 @@ pkl = 'latest'
 description = 'Automatically install Node.js dependencies via nub.'
 sources = ['package.json', 'nub.lock']
 outputs = ['node_modules/']
-run = 'nub install'
+run = 'nub pm pin && nub install'
 auto = true
 
 [env]

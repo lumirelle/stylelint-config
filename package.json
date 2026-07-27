@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.11",
-  "packageManager": "nub@0.5.0",
+  "packageManager": "nub@0.6.0",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -39,7 +39,7 @@
   "devEngines": {
     "packageManager": {
       "name": "nub",
-      "version": "^0.5.0",
+      "version": "^0.6.0",
       "onFail": "warn"
     }
   },
