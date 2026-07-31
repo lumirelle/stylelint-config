@@ -12,3 +12,5 @@ jobs:
     permissions:
       contents: write
       id-token: write
+    with:
+      cache-preset: nub
