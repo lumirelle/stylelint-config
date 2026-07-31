@@ -18,7 +18,6 @@
     "bumpp",
     "changelogithub",
     "pkg-pr-new",
-    "npm",
     // Bundled StyleLint configurations
     "@dreamsicle.io/stylelint-config-tailwindcss",
     "@stylistic/stylelint-config",
