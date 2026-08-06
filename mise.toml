@@ -78,7 +78,7 @@ arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
 run = '''
 vitest {{ '' if usage.watch else 'run' }} {{ usage.rest | join(sep=' ') if usage.rest else '' }}
 '''
-sources = ["@group:deps", "src", "fixtures", "dist"]
+sources = ["@group:deps", "src", "test", "fixtures", "dist"]
 outputs = []
 cache = { enabled = true }
 
