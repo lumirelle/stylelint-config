@@ -20,6 +20,11 @@ _.path = ['{{config_root}}/node_modules/.bin']
 # See https://github.com/webpro-nl/knip/issues/1813 & https://github.com/oxc-project/oxc/issues/11834
 KNIP_DISABLE_RAW_TRANSFER = 1
 
+[task_config.input_groups]
+deps = ["package.json", "nub.lock"]
+hk = ["*.js", "*.mjs", "*.cjs", "*.jsx", "*.ts", "*.mts", "*.cts", "*.tsx", "*.vue", "*.json", "*.jsonc", "*.yaml", "*.yml", "*.toml", "*.md", "*.mdc", "*.mdx", "*.lua", "hk.pkl"]
+vitest = ["src", "test", "fixtures"]
+
 [tasks.dev]
 description = "Run the development build with hot reloading."
 run = "tsdown --tsconfig tsconfig.lib.json --watch"
@@ -27,6 +32,9 @@ run = "tsdown --tsconfig tsconfig.lib.json --watch"
 [tasks.build]
 description = "Run the production build."
 run = "tsdown --tsconfig tsconfig.lib.json"
+sources = ["@group:deps", "src", "tsconfig.lib.json"]
+outputs = ["dist"]
+cache = { enabled = true }
 
 [tasks.start]
 description = "Run the source code."
@@ -34,7 +42,6 @@ run = "nub ./src/index.ts"
 
 [tasks.check]
 description = 'Run all checks.'
-depends = "build"
 usage = '''
 flag "-s --staged" help="Run on staged files only without stashing unstaged changes"
 arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
@@ -42,10 +49,13 @@ arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
 run = '''
 hk check {{ "--staged" if usage.staged else "--all" }} {{ usage.rest | join(sep=' ') if usage.rest else '' }}
 '''
+sources = ["@group:deps", "@group:hk"]
+outputs = []
+depends = "build"
+cache = { enabled = true, command_inputs = ["hk --version"] }
 
 [tasks.fix]
 description = 'Fix all check issues.'
-depends = "build"
 usage = '''
 flag "-s --staged" help="Run on staged files only without stashing unstaged changes"
 arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
@@ -53,6 +63,10 @@ arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
 run = '''
 hk fix {{ "--staged" if usage.staged else "--all" }} {{ usage.rest | join(sep=' ') if usage.rest else '' }}
 '''
+sources = ["@group:deps", "@group:hk"]
+outputs = []
+depends = "build"
+cache = { enabled = true, command_inputs = ["hk --version"] }
 
 [tasks.test]
 description = "Run tests."
@@ -64,6 +78,9 @@ arg "[rest]" var=#true help="Additional arguments to pass to the test runner"
 run = '''
 vitest {{ '' if usage.watch else 'run' }} {{ usage.rest | join(sep=' ') if usage.rest else '' }}
 '''
+sources = ["@group:deps", "src", "fixtures", "dist"]
+outputs = []
+cache = { enabled = true }
 
 [tasks.prerelease]
 description = 'Prepare for release.'

@@ -12,4 +12,4 @@ jobs:
   ci:
     uses: lumirelle/workflows/.github/workflows/ci.yml@v10
     with:
-      cache-preset: nub
+      cache-preset: 'mise-task,nub'

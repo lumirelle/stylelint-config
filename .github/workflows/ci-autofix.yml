@@ -13,4 +13,4 @@ jobs:
     permissions:
       contents: read
     with:
-      cache-preset: nub
+      cache-preset: 'mise-task,nub'

@@ -14,4 +14,4 @@ jobs:
     permissions:
       id-token: write
     with:
-      cache-preset: nub
+      cache-preset: 'mise-task,nub'
