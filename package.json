@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.12",
-  "packageManager": "nub@0.6.0",
+  "packageManager": "nub@0.7.5",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -39,8 +39,8 @@
   "devEngines": {
     "packageManager": {
       "name": "nub",
-      "version": "^0.6.0",
-      "onFail": "warn"
+      "version": "^0.7.5",
+      "onFail": "ignore"
     }
   },
   "engines": {
@@ -68,18 +68,18 @@
     "@antfu/utils": "^9.3.0",
     "@clack/prompts": "^1.7.0",
     "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
-    "@lumirelle/defu": "^1.1.0",
+    "@lumirelle/defu": "^1.2.1",
     "@stylistic/stylelint-config": "^5.0.0",
     "local-pkg": "^1.2.1",
     "lodash.clonedeep": "^4.5.0",
     "postcss-html": "^2.0.0",
     "postcss-scss": "^4.0.9",
     "semver": "^7.8.5",
-    "stylelint-config-recess-order": "^7.7.0",
+    "stylelint-config-recess-order": "^7.8.0",
     "stylelint-scss": "^7.2.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.2.0",
+    "@antfu/eslint-config": "^9.3.0",
     "@arethetypeswrong/cli": "^0.18.5",
     "@lumirelle/oxlint-config": "^0.13.0",
     "@lumirelle/tsconfig": "^0.1.6",
@@ -89,22 +89,22 @@
     "@types/postcss-less": "^4.0.7",
     "@types/semver": "^7.8.0",
     "@vitest/coverage-v8": "^4.1.10",
-    "bumpp": "^12.1.1",
+    "bumpp": "^12.2.1",
     "changelogithub": "^15.0.4",
-    "eslint": "^10.8.0",
-    "eslint-plugin-oxlint": "^1.77.0",
-    "knip": "^6.31.0",
-    "oxlint": "^1.77.0",
+    "eslint": "^10.8.1",
+    "eslint-plugin-oxlint": "^1.78.0",
+    "knip": "^6.32.2",
+    "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "pkg-pr-new": "^0.0.82",
+    "pkg-pr-new": "^0.0.87",
     "postcss-less": "^6.0.0",
     "publint": "^0.3.23",
     "stylelint": "^17.14.1",
     "stylelint-less": "^4.2.1",
-    "taze": "^19.17.1",
+    "taze": "^20.0.1",
     "tsdown": "^0.22.14",
     "tsnapi": "^1.2.0",
-    "typescript": "npm:typescript-native-bridge@^6.0.3-bridge.10.tsgo.7.0.2",
+    "typescript": "npm:typescript-native-bridge@^6.0.3-bridge.12.tsgo.7.0.2",
     "vitest": "^4.1.10"
   },
   "overrides": {
