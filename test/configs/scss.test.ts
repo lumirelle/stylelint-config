@@ -1,19 +1,5 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { scss } from '../../src'
-
-beforeAll(() => {
-  vi.mock(import('../../src/resolve'), async (importOriginal) => {
-    const original = await importOriginal()
-    return {
-      ...original,
-      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
-    }
-  })
-})
-
-afterAll(() => {
-  vi.restoreAllMocks()
-})
 
 describe('scss config', () => {
   it('should generate empty config when SCSS is disabled', async () => {

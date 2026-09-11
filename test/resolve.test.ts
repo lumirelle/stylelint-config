@@ -1,5 +1,8 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { resolvePackagePath, resolvePackagePaths } from '../src/resolve'
+
+// This file exercises the real resolver, opt out of the global setup mock.
+vi.unmock('../src/resolve')
 
 describe('resolve', () => {
   it('should resolve package paths without throwing', () => {

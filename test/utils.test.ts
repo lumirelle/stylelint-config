@@ -15,7 +15,8 @@ beforeEach(() => {
   spiedInstallPackage.mockImplementation(async () => undefined as any)
   // Avoid CI environment interference
   vi.stubEnv('CI', undefined)
-  // Why global config does not work?
+  // `clearMocks` runs before this hook, so clear after any setup that may use
+  // `Array.prototype.filter` internally (otherwise those calls get recorded).
   spiedFilter.mockClear()
 })
 
@@ -49,11 +50,15 @@ describe('utils', () => {
 
     it('should `Array.filter` not be called if `isTTY` false', async () => {
       const originalIsTTY = process.stdout.isTTY
-      process.stdout.isTTY = false
-      expect(await ensurePackages(['stylelint'], false))
-        .toBeUndefined()
-      expect(spiedFilter).not.toHaveBeenCalled()
-      process.stdout.isTTY = originalIsTTY
+      try {
+        process.stdout.isTTY = false
+        expect(await ensurePackages(['stylelint'], false))
+          .toBeUndefined()
+        expect(spiedFilter).not.toHaveBeenCalled()
+      }
+      finally {
+        process.stdout.isTTY = originalIsTTY
+      }
     })
 
     it('should not prompt and install for `stylelint`', async () => {
@@ -87,7 +92,6 @@ describe('utils', () => {
         .toBeUndefined()
       expect(spiedConfirm).toHaveBeenCalledTimes(1)
       expect(spiedInstallPackage).toHaveBeenCalledTimes(0)
-      spiedConfirm.mockReset()
     })
 
     it('should prompt one package not exists correctly', async () => {
@@ -120,25 +124,15 @@ describe('utils', () => {
 
   describe('isInEditorEnv & isInGitHooksOrLintStaged', () => {
     it('should not in editor if in CI environment', () => {
-      const CI = process.env.CI
-      process.env.CI = 'true'
+      vi.stubEnv('CI', 'true')
       expect(isInEditorEnv())
         .toBe(false)
-      if (CI !== undefined)
-        process.env.CI = CI
-      else
-        delete process.env.CI
     })
 
     it('should not in editor if in Git hooks or lint-staged', () => {
-      const GIT_PARAMS = process.env.GIT_PARAMS
-      process.env.GIT_PARAMS = 'true'
+      vi.stubEnv('GIT_PARAMS', 'true')
       expect(isInEditorEnv())
         .toBe(false)
-      if (GIT_PARAMS !== undefined)
-        process.env.GIT_PARAMS = GIT_PARAMS
-      else
-        delete process.env.GIT_PARAMS
     })
 
     it.each([
@@ -147,15 +141,10 @@ describe('utils', () => {
       ['JETBRAINS_IDE', 'idea'],
       ['VIM', 'vim'],
       ['NVIM', 'nvim'],
-    ])('should in editor if %s is set to %s', async (envVar, value) => {
-      const ENV_VAR = process.env[envVar]
-      process.env[envVar] = value
+    ])('should in editor if %s is set to %s', (envVar, value) => {
+      vi.stubEnv(envVar, value)
       expect(isInEditorEnv())
         .toBe(true)
-      if (ENV_VAR !== undefined)
-        process.env[envVar] = ENV_VAR
-      else
-        delete process.env[envVar]
     })
 
     it('should not in Git hooks or lint-staged', () => {
@@ -168,14 +157,9 @@ describe('utils', () => {
       ['VSCODE_GIT_COMMAND', 'some-command'],
       ['npm_lifecycle_script', 'lint-staged some-other-args'],
     ])('should in Git hooks or lint-staged if %s is set to %s', (envVar, value) => {
-      const ENV_VAR = process.env[envVar]
-      process.env[envVar] = value
+      vi.stubEnv(envVar, value)
       expect(isInGitHooksOrLintStaged())
         .toBe(true)
-      if (ENV_VAR !== undefined)
-        process.env[envVar] = ENV_VAR
-      else
-        delete process.env[envVar]
     })
   })
 })

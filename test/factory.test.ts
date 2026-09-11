@@ -1,6 +1,6 @@
 import type { StylelintConfig, StylelintOverrideConfig } from '../src/types'
 import * as localPkg from 'local-pkg'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ConfigComposer, GLOB_EXCLUDE, lumirelle } from '../src'
 import { css, html, less, ordered, scss, stylistic, tailwindcss, vue } from '../src/configs'
 import * as utils from './../src/utils'
@@ -11,6 +11,14 @@ const spiedIsInEditorEnv = vi.spyOn(utils, 'isInEditorEnv')
 const spiedLog = vi.spyOn(console, 'log')
 const spiedWarn = vi.spyOn(console, 'warn')
 const spiedIsPackageExists = vi.spyOn(localPkg, 'isPackageExists')
+
+// These spies live at module scope, so reset their per-test implementations to
+// avoid leaking `mockReturnValue`/`mockImplementation` into later tests.
+// `clearMocks` only clears call history, not implementations.
+afterEach(() => {
+  spiedIsInEditorEnv.mockReset()
+  spiedIsPackageExists.mockReset()
+})
 
 describe('factory config', () => {
   it('should log if in editor', async () => {
@@ -137,7 +145,6 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
-    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config with `less` enabled', async () => {
@@ -173,7 +180,6 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
-    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config with both `scss` and `less` enabled (`less` is ignored)', async () => {
@@ -241,7 +247,6 @@ describe('factory config', () => {
         ordered(true),
       ),
     )
-    spiedIsPackageExists.mockReset()
   })
 
   it('should construct config  with `vue` and `scss` enabled', async () => {

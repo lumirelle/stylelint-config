@@ -1,19 +1,5 @@
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { tailwindcss } from '../../src'
-
-beforeAll(() => {
-  vi.mock(import('../../src/resolve'), async (importOriginal) => {
-    const original = await importOriginal()
-    return {
-      ...original,
-      resolvePackagePath: vi.fn((packageName: string) => `path/to/${packageName}`),
-    }
-  })
-})
-
-afterAll(() => {
-  vi.restoreAllMocks()
-})
 
 describe('tailwindcss config', () => {
   it('should generate empty config when Tailwind CSS is disabled', async () => {
