@@ -1,0 +1,39 @@
+{
+  "version": 5,
+  "verify": "run `mise run check` and `mise run test` — confirm lint, typecheck, build and tests pass, and that the built config still imports",
+  "managers": [
+    {
+      "name": "mise",
+      "kind": "toolchain",
+      "detect": ["mise.toml", "mise.lock"],
+      "note": "project-scoped: --local keeps this off the machine-global config",
+      "commands": {
+        "check": "mise outdated --local --json",
+        "bump": {
+          "default": "mise upgrade --local",
+          "major": "mise upgrade --local --bump"
+        }
+      }
+    },
+    {
+      "name": "nub",
+      "kind": "package",
+      "detect": ["nub.lock", "packageManager=nub"],
+      "note": "taze declared in devDependencies, so the Node lane is available; -x nub keeps taze off the unrelated npm package named nub",
+      "commands": {
+        "check": "nub outdated --json",
+        "bump": {
+          "default": "nub exec taze -x nub -w --no-interactive --no-node-version --no-github-actions",
+          "patch": "nub exec taze patch -x nub -w --no-interactive --no-node-version --no-github-actions",
+          "minor": "nub exec taze minor -x nub -w --no-interactive --no-node-version --no-github-actions",
+          "major": "nub exec taze major -x nub -w --no-interactive --no-node-version --no-github-actions"
+        },
+        "refresh": [
+          "node --input-type=commonjs -e \"const fs=require('fs');for(const p of ['node_modules','nub.lock'])fs.rmSync(p,{recursive:true,force:true})\"",
+          "nub install",
+          "nub dedupe"
+        ]
+      }
+    }
+  ]
+}
