@@ -2,7 +2,7 @@
   "name": "@lumirelle/stylelint-config",
   "type": "module",
   "version": "5.0.0-beta.13",
-  "packageManager": "nub@0.7.5",
+  "packageManager": "nub@0.9.6",
   "description": "Lumirelle's StyleLint config",
   "author": "Lumirelle <shabbyacc@outlook.com>",
   "license": "MIT",
@@ -39,7 +39,7 @@
   "devEngines": {
     "packageManager": {
       "name": "nub",
-      "version": "^0.7.5",
+      "version": "^0.9.6",
       "onFail": "ignore"
     }
   },
@@ -64,9 +64,9 @@
     }
   },
   "dependencies": {
-    "@antfu/install-pkg": "^2.0.1",
+    "@antfu/install-pkg": "^2.1.0",
     "@antfu/utils": "^9.3.0",
-    "@clack/prompts": "^1.8.0",
+    "@clack/prompts": "^1.8.1",
     "@dreamsicle.io/stylelint-config-tailwindcss": "^1.2.2",
     "@lumirelle/defu": "^1.2.1",
     "@stylistic/stylelint-config": "^5.0.0",
@@ -76,36 +76,36 @@
     "postcss-scss": "^4.0.9",
     "semver": "^7.8.5",
     "stylelint-config-recess-order": "^7.8.0",
-    "stylelint-scss": "^7.2.0"
+    "stylelint-scss": "^7.3.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.5.1",
     "@arethetypeswrong/cli": "^0.18.5",
     "@lumirelle/oxlint-config": "^0.14.0",
     "@lumirelle/tsconfig": "^0.1.6",
-    "@types/bun": "^1.4.2",
+    "@types/bun": "^1.4.3",
     "@types/lodash.clonedeep": "^4.5.9",
-    "@types/node": "^26.5.1",
+    "@types/node": "^26.6.5",
     "@types/postcss-less": "^4.0.7",
     "@types/semver": "^7.8.0",
-    "@vitest/coverage-v8": "^5.0.0",
+    "@vitest/coverage-v8": "^5.0.4",
     "bumpp": "^12.3.0",
     "changelogithub": "^15.0.5",
-    "eslint": "^10.10.0",
-    "eslint-plugin-oxlint": "^1.82.0",
-    "knip": "^6.35.1",
-    "oxlint": "^1.82.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "pkg-pr-new": "^0.0.88",
+    "eslint": "^10.12.0",
+    "eslint-plugin-oxlint": "^1.88.0",
+    "knip": "^6.41.0",
+    "oxlint": "^1.88.0",
+    "oxlint-tsgolint": "^7.0.2004",
+    "pkg-pr-new": "^0.0.91",
     "postcss-less": "^6.0.0",
-    "publint": "^0.3.24",
-    "stylelint": "^17.15.0",
-    "stylelint-less": "^4.2.1",
-    "taze": "^21.1.0",
-    "tsdown": "^0.23.0",
-    "tsnapi": "^1.4.2",
-    "typescript": "npm:typescript-native-bridge@^6.0.3-bridge.16.tsgo.7.0.2",
-    "vitest": "^5.0.0"
+    "publint": "^0.3.25",
+    "stylelint": "^17.16.0",
+    "stylelint-less": "^4.2.2",
+    "taze": "^21.3.0",
+    "tsdown": "^0.23.1",
+    "tsnapi": "^1.5.0",
+    "typescript": "npm:typescript-native-bridge@^6.0.3-bridge.18.tsgo.7.0.2",
+    "vitest": "^5.0.4"
   },
   "overrides": {
     "typescript": "$typescript"
